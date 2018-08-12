@@ -1,1 +1,63 @@
 \chapter{Literature Review}
+
+\section{Definition of Important terms}
+The field of Computer vision is riddled with similar sounding terms whose intent
+can get muddled during the discussion of concepts.  The purpose of this section
+is to establish the intent of these keywords as they are used later in this text.
+
+Detailed below are definitions of important terms within the field of computer
+vision, some of which are used rather loosely within the literature or are
+despite seeming interchangeable may refer to different concepts. 
+
+Feature Detection:
+
+Image Segmentation: This is the process of partitioning an image into multiple
+sets of pixels with the goal of making the image easier to analyse, it typically
+involves finding boundary lines of objects. 
+
+Motion Segmentation: Motion Segmentation refers to the labelling of pixels that
+are associated with each independently moving 3D object in sequence of images
+that can feature multiple motions. \cite{Tekalp2014}
+
+Object Recognition: This a method by which Given an image, the objects within
+said image are detected and classified as one of a set of predefined Object
+Category.  I.e. “What Object(s) are in this frame?”
+
+Object Detection: Object Detection can be seen as targeted recognition, it deals
+with finding instances of objects within a given image or video frame, this
+technique usually makes use of extracted features and learning algorithms to
+recognize instances of an object category.  I.e. “Where is this particular
+object in this frame?”
+
+Object Classification: This is a broader treatments than Detection, where a
+system is not only able to identify objects within images but can differentiate
+between and label different classes of objects within the image. 
+
+Optical Flow: refers to the pattern of apparent motion of objects, surfaces, and
+edges in a visual scene caused by the relative motion between an observer and a
+scene. Optic flow fields can be used to structure or segment a scene. [3]
+
+ptical Flow Segmentation: Refers to the grouping together of optical flow
+vectors that are associated with the same 3-D motion or structure. This problem
+is identical to motion segmentation provided a dense optical flow field. [1]
+
+Object Tracking: Object tracking also known as Video Tracking refers to the use
+of sensor measurements to determine the location, path and characteristics of
+objects of interest. [4]
+ 
+Motion Estimation: A fundamental problem in video processing that is concerned
+with determining motion vectors that describe the transformation of one 2D
+image to another over time. The problem can be broken down into
+\cite{Tekalp2014};
+
+2D Motion Estimation: Defined as an “ill posed problem”, as motion is in
+three dimensions but image worked on are projections of 3D phonomena onto a
+2D image plane.
+
+NOTE:
+Motion Tracking: In the literature, this may also refer to Motion Capture;
+The technology of recording movements of one objects and applying said
+tracking data to another object.\ e.g.\ animation. Or as it is used in the
+case of this paper Video/Object Tracking.
+
+
