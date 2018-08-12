@@ -1,4 +1,17 @@
-# Thesis Template
+# Claude Betz
+## BTZCLA001
+## University of Capetown
+## Undergraduate Thesis
+
+This thesis template is adapted from Ross Macarthur's repo:
+https://github.com/rossmacarthur/latex-templates/tree/master/thesis
+
+for the pupose of writing my undergraduate thesis
+_____________________________________________________________________________________________________
+
+# Original README.md contents
+
+#Thesis Template
 
 Template made for my undergraduate engineering thesis at UCT. Recommended compiler is pdfLaTeX.
 
