@@ -15,6 +15,7 @@
 *.ilg
 *.ind
 *.lof
+*.lol
 *.lot
 *.maf
 *.mtc
@@ -22,3 +23,4 @@
 *.out
 *.synctex.gz
 *.pdf
+*.toc
