@@ -1,3 +1,4 @@
+# Ignore
 *.aux
 *.glo
 *.idx
@@ -22,5 +23,8 @@
 *.mtc1
 *.out
 *.synctex.gz
-*.pdf
 *.toc
+*.pdf
+
+# Allow
+!/figures/*.pdf
