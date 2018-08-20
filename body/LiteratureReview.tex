@@ -1,5 +1,4 @@
 \chapter{Literature Review}
-
 \section{Definition of Important terms}
 The field of Computer vision is riddled with similar sounding terms whose intent
 can get muddled during the discussion of concepts.  The purpose of this section
@@ -17,7 +16,7 @@ involves finding boundary lines of objects.
 
 Motion Segmentation: Motion Segmentation refers to the labelling of pixels that
 are associated with each independently moving 3D object in sequence of images
-that can feature multiple motions. \cite{Tekalp2014}
+that can feature multiple motions.~\cite{Tekalp2014}
 
 Object Recognition: This a method by which Given an image, the objects within
 said image are detected and classified as one of a set of predefined Object
@@ -50,9 +49,55 @@ with determining motion vectors that describe the transformation of one 2D
 image to another over time~\cite{Tekalp2014}.
 
 NOTE:\@
-Motion Tracking: In the literature, this may also refer to Motion Capture;
-The technology of recording movements of one objects and applying said
 tracking data to another object.\ e.g.\ animation. Or as it is used in the
 case of this paper Video/Object Tracking.
+
+\section{Motion Tracking}
+
+*insert anecdote*
+
+The problem discussed of isolating moving objects of interest from a scene can
+be categorised under the branch of Computer Vision known as Motion
+Estimation/Tracking.
+
+This literature review starts by broadly detailing the general approach to
+solving of Motion Tracking problems. This is followed by a study of the
+progression of the field; This involves a review of prominent “classical”
+pre-deep learning approaches to the problem, followed by a brief review of the
+relatively recent benefits that deep learning approaches offer.
+
+\subsection{The Representation of Video}
+While a still image has a spatial distribution of intensity that is constant
+with time, videos can be defined as a time-varying image whose spatial
+distribution of intensity changes with respect to time, we can denote this by
+$s_c(x_1,x_2,t)$ where $x_1$ and $x_2$ represent spatial variables and $t$ is
+the temporal variable. \cite{Tekalp2014}
+
+Video can be represented either in analog form.
+Typically video recording, storage and transmission used to be in analog form
+i.e.\ recording on video cassettes, reception by antenna,  
+
+\subsection{A General Approach to Motion Tracking}
+The problem of Motion Tracking can coarsely be broken down into a sequence of
+subtasks, these roughly being:
+    \begin{itemize}
+        \item Object Detection: This is concerned with (initially) identifying
+            whether a, or multiple object is/are present within a given scenario.
+        \item Object Classification: 
+        \item Object Tracking: This is concerned with successively following the
+            identified objects in subsequent frames in the provided video.
+    \end{itemize}
+The relevant literature details numerous approaches to each of the above
+subtasks of the overall Motion Tracking Task. The most prominent of each are
+reviewed below:
+
+\subsection{Object Detection}
+
+
+\subsection{Object Classification}
+
+\subsection{Object Tracking}
+
+
 
 
