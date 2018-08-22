@@ -1,5 +1,15 @@
-\chapter{Literature Review}
-\section{Definition of Important terms}
+\chapter{Literature Review}\label{literature_review}
+
+This Literature Review begins by establishing key definitions necessary for navigating
+the literature. This is followed by a brief recap of how the field of Computer
+Vision and more specifically Motion Tracking came to be.
+
+The Review then broadly details the general approach to solving of Motion Tracking
+problems. This is followed by a study of the progression of the field,
+specifically reviewing prominent “classical” pre-deep learning approaches to the
+problem.
+
+\section{Establishing Key Terms}
 The field of Computer vision is riddled with similar sounding terms whose intent
 can get muddled during the discussion of concepts.  The purpose of this section
 is to establish the intent of these keywords as they are used later in this text.
@@ -52,19 +62,14 @@ NOTE:\@
 tracking data to another object.\ e.g.\ animation. Or as it is used in the
 case of this paper Video/Object Tracking.
 
-\section{Motion Tracking}
-
+\section{Brief History of Computer Vision and Motion Tracking}
 *insert anecdote*
 
-The problem discussed of isolating moving objects of interest from a scene can
+
+\section{Motion Tracking}
+The problem of isolating moving objects of interest from a scene can
 be categorised under the branch of Computer Vision known as Motion
 Estimation/Tracking.
-
-This literature review starts by broadly detailing the general approach to
-solving of Motion Tracking problems. This is followed by a study of the
-progression of the field; This involves a review of prominent “classical”
-pre-deep learning approaches to the problem, followed by a brief review of the
-relatively recent benefits that deep learning approaches offer.
 
 \subsection{The Representation of Video}
 While a still image has a spatial distribution of intensity that is constant
@@ -77,7 +82,7 @@ Video can be represented either in analog form.
 Typically video recording, storage and transmission used to be in analog form
 i.e.\ recording on video cassettes, reception by antenna,  
 
-\subsection{A General Approach to Motion Tracking}
+\subsection{A General Approach to Motion Tracking}\label{literature_review_general_approach}
 The problem of Motion Tracking can coarsely be broken down into a sequence of
 subtasks, these roughly being:
     \begin{itemize}
@@ -88,15 +93,23 @@ subtasks, these roughly being:
             identified objects in subsequent frames in the provided video.
     \end{itemize}
 The relevant literature details numerous approaches to each of the above
-subtasks of the overall Motion Tracking Task. The most prominent of each are
-reviewed below:
+subtasks of the overall Motion Tracking Task. 
+These approaches to the three subtasks specified above can conveniently be
+presented as a taxonomy as shown in the  
 
+*insert figure of taxonomy of motion tracking sub task approaches*
+ 
 \subsection{Object Detection}
-
 
 \subsection{Object Classification}
 
 \subsection{Object Tracking}
+
+
+\section{Software}
+
+\subsection{Relevant Languages}
+\subsection{Relevant Libraries}
 
 
 
