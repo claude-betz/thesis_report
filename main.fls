@@ -183,9 +183,9 @@ INPUT body/LiteratureReview.tex
 INPUT body/LiteratureReview.tex
 INPUT body/Methodology.tex
 INPUT body/Methodology.tex
-INPUT figures/methodology_phases.pdf
-INPUT ./figures/methodology_phases.pdf
-INPUT ./figures/methodology_phases.pdf
+INPUT figures/methodology_phases_and_process_models.pdf
+INPUT ./figures/methodology_phases_and_process_models.pdf
+INPUT ./figures/methodology_phases_and_process_models.pdf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT figures/methodology_v_diagram.pdf
 INPUT ./figures/methodology_v_diagram.pdf
