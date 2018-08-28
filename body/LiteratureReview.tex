@@ -1,8 +1,9 @@
 \chapter{Literature Review}\label{literature_review}
 
-This Literature Review begins by establishing key definitions necessary for navigating
-the literature. This is followed by a brief recap of how the field of Computer
-Vision and more specifically Motion Tracking came to be.
+This Literature Review is structured as follows: It begins by establishing key
+definitions necessary for navigating the literature. This is followed by a brief
+recap of how the field of Computer Vision and more specifically Motion Tracking
+came to be.
 
 The Review then broadly details the general approach to solving of Motion Tracking
 problems. This is followed by a study of the progression of the field,
@@ -76,12 +77,21 @@ While a still image has a spatial distribution of intensity that is constant
 with time, videos can be defined as a time-varying image whose spatial
 distribution of intensity changes with respect to time, we can denote this by
 $s_c(x_1,x_2,t)$ where $x_1$ and $x_2$ represent spatial variables and $t$ is
-the temporal variable. \cite{Tekalp2014}
+the continuous temporal variable.
 
-Video can be represented either in analog form.
-Typically video recording, storage and transmission used to be in analog form
-i.e.\ recording on video cassettes, reception by antenna,  
+Digital video can be considered as a periodic sampling of an analog video signal
+or scene. This can be thought of as a multiplication of the analog signal, by an
+impulse train, resulting in a discrete lattice of values that can be indexed.
+Symbolically this can be represented as $s_k(x_1,x_2)$ where $x_1$ and
+$x_2$ represent discrete spatial variables and $k$ is the frame index
+\cite{Tekalp2014}. 
 
+These conventions are summarized below: \newline
+Continuous spatio-temporal image:
+$$s_c(x_1,x_2,t), (\textbf{x},t) \in R^3$$ \newline 
+Discrete spatio-temporal image:
+$$s_k(x_1,x_2), (\textbf{x},k) \in Z^3$$ 
+    
 \subsection{A General Approach to Motion Tracking}\label{literature_review_general_approach}
 The problem of Motion Tracking can coarsely be broken down into a sequence of
 subtasks, these roughly being:
@@ -101,10 +111,53 @@ sources*
 *insert figure of taxonomy of motion tracking sub task approaches*
  
 \subsection{Object Detection}
+Object detection generally refers to the identification of objects within
+images. Of particular interest to us is the detection of moving objects.
+
+Given a still image, object detection is based on 
+
 
 \subsection{Object Classification}
 
 \subsection{Object Tracking}
+Moving objects in a video have a state. A state can be directly observable such as a
+particular object's colour features, or position in a frame. A state can also be a function
+of observable states such as the object's velocity.
+
+In Object Tracking, the state we are interested in is the position of an object
+of interest in successive frames of video. We may use states or derivatives of
+them to reliably determine this. \cite{Forsyth2012}.
+
+The approaches to Object Tracking are broadly two-fold:
+\begin{itemize}
+    \item Tracking by Detection:
+        Assuming that there is only one object of interest in each frame of
+        video, and that there exists a reliable detector for the object of
+        interest. The tracking problem can be reduced to applying the detector
+        to each frame of video and outputting it's response \cite{Forsyth2012}.
+
+        Certain situations lend themselves well to this approach, for example;
+        One could imagine that an overhead camera in a game of billiards could
+        easily track the position of the 8-ball by searching each video frame
+        for the colour black, as this colour differs significantly from the
+        green felt, and the colour of the other balls.
+        
+        However, most practical applications cannot assume reliable detection or
+        single objects of interest. Referring back to the above example,
+        difficulty may arise if a player is wearing a long sleeve black shirt as
+        the detector would interpret this as the ball, such a scenario may
+        require more sophistication in the design of the detector.
+
+    \item Tracking Translation by Matching:
+        Matching is based on the tendency for objects to looks similar and
+        exhibit coherence in motion between successive frames.
+       
+        
+
+
+\end{itemize}   
+
+\cite{Forsyth2012}
 
 
 \section{Software}
