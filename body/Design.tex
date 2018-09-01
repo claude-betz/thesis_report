@@ -3,36 +3,49 @@
 
 \section{System Level Design}
 Development of the overall system design can conveniently be divided into
-Front-End and Back-End. The Front-End being a GUI with which users interact 
-of interact with the system, thereby satisfying the User Requirements of the
-system.
-The Back-End consists of the algorithms enabling the tracking of objects of
-interest within video, thereby addressing the Technical Specifications of the
-system.
+Front-End and Back-End. The Front-End system is the point of interaction for the
+system user. It is GUI application that thereby satisfying the User Requirements
+of the system. The Back-End consists of the algorithms enabling the tracking of
+objects of interest within video, thereby addressing the Technical
+Specifications of the system.
 
 The Overall System Design is summarised by the Block Diagram below: 
 
 \Figure[width=0.8\columnwidth]{Block Diagram of System Overview\label{motion_tracking_subtasks}}{design_system_overview}
 
 \section{User Requirements}
+The end-user requirements of the proposed system are elaborated upon below:
 \begin{itemize}
+    \item The GUI application should have a menu that allows for a system
+        user to select a video or image sequence of interest.
+    \item Upon the selection of an image sequence, the system will allow for a
+        user to specify an object or point of interest within the first sequence
+        frame for tracking in subsequent frames.
+    \item The system should reliably output a bounding box around the user
+        specified point or object of interest in subsequent frames of the
+        sequence. 
+    \item At termination of the sequence, snapshots of the bounding box
+        surrounding the relevant point of interest or object should be stored in
+        a user selected directory.
+    \item
     \item 
-    \item
-    \item
-    \item
 \end{itemize}
 
-\section{System Specifications}
-This section aims to present and flesh out the specifications, set out in the
+\section{Specification}
+This section aims to present functional specifications, set out in the
 project brief.
 
 \subsection{Environmental Requirements}
 
+
 \subsection{Non-functional Requirements}
+
 
 \subsection{Feature Specifications}
 
+
 \subsection{Use Cases}
+
 
 \section{Software Design}
 This Section is concerned with the detailed design of of the Front- and Back-end
@@ -47,8 +60,13 @@ satisfy the System User Requirements.
 As indicated by the indicated by the literature in Section
 \ref{literature_review_general_approach}. The Software underlying motion is broken down into three
 
-\section{Development Environment and Tech-Stack}
+\subsection{Development Environment and Tech-Stack}
 This section details underlying Tech-Stack of the Motion Tracking System.
+
+\section{Integration Design}
+This section details the specifics of how 
+
+
 
 
 
