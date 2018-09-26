@@ -1,5 +1,4 @@
 \chapter{Literature Review}\label{literature_review}
-
 This Literature Review is structured as follows: It begins by establishing key
 definitions necessary for navigating the literature. This is followed by a brief
 recap of how the field of Computer Vision and more specifically Motion Tracking
@@ -72,7 +71,95 @@ The problem of isolating moving objects of interest from a scene can
 be categorised under the branch of Computer Vision known as Motion
 Estimation/Tracking.
 
-\subsection{The Representation of Video}
+\subsection{A General Approach to Motion Tracking}\label{literature_review_general_approach}
+The approaches to Object Tracking are broadly two-fold:
+\begin{itemize}
+    \item Tracking by Detection:
+        Assuming that there is only one object of interest in each frame of
+        video, and that there exists a reliable detector for the object of
+        interest. The tracking problem can be reduced to applying the detector
+        to each frame of video and outputting it's response \cite{Forsyth2012}.
+
+        Certain situations lend themselves well to this approach, for example;
+        One could imagine that an overhead camera in a game of billiards could
+        easily track the position of the 8-ball by searching each video frame
+        for the colour black, as this colour differs significantly from the
+        green felt, and the colour of the other balls.
+        
+        However, many practical applications cannot assume reliable detection or
+        single objects of interest. Referring back to the above example,
+        difficulty may arise if a player is wearing a long sleeve black shirt as
+        the detector would interpret this as the ball, such a scenario may
+        require more sophistication in the design of the detector.
+
+    \item Tracking Translation by Matching:
+        Matching is based on the tendency for an object's appearance to be
+        temporally similar and exhibit coherence in motion between successive
+        frames.
+        Given a model of an objects motion, as well a domain within a particular
+        frame in which the object of interest is located. The motion model can
+        be used to search for the domain of interest within a subsequent frame.
+        \cite{Forsyth2012}
+
+        
+
+\end{itemize}   
+
+The above approaches to the overall problem highlight two key subtasks:
+    \begin{itemize}
+        \item Object Detection: This is concerned with (initially) identifying
+            whether a, or multiple object is/are present within a given scenario.
+        \item Object Tracking: This is concerned with successively following the
+            identified objects in subsequent frames in the provided video.
+    \end{itemize}
+The relevant literature details numerous approaches to each of the above
+subtasks of the overall Motion Tracking Task. 
+
+\subsection{Object Detection}
+Object detection generally refers to the identification of objects within
+an image. It is thereby a segmentation of the image into foreground
+and background with foreground containing the object(s) of interest for subsequent
+operations.
+
+In the context of motion tracking, the problem of object detection is a key
+step. It becomes narrowed down to the more specific task of motion segmentation.
+The literature details several approaches to this task, summarised in 
+Figure \ref{motion_detection_taxonomy} below.
+
+\Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking
+Approaches\label{motion_detection_taxonomy}}{literaturereview_taxonomy_motion_detection}
+
+*Explain Diagram
+
+\subsection{Object Tracking}
+Moving objects in a video have a state. A state can be directly observable such as a
+particular object's colour features, or position in a frame. A state can also be a function
+of observable states such as the object's velocity.
+
+In Object Tracking, the state we are interested in is the position of an object
+of interest in successive frames of video. We may use states or derivatives of
+them to reliably determine this \cite{Forsyth2012}.
+
+The literature states several approaches to the motion tracking problem. The can
+conveniently be expressed in the following taxonomy, Figure \ref{motion_tracking_taxonomy},
+adapted from Prajapati \cite{Prajapati2015}.
+
+\Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking
+Approaches\label{motion_tracking_taxonomy}}{literaturereview_taxonomy_motion_tracking}
+
+*Explain Higher Level*
+
+\subsubsection{Simple Template Matching}
+Template Matching is a high-level Machine Vision operation that aims to determine
+what elements of a given image match a specified template of the element of
+interest.
+Formally we have a source image, $I$ in which we would like to obtain matches to
+an element of interest defined by a template image $T$.
+
+\subsubsection{Mean-Shift}
+
+\subsection{Theoretical Framework}
+\subsubsection{Representation of Video}
 While a still image has a spatial distribution of intensity that is constant
 with time, videos can be defined as a time-varying image whose spatial
 distribution of intensity changes with respect to time, we can denote this by
@@ -91,90 +178,12 @@ Continuous spatio-temporal image:
 $$s_c(x_1,x_2,t), (\textbf{x},t) \in R^3$$ \newline 
 Discrete spatio-temporal image:
 $$s_k(x_1,x_2), (\textbf{x},k) \in Z^3$$ 
-    
-\subsection{A General Approach to Motion Tracking}\label{literature_review_general_approach}
-The problem of Motion Tracking can coarsely be broken down into a sequence of
-subtasks, these roughly being:
-    \begin{itemize}
-        \item Object Detection: This is concerned with (initially) identifying
-            whether a, or multiple object is/are present within a given scenario.
-        \item Object Tracking: This is concerned with successively following the
-            identified objects in subsequent frames in the provided video.
-    \end{itemize}
-The relevant literature details numerous approaches to each of the above
-subtasks of the overall Motion Tracking Task. 
-
-
-\subsection{Object Detection}
-Object detection generally refers to the identification of objects within
-an image. It is thereby a segmentation of the image into foreground
-and background with foreground containing the object(s) of interest for subsequent
-operations.
-
-In the context of motion tracking, the problem of object detection is a key
-step. It becomes narrowed down to the more specific task of motion segmentation.
-The literature details several approaches to this task, summarised in 
-Figure \ref{motion_detection_taxonomy} below.
-
-\Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking
-Approaches\label{motion_detection_taxonomy}}{literaturereview_taxonomy_motion_detection}
-
-*Explain Diagram*
-
-\subsection{Object Tracking}
-Moving objects in a video have a state. A state can be directly observable such as a
-particular object's colour features, or position in a frame. A state can also be a function
-of observable states such as the object's velocity.
-
-In Object Tracking, the state we are interested in is the position of an object
-of interest in successive frames of video. We may use states or derivatives of
-them to reliably determine this \cite{Forsyth2012}.
-
-The literature states several approaches to the motion tracking problem. The can
-conveniently be expressed in the following taxonomy, Figure \ref{motion_tracking_taxonomy},
-adapted from Prajapati \cite{Prajapati2015}.
-
-\Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking
-Approaches\label{motion_tracking_taxonomy}}{literaturereview_taxonomy_motion_tracking}
-
-*Explain Diagram*
-
-
-
-\subsection{Object Classification}
-
-The approaches to Object Tracking are broadly two-fold:
-\begin{itemize}
-    \item Tracking by Detection:
-        Assuming that there is only one object of interest in each frame of
-        video, and that there exists a reliable detector for the object of
-        interest. The tracking problem can be reduced to applying the detector
-        to each frame of video and outputting it's response \cite{Forsyth2012}.
-
-        Certain situations lend themselves well to this approach, for example;
-        One could imagine that an overhead camera in a game of billiards could
-        easily track the position of the 8-ball by searching each video frame
-        for the colour black, as this colour differs significantly from the
-        green felt, and the colour of the other balls.
-        
-        However, most practical applications cannot assume reliable detection or
-        single objects of interest. Referring back to the above example,
-        difficulty may arise if a player is wearing a long sleeve black shirt as
-        the detector would interpret this as the ball, such a scenario may
-        require more sophistication in the design of the detector.
-
-    \item Tracking Translation by Matching:
-        Matching is based on the tendency for objects to looks similar and
-        exhibit coherence in motion between successive frames.
-       
-        
-
-
-\end{itemize}   
+ 
 
 \section{Software}
 
 \subsection{Relevant Languages}
+
 \subsection{Relevant Libraries}
 
 

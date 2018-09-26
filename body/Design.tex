@@ -47,18 +47,133 @@ project brief.
 \subsection{Use Cases}
 
 
-\section{Software Design}
-This Section is concerned with the detailed design of of the Front- and Back-end
+This following Section are concerned with the detailed design of of the Front- and Back-end
 subsystems of the Motion Tracking System.
 
-\subsection{Front-End Design}
+\section{Front-End Design}
 The Front-End is the GUI that user's of the Motion Tracking System interact with 
 It interacts with the underlying functionality implemented in the Back-End to
 satisfy the System User Requirements. 
 
-\subsection{Back-End Design}
+\section{Back-End Design}
 As indicated by the indicated by the literature in Section
-\ref{literature_review_general_approach}. The Software underlying motion is broken down into three
+\ref{literature_review_general_approach}. Three variants of kernel based object
+trackers were implemented.
+
+\subsection{Template Matching Tracker}
+
+
+\subsection{Mean Shift Tracker}
+As summarised in section \ref{literature_review_mean_shift}, the Mean Shift Tracker was
+first proposed by Commaniciu et al. It is addresses the
+visual tracking problem of Target Representation and Localization.
+
+The idea of this tracker is that spatially masking an object with an
+isotropic kernel allows for the definition of a spatially-smooth similarity
+function between a target and potential candidate model. This smooth similarity
+allows for gradient-based optimization in achieving target localisation in
+subsequent frames \cite{Comaniciu2003}.
+
+A description of theory underlying the Mean Shift Tracker follows:
+
+\subsubsection{Target and Candidate Representation}
+To represent a particular target or candidate Model, a suitable feature space
+must be chosen. The choices could be anything from grayscale intensity, RGB
+intensity or Texture of the particular object.
+
+Target and candidate models are defined as pdf's within the chosen feature
+space.
+In the initial frame 0, a target model of the object to be tracked is defined as
+pdf $\hat{q}$, and can be considered to be the initial location 0. i.e. 
+Since the frame dimensions remain constant throughout the video sequence, in the
+subsequent frame 1, a candidate model with pdf $\hat{p}(y)$ can be defined at location
+$y$ 
+
+Both pdf's $\hat{q}$ and $\hat{p}(y)$ are estimated from their respective frame data. For
+this purpose we make use of $m$-bin histograms. Depending on the number of
+features used computational complexity of calculating the histogram and space
+needed for storing the histogram goes up by a factor of $m$, as we are
+increasing the dimensionality of our feature space by 1 thus incrementing the
+size by a factor of $m$-bins.
+
+The models for the target and candidate are summarised below:
+$$\text{target model: } \hat{q}(0)=\{\hat{q}_u\}_{u=1,...,m}
+\sum_{u=1}^{m}\hat{q}_u = 1$$
+$$\text{candidate model: } \hat{p}(y)=\{\hat{p}_u(y)\}_{u=1,...,m}
+\sum_{u=1}^{m}\hat{p}_u = 1$$
+
+Computing the histogram occurs according to the following equation:
+\begin{equation}
+    pdf(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{x_i}^*-x_0\parallel}^2)\delta[b({x_i}^*)-u]    
+\end{equation}
+\begin{equation}
+    C=\frac{1}{\sum_{i=1}^{n_x}k({\parallel{x_i}^*\parallel}^2)}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\parallel{x_i}^*-{x_0}^*\parallel$: The norm between ${x_i}^*$ and
+        ${x_0}^*$ squared which reduces to norm of $x_i$ for $x_0 = 0$ 
+    \item $\kappa({\parallel{x_i}^*\parallel}^2)$: Kernel function that provides the weight based on normalized distance squared
+    \item $b({x_i}^*)$: A function which maps the normalized pixel values to their RGB value
+    \item $\delta[b({x_i}^*)-u]$: Assigns pixel value or a particular point in normalized kernel to appropriate bin u 
+    \item $C$: Normalization constant
+\end{itemize}
+
+\subsubsection{Kernel Profile $\kappa(x)$: Epanechnikov Kernel}
+*define a kernel here*
+
+The recommended kernel function is that of the Epanechnikov Kernel
+The points pixels in the elliptical mask of the target are normalized to a unit
+circle by scaling the ellipse by $h_y$ and $h_x$ (which are the major and minor
+axes size of the ellipse) as in [1]. Each pixel is then assigned a weight
+according to the euclidean distance from the normalized circle center by the
+Epanechnikov Kernel.
+
+The Epanechnikov Kernel has the following general equation:
+\begin{equation}
+    \kappa(x)=\frac{1}{2 c_d}(d+2)(1-x), |x|<1
+\end{equation}
+where:
+\begin{itemize}
+   \item $d$: the dimensions of the kernel
+   \item $c_d$: the area of a unit circle in the dimension $d$
+   \item $x$: the Euclidian distance of the normalized pixel in the ellipse for the kernel center
+\end{itemize}
+
+Of interest is the 2D variant of this equation given that the spatial smoothing
+is occurring in the $y,x$ pixel plane. Thus we choose $d$ as 2 and $c_d$ as
+$\pi$. As the kernel profile does not vary for a particular region of interest,
+it is computationally convenient to pre-calculate its values for use in the subsequent derivation of the subsequent histogram
+
+The calculation of the Epanechnikov Kernel Matrix for a particular template is
+illustrated below:
+
+\Figure[width=0.8\columnwidth]{Illustration of Epanechnikov Matrix Derivation\label{epanechnikov_kernel}}{design_epanechnikov_kernel_illustration}
+
+*talk about image*
+
+
+\subsubsection{Similarity Measure, $\rho$: Bhattacharyya Coefficient}
+
+$\rho(y) \equiv \rho[\hat{p}(y),\hat{q}]$
+Given a target model's pdf of $\hat{q}$, and a candidate pdf in a subsequent
+frame $\hat{p}(y)$.  The function $\rho(y)$ tell us how strongly a candidate pdf
+$\hat{p}(y)$ resembles the target pdf $\hat{q}$. In our application, pdf
+$\hat{q}$ is determined in frame $n-1$ and the target pdf(s) are drawn from
+frame $n$ in which we would like to determine how the object has moved
+
+As per \cite{Comaniciu2003} we make use of the Bhattacharyya coefficient, $BC$ as our
+measure of similarity $\rho$ between the target and candidate pdfs, which is
+defined as
+\begin{equation}
+    BC = \rho[\hat{p}(y),\hat{q}]=\sum_{u=1}^{m}\sqrt{\hat{p}_u(y)\hat{q}_u}
+\end{equation}
+
+
+
+\subsubsection{The General Algorithm}
+The general algorithm is defined by the following flow chart
+
 
 \subsection{Development Environment and Tech-Stack}
 This section details underlying Tech-Stack of the Motion Tracking System.
