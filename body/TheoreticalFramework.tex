@@ -99,7 +99,7 @@ periphery of the object domain.
 
 \subsection{Histogram development}
 Computing the histogram then occurs according to the following equation:
-\begin{equation}
+\begin{equation}\label{eqn_histogram}
     \text{pdf}(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\delta[b(\mathbf{x_i}^*)-u]    
 \end{equation}
 \begin{equation}
@@ -149,7 +149,7 @@ As per \cite{Comaniciu2003} we make use of the Bhattacharyya coefficient, $BC$ a
 measure of similarity measure $\rho$ between the target and candidate pdfs. The
 Bhattacharyya coefficient is defined by the following equation:
 \begin{equation}
-    BC = \rho[\hat{q}(\mathbf{c_0}),hat{p}(\mathbf{c_i})]=\sum_{u=1}^{m}\sqrt{\hat{p}_u(\mathbf{c_i})\hat{q}_u(\mathbf{c_0})}
+    BC = \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]=\sum_{u=1}^{m}\sqrt{\hat{p}_u(\mathbf{c_i})\hat{q}_u(\mathbf{c_0})}
 \end{equation}
 
 \subsection{Maximising the Bhattacharyya Coefficient}\label{maximising_bhat}
@@ -163,20 +163,47 @@ $\rho_0=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]$
 
 Since $\rho$ is spatially smooth, we can apply optimization. This involves
 taking the first order Taylor Series approximation of $\rho$ around our initial estimate
+The relevant calculation is detailed in \ref{AppendixA}. 
 $\mathbf{c_0}$. 
-$$\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_i})]=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]+\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}$$
+\begin{equation}\label{eqn_rho_taylor}
+    \rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_i})]=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]+\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}
+\end{equation}
+
+This is a valid approximation for small changes to $\hat{p}(\mathbf{c_i})$
+which usually holds between adjacent frames in the video sequence. 
 
 The first term on the right hand side is a constant, by maximising the second
-term we maximise the Bhattacharryya Coefficient which corresponds to locating
-our object in frame k+1. 
+term 
+$$\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}$$
+We maximise $\rho$ and in doing so we locate our object in frame k+1.
 
-The calculation is detailed in \ref{AppendixA}. Of interest is the result
+By substitution of Equation \ref{eqn_histogram} for $\hat{p}(\mathbf{c_i})$ in
+the second term of \ref{eqn_rho_taylor} it can be observed that is that the
+second term is the density estimate of the underlying pdf at center
+$\mathbf{c_i}$ in frame $\mathbf{f}_{k+1}$ with pixels weighted according to the
+following equation:
+
+$$\rho_0=\rho[\hat{q}(\mathbf{c_0})=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)$$
+
+\begin{equation} 
+    w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\delta[b(\mathbf{x_i}^*-u)]
+\end{equation}
+
+Using the Mean Shift Procedure outlined in Section
+\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus locating
+our object in frame $\mathbf{f}_{k+1}$.
 
 \subsection{The General Algorithm}
 The general algorithm for Mean Shift Tracking between two frames is defined by
-flow chart in Figure \ref{mean_shift_tracking_algorithm}. 
+flow chart in Figure \ref{mean_shift_tracking_algorithm}. This algorithm follows
+the optimized practical implementation expanded on by \cite{Comaniciu2003}. 
 
-\Figure[width=0.8\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
+\Figure[width=0.75\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
 between two frames $\mathbf{f}_k$ and
 $\mathbf{f}_{k+1}$\label{mean_shift_tracking_algorithm}}{design_mean_shift_tracking_algorithm}
+
+The preceding theory for the basis for the implementation of the Mean Shift
+Tracker implemented in Chapter \ref{chapter_implementation}.
+
+
 

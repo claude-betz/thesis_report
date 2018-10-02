@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 1538511976 "main.aux" "main.bbl" "main" 1538512186
+["bibtex main"] 1538517169 "main.aux" "main.bbl" "main" 1538517169
   "/usr/share/texlive/texmf-dist/bibtex/bst/IEEEtran/IEEEtran.bst" 1480098433 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
   "References.bib" 1538503222 16078 88cade6634705ed15f2555e3c2e7731e ""
-  "main.aux" 1538512186 12158 18e822b42f43acdbc2dc66f3f18e8df8 ""
+  "main.aux" 1538517169 12357 1fadd4c627125ed242d24020f4f2caca ""
   "main.bcf" 0 -1 0 ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1538512186 "main.tex" "main.pdf" "main" 1538512186
+["pdflatex"] 1538517169 "main.tex" "main.pdf" "main" 1538517169
   "/etc/texmf/web2c/texmf.cnf" 1533242635 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1480098696 1536 06717a2b50de47d4087ac0e6cd759455 ""
@@ -112,7 +112,7 @@
   "body/LiteratureReview.tex" 1538498893 8870 9627024d0df9a4572207639d1030b4f8 ""
   "body/Methodology.tex" 1536854488 1999 2482a571a2650df1d4125e3b8e46c4bb ""
   "body/Results.tex" 1534086664 18 c7d7cb0364276f06a11b36ff492ca173 ""
-  "body/TheoreticalFramework.tex" 1538512185 9765 652d55cd7b6219bd58ed9240df3bb43f ""
+  "body/TheoreticalFramework.tex" 1538517167 11051 177f17dab40d130c00744830c6ef5454 ""
   "figures/design_epanechnikov_kernel_illustration.pdf" 1537996272 76445 ec5f99932cd3d9937c706dd1705980bb ""
   "figures/design_mean_shift_tracking_algorithm.pdf" 1538486390 85870 d883ebeb24f3a83970d61a27c5b4e9d8 ""
   "figures/design_system_overview.pdf" 1534969049 51297 09a392ae8c8f47a888942ad2ca26091c ""
@@ -127,15 +127,15 @@
   "frontmatter/Declaration.tex" 1534086664 953 f66900b0b676f88bf1d07a5f6b1baab7 ""
   "frontmatter/Frontmatter.tex" 1534086664 600 bd693011273961e59d67805d7cae5d5a ""
   "frontmatter/Nomenclature.tex" 1534086664 127 2942e0d2d95000681b7ea6a8636d684a ""
-  "main.aux" 1538512186 12158 18e822b42f43acdbc2dc66f3f18e8df8 ""
-  "main.bbl" 1538511976 2032 72254fd27bd580bcb33299c90a0b554a "bibtex main"
-  "main.lof" 1538512186 1103 c5fb049eb5117a8738dd8f1cdfc30019 ""
-  "main.lol" 1538512186 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "main.lot" 1538512186 180 4fcb58b8a35e71f8ad1873924b86ddc9 ""
+  "main.aux" 1538517169 12357 1fadd4c627125ed242d24020f4f2caca ""
+  "main.bbl" 1538517169 2032 72254fd27bd580bcb33299c90a0b554a "bibtex main"
+  "main.lof" 1538517169 1103 c85ae32f733e566b040893f76f2c7006 ""
+  "main.lol" 1538517169 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "main.lot" 1538517169 180 4fcb58b8a35e71f8ad1873924b86ddc9 ""
   "main.nls" 0 -1 0 ""
-  "main.out" 1538512186 3835 715744d021e5ccbb7282dae83bd1417a ""
+  "main.out" 1538517169 3835 715744d021e5ccbb7282dae83bd1417a ""
   "main.tex" 1538496292 710 8a13a5b62c8572ac4e15288413ab677e ""
-  "main.toc" 1538512186 5181 277bc46f90486a4ae16aa08ee1d762d3 ""
+  "main.toc" 1538517169 5181 10597d37f00f62ad386730464704f634 ""
   "preamble/FiguresAndTables.tex" 1534086664 1081 83504e14f5bcdbde30805eed2193eb17 ""
   "preamble/Listings.tex" 1534086664 1352 d701aae69286a84ddcfce61fc49aeb8c ""
   "preamble/Preamble.tex" 1534092042 1408 828070c5e86dafb70b446ae6257cfc21 ""
