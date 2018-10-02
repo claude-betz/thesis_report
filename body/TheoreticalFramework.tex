@@ -51,7 +51,7 @@ their respective frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ using $m$-bin
 weighted histograms within the relevant feature space. The weighting is achieved
 by use of a Kernel. 
 
-\subsection{Kernel $\kappa(x)$: Epanechnikov Kernel}
+\subsection{Kernel Function}
 A Kernel is a weighting function employed in non-parametric density estimation.
 The recommended kernel function for the mean shift tracker is that of the
 Epanechnikov kernel \cite{Comaniciu2002}.
@@ -97,8 +97,8 @@ smooth similarity function as addressed in Section \ref{maximising_bhat} but it
 also encodes into our model robustness to the effects of occlusions at the
 periphery of the object domain.
 
-\subsection{Histogram development}
-Computing the histogram then occurs according to the following equation:
+\subsection{pdf development}
+Computing the pdf then occurs according to the following equation:
 \begin{equation}\label{eqn_histogram}
     \text{pdf}(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\delta[b(\mathbf{x_i}^*)-u]    
 \end{equation}
@@ -137,7 +137,7 @@ within a frame $\mathbf{f}_k$, satisfies the following normalisation condition:
     \sum_{u=1}^{m}\hat{p}_u = 1
 \end{equation}
 
-\subsection{Similarity Measure $\rho$: Battacharryya Coefficient}
+\subsection{Similarity Measure}
 Given a target model's pdf $\hat{q}(\mathbf{c_0})$, and a candidate pdf,
 $\hat{p}(\mathbf{c_i})$, in a subsequent frame.  The function $\rho$ returns a
 metric describing how strongly a target $\hat{p}(\mathbf{c_i})$ resembles
@@ -193,7 +193,7 @@ Using the Mean Shift Procedure outlined in Section
 \ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus locating
 our object in frame $\mathbf{f}_{k+1}$.
 
-\subsection{The General Algorithm}
+\subsection{The General Algorithm}\label{theoretical_framework_mean_shift_algorithm}
 The general algorithm for Mean Shift Tracking between two frames is defined by
 flow chart in Figure \ref{mean_shift_tracking_algorithm}. This algorithm follows
 the optimized practical implementation expanded on by \cite{Comaniciu2003}. 

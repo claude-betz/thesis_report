@@ -200,12 +200,6 @@ INPUT ./figures/methodology_v_diagram.pdf
 INPUT ./figures/methodology_v_diagram.pdf
 INPUT body/TheoreticalFramework.tex
 INPUT body/TheoreticalFramework.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT figures/design_epanechnikov_kernel_illustration.pdf
 INPUT ./figures/design_epanechnikov_kernel_illustration.pdf
 INPUT ./figures/design_epanechnikov_kernel_illustration.pdf
@@ -223,6 +217,8 @@ INPUT ./figures/design_system_overview.pdf
 INPUT ./figures/design_system_overview.pdf
 INPUT body/Implementation.tex
 INPUT body/Implementation.tex
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT body/Results.tex
 INPUT body/Results.tex
 INPUT body/Conclusion.tex
@@ -250,4 +246,5 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb
