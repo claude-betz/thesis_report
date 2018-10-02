@@ -1,8 +1,6 @@
 \chapter{Literature Review}\label{literature_review}
 This Literature Review is structured as follows: It begins by establishing key
-definitions necessary for navigating the literature. This is followed by a brief
-recap of how the field of Computer Vision and more specifically Motion Tracking
-came to be.
+definitions necessary for navigating the literature.
 
 The Review then broadly details the general approach to solving of Motion Tracking
 problems. This is followed by a study of the progression of the field,
@@ -65,7 +63,6 @@ case of this paper Video/Object Tracking.
 \section{Brief History of Computer Vision and Motion Tracking}
 *insert anecdote*
 
-
 \section{Motion Tracking}
 The problem of isolating moving objects of interest from a scene can
 be categorised under the branch of Computer Vision known as Motion
@@ -101,8 +98,6 @@ The approaches to Object Tracking are broadly two-fold:
         be used to search for the domain of interest within a subsequent frame.
         \cite{Forsyth2012}
 
-        
-
 \end{itemize}   
 
 The above approaches to the overall problem highlight two key subtasks:
@@ -126,7 +121,7 @@ step. It becomes narrowed down to the more specific task of motion segmentation.
 The literature details several approaches to this task, summarised in 
 Figure \ref{motion_detection_taxonomy} below.
 
-\Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking
+\Figure[width=0.7\columnwidth]{Taxonomy of Motion Detection
 Approaches\label{motion_detection_taxonomy}}{literaturereview_taxonomy_motion_detection}
 
 *Explain Diagram
@@ -156,7 +151,11 @@ interest.
 Formally we have a source image, $I$ in which we would like to obtain matches to
 an element of interest defined by a template image $T$.
 
-\subsubsection{Mean-Shift}
+\subsubsection{Mean-Shift} \label{literature_review_mean_shift}
+
+
+\subsection{GUI Design}
+
 
 \subsection{Theoretical Framework}
 \subsubsection{Representation of Video}

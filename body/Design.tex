@@ -9,7 +9,8 @@ of the system. The Back-End consists of the algorithms enabling the tracking of
 objects of interest within video, thereby addressing the Technical
 Specifications of the system.
 
-The Overall System Design is summarised by the Block Diagram below: 
+The Overall System Design is summarised by the Block Diagram in Figure
+\ref{motion_tracking_subtasks}.
 
 \Figure[width=0.8\columnwidth]{Block Diagram of System Overview\label{motion_tracking_subtasks}}{design_system_overview}
 
@@ -62,6 +63,10 @@ trackers were implemented.
 
 \subsection{Template Matching Tracker}
 
+\subsubsection{Simple Template Tracking}
+
+\subsubsection{Adaptive Template Tracking}
+
 
 \subsection{Mean Shift Tracker}
 As summarised in section \ref{literature_review_mean_shift}, the Mean Shift Tracker was
@@ -79,54 +84,62 @@ A description of theory underlying the Mean Shift Tracker follows:
 \subsubsection{Target and Candidate Representation}
 To represent a particular target or candidate Model, a suitable feature space
 must be chosen. The choices could be anything from grayscale intensity, RGB
-intensity or Texture of the particular object.
+intensity or Texture of the particular object. Objects geometrically described 
+as elliptical sub-domains $\mathbf{D}$ of a frame, with dimensions $h_x$ and
+$h_y$ and center $\mathbf{x}$.
 
 Target and candidate models are defined as pdf's within the chosen feature
-space.
-In the initial frame 0, a target model of the object to be tracked is defined as
-pdf $\hat{q}$, and can be considered to be the initial location 0. i.e. 
-Since the frame dimensions remain constant throughout the video sequence, in the
-subsequent frame 1, a candidate model with pdf $\hat{p}(y)$ can be defined at location
-$y$ 
+space defined over $\mathbf{D}$. In the initial frame, $\mathbf{f}_k$, a target
+model of the object to be tracked located at $\mathbf{x_0}$ is defined by it's
+pdf, $\hat{q}(\mathbf{x_0})$. In the subsequent frame, $\mathbf{f_{k+1}}$, a
+candidate model is defined with pdf $\hat{p}(\mathbf{x_0})$ starting at the last
+known object position $\mathbf{x_0}$. 
 
-Both pdf's $\hat{q}$ and $\hat{p}(y)$ are estimated from their respective frame data. For
-this purpose we make use of $m$-bin histograms. Depending on the number of
+Both pdf's $\hat{q}(\mathbf{x_0})$ and $\hat{p}(\mathbf{x_0})$ are estimated from
+their respective frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ using $m$-bin
+histograms in the relevant feature space. Depending on the number of
 features used computational complexity of calculating the histogram and space
 needed for storing the histogram goes up by a factor of $m$, as we are
-increasing the dimensionality of our feature space by 1 thus incrementing the
-size by a factor of $m$-bins.
+increasing the dimensionality of our feature space by 1 for each additional
+feature thus incrementing the size by a factor of $m$-bins.
 
 The models for the target and candidate are summarised below:
-$$\text{target model: } \hat{q}(0)=\{\hat{q}_u\}_{u=1,...,m}
-\sum_{u=1}^{m}\hat{q}_u = 1$$
-$$\text{candidate model: } \hat{p}(y)=\{\hat{p}_u(y)\}_{u=1,...,m}
-\sum_{u=1}^{m}\hat{p}_u = 1$$
+$$\text{target model: } \hat{q}(\mathbf{x_0})=\{\hat{q}_u(\mathbf{x_0})\}_{u=1,...,m}$$
+$$\text{candidate model: } \hat{p}(\mathbf{x_i})=\{\hat{p}_u(\mathbf{x_i})\}_{u=1,...,m}$$
+
+All model/candidate histograms are normalized. Therefore, a general m-bin
+histogram, $\hat{p}(\mathbf{x_i})$ defined over spacial sub-domain, $\mathbf{D}$
+within a frame $\mathbf{f}_k$, satisfies the following normalisation condition:
+\begin{equation}\label{eqn_histogram_normalisation}
+    \sum_{u=1}^{m}\hat{p}_u = 1
+\end{equation}
 
 Computing the histogram occurs according to the following equation:
 \begin{equation}
-    pdf(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{x_i}^*-x_0\parallel}^2)\delta[b({x_i}^*)-u]    
+    pdf(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{x_0}^*}\parallel}^2)\delta[b(\mathbf{x_i}^*)-u]    
 \end{equation}
 \begin{equation}
-    C=\frac{1}{\sum_{i=1}^{n_x}k({\parallel{x_i}^*\parallel}^2)}
+    C=\frac{1}{\sum_{i=1}^{n_x}\kappa({\parallel\mathbf{x_i}^*\parallel}^2)}
 \end{equation}
 where:
 \begin{itemize}
-    \item $\parallel{x_i}^*-{x_0}^*\parallel$: The norm between ${x_i}^*$ and
-        ${x_0}^*$ squared which reduces to norm of $x_i$ for $x_0 = 0$ 
-    \item $\kappa({\parallel{x_i}^*\parallel}^2)$: Kernel function that provides the weight based on normalized distance squared
-    \item $b({x_i}^*)$: A function which maps the normalized pixel values to their RGB value
-    \item $\delta[b({x_i}^*)-u]$: Assigns pixel value or a particular point in normalized kernel to appropriate bin u 
-    \item $C$: Normalization constant
+    \item $\parallel{\mathbf{x_i}}^*-{\mathbf{x_0}}^*\parallel$: The euclidean
+        norm between $\mathbf{x_i}^*$ and ${\mathbf{x_0}}^*$ squared which
+        reduces to $\parallel{\mathbf{x_i}}^*\parallel$ for $\mathbf{x_0} = 0$. 
+    \item $\kappa({\parallel{\mathbf{x_i}}^*\parallel}^2)$: Kernel function that
+        defining weights based on $\parallel{\mathbf{x_i}}^*\parallel^2$.
+    \item $b({\mathbf{x_i}}^*)$: A function which maps the normalized pixel
+        values in $\mathbf{n_x}$ to their RGB pixel value in $\mathbf{D}$.
+    \item $\delta[b({\mathbf{x_i}}^*)-u]$: Assigns pixel value or a particular
+        point in normalised kernel to appropriate bin u.
+    \item $C$: Normalisation constant to ensure histogram satisfies equation
+        \ref{eqn_histogram_normalisation}.
 \end{itemize}
 
-\subsubsection{Kernel Profile $\kappa(x)$: Epanechnikov Kernel}
-*define a kernel here*
+\subsubsection{Kernel Profile $\Kappa(x)$: Epanechnikov Kernel}
+A Kernel is a weighting function employed in non-parametric density estimation. 
 
-The recommended kernel function is that of the Epanechnikov Kernel
-The points pixels in the elliptical mask of the target are normalized to a unit
-circle by scaling the ellipse by $h_y$ and $h_x$ (which are the major and minor
-axes size of the ellipse) as in [1]. Each pixel is then assigned a weight
-according to the euclidean distance from the normalized circle center by the
+The recommended kernel function for the mean shift tracker is that of the
 Epanechnikov Kernel.
 
 The Epanechnikov Kernel has the following general equation:
@@ -137,21 +150,25 @@ where:
 \begin{itemize}
    \item $d$: the dimensions of the kernel
    \item $c_d$: the area of a unit circle in the dimension $d$
-   \item $x$: the Euclidian distance of the normalized pixel in the ellipse for the kernel center
+   \item $x$: the square of the Euclidian distance of the normalized pixel from $\mathbf{D}$
 \end{itemize}
 
 Of interest is the 2D variant of this equation given that the spatial smoothing
-is occurring in the $y,x$ pixel plane. Thus we choose $d$ as 2 and $c_d$ as
-$\pi$. As the kernel profile does not vary for a particular region of interest,
-it is computationally convenient to pre-calculate its values for use in the subsequent derivation of the subsequent histogram
+is occurring in the 2D $(x,y)$ pixel plane. Thus we choose $d=2$ and $c_d=\pi$.
+As the kernel profile does not vary for a particular region of interest, it is
+computationally convenient to pre-calculate its values for use in the subsequent
+derivation of the subsequent histogram
 
-The calculation of the Epanechnikov Kernel Matrix for a particular template is
-illustrated below:
+The calculation of the Epanechnikov Kernel Matrix for a particular $\mathbf{D}$ is
+illustrated in Figure \ref{epanechnikov_kernel}.
 
 \Figure[width=0.8\columnwidth]{Illustration of Epanechnikov Matrix Derivation\label{epanechnikov_kernel}}{design_epanechnikov_kernel_illustration}
 
-*talk about image*
-
+The pixels in the elliptical mask of the target/candidate are normalized to a unit
+circle by scaling the ellipse by $h_y$ and $h_x$ (which are the major and minor
+axes size of the ellipse). Each pixel is then assigned a weight according to the
+value of the 2D Epanechnikov Kernel for said pixel's normalized euclidean
+distance from the unit circle centre as illustrated in Figure \ref{epanechnikov_kernel}.
 
 \subsubsection{Similarity Measure, $\rho$: Bhattacharyya Coefficient}
 
@@ -169,14 +186,20 @@ defined as
     BC = \rho[\hat{p}(y),\hat{q}]=\sum_{u=1}^{m}\sqrt{\hat{p}_u(y)\hat{q}_u}
 \end{equation}
 
-
-
 \subsubsection{The General Algorithm}
-The general algorithm is defined by the following flow chart
+The general algorithm for Mean Shift Tracking between two frames is defined by
+flow chart in Figure \ref{mean_shift_tracking_algorithm}. 
 
+\Figure[width=0.7\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
+between two frames $\mathbf{f}_k$ and
+$\mathbf{f}_{k+1}$\label{mean_shift_tracking_algorithm}}{design_mean_shift_tracking_algorithm}
 
 \subsection{Development Environment and Tech-Stack}
-This section details underlying Tech-Stack of the Motion Tracking System.
+This section details underlying Tech-Stack of the Motion Tracking System. The
+purpose of this section is to ensure easy reproducibility of the implemented
+system.
+
+\subsubsection{}
 
 \section{Integration Design}
 This section details the specifics of how 

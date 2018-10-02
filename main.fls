@@ -164,6 +164,8 @@ INPUT main.toc
 OUTPUT main.toc
 INPUT main.lof
 INPUT main.lof
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 OUTPUT main.lof
 INPUT main.lot
 INPUT main.lot
@@ -188,8 +190,6 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT figures/literaturereview_taxonomy_motion_tracking.pdf
 INPUT ./figures/literaturereview_taxonomy_motion_tracking.pdf
 INPUT ./figures/literaturereview_taxonomy_motion_tracking.pdf
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT body/Methodology.tex
 INPUT body/Methodology.tex
 INPUT figures/methodology_phases_and_process_models.pdf
@@ -206,6 +206,15 @@ INPUT ./figures/design_system_overview.pdf
 INPUT figures/design_epanechnikov_kernel_illustration.pdf
 INPUT ./figures/design_epanechnikov_kernel_illustration.pdf
 INPUT ./figures/design_epanechnikov_kernel_illustration.pdf
+INPUT figures/design_mean_shift_tracking_algorithm.pdf
+INPUT ./figures/design_mean_shift_tracking_algorithm.pdf
+INPUT ./figures/design_mean_shift_tracking_algorithm.pdf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT body/Implementation.tex
+INPUT body/Implementation.tex
 INPUT body/Results.tex
 INPUT body/Results.tex
 INPUT body/Conclusion.tex
@@ -219,7 +228,9 @@ INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
 INPUT /usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
