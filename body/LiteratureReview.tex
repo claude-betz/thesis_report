@@ -1,4 +1,4 @@
-\chapter{Literature Review}\label{literature_review}
+\chapter{Literature Review} \label{chapter_literature_review}
 This Literature Review is structured as follows: It begins by establishing key
 definitions necessary for navigating the literature.
 
@@ -63,13 +63,12 @@ case of this paper Video/Object Tracking.
 \section{Brief History of Computer Vision and Motion Tracking}
 *insert anecdote*
 
-\section{Motion Tracking}
 The problem of isolating moving objects of interest from a scene can
 be categorised under the branch of Computer Vision known as Motion
 Estimation/Tracking.
 
-\subsection{A General Approach to Motion Tracking}\label{literature_review_general_approach}
-The approaches to Object Tracking are broadly two-fold:
+\section{A General Approach to Motion Tracking}\label{literature_review_general_approach}
+The approaches to Motion Tracking are broadly two-fold:
 \begin{itemize}
     \item Tracking by Detection:
         Assuming that there is only one object of interest in each frame of
@@ -97,20 +96,105 @@ The approaches to Object Tracking are broadly two-fold:
         frame in which the object of interest is located. The motion model can
         be used to search for the domain of interest within a subsequent frame.
         \cite{Forsyth2012}
-
 \end{itemize}   
 
 The above approaches to the overall problem highlight two key subtasks:
     \begin{itemize}
-        \item Object Detection: This is concerned with (initially) identifying
-            whether a, or multiple object is/are present within a given scenario.
-        \item Object Tracking: This is concerned with successively following the
-            identified objects in subsequent frames in the provided video.
+        \item Object Detection: This is concerned with identifying whether an
+            object, or multiple object's of interest is/are present within a
+            given scenario.
+        \item Object Tracking: This is concerned with successively following an
+            identified objects of interest in one frame in subsequent frames in
+            of a video or image sequence.  
     \end{itemize}
 The relevant literature details numerous approaches to each of the above
-subtasks of the overall Motion Tracking Task. 
+subtasks of the overall Motion Tracking Task. Before elaborating on these
+approaches, it is necessary to have an understanding of challenges faced in
+the practical implementations of these subtasks.
 
-\subsection{Object Detection}
+\section{Challenges faced by Computer Vision}
+Addressed here are several challenges faced when developing Computer
+Vision Algorithms to solve the tasks of Object Detection and Motion Tracking. 
+These ideas will be necessary in assessing which approaches to focus on within
+this study, in line with the objectives outlined in Section~\ref{introduction_objectives}.
+
+The challenges are conveniently expressed in
+Table~\ref{table_challenges_to_motion_tracking}. Experts of image sequences 
+from the VOT2017~\cite{VOT_TPAMI} datasets are used to illustrate the various
+challenges.
+
+\begin{longtable}{| c  p{3cm}  p{5cm} |}
+    \hline
+    \textbf{Illustration} & \textbf{Challenge} & \textbf{Description} \\ 
+    \hline\hline
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
+    &
+    1. Occlusion
+    & 
+    Objects of interest may only be partially visible in a
+    given frame, ideally we want an algorithm to still detect or
+    track an object despite this.
+    \\ \bottomrule
+    
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
+    &
+    2. Illumination
+    &
+    Algorithm performance can be significantly degraded by changes
+    in lighting, if their implementation does not take this into
+    account.
+    \\ \bottomrule
+
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
+    &
+    3. Ego Motion
+    &
+    If image sequences are not recorded by a stationary observer,
+    the camera motion has to be accounted for by the algorithm.
+    \\ \bottomrule
+    
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
+    &
+    4. Deformation 
+    &
+    Some object do not have constant geometric characteristics
+    between frame's. For example, observing a bird flying. In this
+    case an algorithm may fail if it assumes a consistent shape for
+    the object of interest.
+    \\ \bottomrule
+
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}} 
+    &
+    5. Orientation
+    &
+    Objects look different according to their orientation relative
+    to the camera.
+    \\ \bottomrule
+
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
+    &
+    6. Scale
+    &
+    An object of interest may change it's scale within an image
+    sequence, depending on whether it is moving away from or towards
+    the observer.
+    \\ \bottomrule
+
+    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}} 
+    &
+    7. Speed 
+    &
+    Many algorithms operates on the assumption of small
+    changes of the position and appearance of an object between
+    subsequent frames. An object moving at a high enough velocity
+    affect the performance of algorithms that are not designed to
+    deal with this.
+    \\ \bottomrule
+    \caption{Table illustrating Computer Vision Challenges}
+    \label{table_computer_vision_challenges}
+\end{longtable}
+
+\section{Object Detection}
 Object detection generally refers to the identification of objects within
 an image. It is thereby a segmentation of the image into foreground
 and background with foreground containing the object(s) of interest for subsequent
@@ -126,7 +210,7 @@ Approaches\label{motion_detection_taxonomy}}{literaturereview_taxonomy_motion_de
 
 *Explain Diagram
 
-\subsection{Object Tracking}
+\section{Object Tracking}
 Moving objects in a video have a state. A state can be directly observable such as a
 particular object's colour features, or position in a frame. A state can also be a function
 of observable states such as the object's velocity.
@@ -154,33 +238,7 @@ an element of interest defined by a template image $T$.
 \subsubsection{Mean-Shift} \label{literature_review_mean_shift}
 
 
-\subsection{Challenges to Object Tracking}
-
-
-\subsection{GUI Design}
-
-
-\subsection{Theoretical Framework}
-\subsubsection{Representation of Video}
-While a still image has a spatial distribution of intensity that is constant
-with time, videos can be defined as a time-varying image whose spatial
-distribution of intensity changes with respect to time, we can denote this by
-$s_c(x_1,x_2,t)$ where $x_1$ and $x_2$ represent spatial variables and $t$ is
-the continuous temporal variable.
-
-Digital video can be considered as a periodic sampling of an analog video signal
-or scene. This can be thought of as a multiplication of the analog signal, by an
-impulse train, resulting in a discrete lattice of values that can be indexed.
-Symbolically this can be represented as $s_k(x_1,x_2)$ where $x_1$ and
-$x_2$ represent discrete spatial variables and $k$ is the frame index
-\cite{Tekalp2014}. 
-
-These conventions are summarized below: \newline
-Continuous spatio-temporal image:
-$$s_c(x_1,x_2,t), (\textbf{x},t) \in R^3$$ \newline 
-Discrete spatio-temporal image:
-$$s_k(x_1,x_2), (\textbf{x},k) \in Z^3$$ 
- 
+\section{GUI Design}
 
 \section{Software}
 
