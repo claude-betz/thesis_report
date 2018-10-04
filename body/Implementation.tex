@@ -2,13 +2,13 @@
 
 This Chapter details the implementation of the relevant software modules of the
 Overall MOT System. The work is firmly grounded within the Theoretical Framework
-established in Chapter \ref{chapter_theoretical_framework} and the System Design
-developed in Chapter \ref{chapter_design}. The Implementations documented here
-are subsequently tested in Chapter \ref{chapter_results}.
+established in Chapter~\ref{chapter_theoretical_framework} and the System Design
+developed in Chapter~\ref{chapter_design}. The Implementations documented here
+are subsequently tested in Chapter~\ref{chapter_results}.
 
 \section{Mean Shift Tracker Implementation}\label{implementation_mean_shift_tracker}
 The implementation follows directly from the General Algorithm description is
-Section \ref{theoretical_framework_mean_shift_algorithm}.
+Section~\ref{theoretical_framework_mean_shift_algorithm}.
 
 This Section begins by laying out some preliminaries choices for the algorithm
 implementation, then details the implementation of the various functions and
@@ -22,8 +22,9 @@ This Section details implementation choices for the Mean Shift Tracker:
 \end{itemize}
 
 \subsection{Computing target/candidate pdfs}
-As outlined in the class structure in \ref{design_UML}, computing the pdf according to Equation \ref{eqn_histogram} requires the
-following functions to be defined
+As outlined in the class structure in the UML diagram, %Figure~\ref{design_UML}, 
+computing the pdf according to Equation~\ref{eqn:mean_shift_histogram} requires the following functions to be
+defined
 
 \begin{itemize}
     \item get\_ROI(frame)
@@ -53,20 +54,18 @@ def epanechnikov_eqn(x):
     d = 2 #number of dimensions
     c_d = np.pi # area of a unit circle in d  
     return 1/2*(1/c_d)*(d+2)*(1-x) # |x|<=1 i.e. normalised
-
-
 \end{lstlisting}
 
 \subsection{Computing Bhattacharyyaa Coefficient}
 Computing the Bhattacharyyaa coefficient between two pdfs is implemented by the
-following function according to Equation \ref{eqn_bhattacharyya_coefficient}
+following function according to Equation~\ref{eqn:bhattacharyya}
 \begin{itemize}
     \item get\_BC(q,p)
 \end{itemize}
 
 \subsection{Computing pixel weights}
 Computing the pixel weights within the region of interest requires the following
-functions according to Equation \ref{eqn_pixel_weights}.
+functions according to Equation~\ref{eqn:mean_shift_weights}.
 
 \begin{itemize}
     \item get\_elliptical\_mask(height, width)
@@ -75,7 +74,8 @@ functions according to Equation \ref{eqn_pixel_weights}.
 
 \subsection{Computing mean shift vector}
 Computing of the Mean Shift Vector is implemented the following functions
-according to Equation \ref{eqn_mean_shift_vector}.
+according to 
+%Equation~\ref{eqn:mean_shift_vector}.
 
 \begin{itemize}
     \item get\_elliptical\_mask(ROI)
@@ -88,8 +88,7 @@ according to Equation \ref{eqn_mean_shift_vector}.
 
 \subsection{Performing the Mean Shift Loop}
 The Mean Shift Loop is outlined by the Algorithm in
-Figure \ref{theoretical_framework_mean_shift_algorithm}. As detailed in
-Section \ref{theoretical_framework_mean_shift_tracker}, the mean shift loop is
+Figure~\ref{fig:mean_shift_tracking_algorithm}, the mean shift loop is
 applied to a frame $\mathbf{f}\_{k+1}$ given the model pdf of the object of
 interest $\hat{q}$ and its location $\mathbf{c_0}$ in the previous frame
 $\mathbf{f}_{k}$, to compute it's current position $\mathbf{c_1}$ in

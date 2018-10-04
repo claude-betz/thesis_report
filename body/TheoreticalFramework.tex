@@ -4,14 +4,14 @@ This Chapter aims to provide a comprehensive treatment of the theory necessary
 for the implementation of the Overall MOT System. This is in line with the
 objectives of the study outlined in Section~\ref{introduction_objectives} and
 the research direction determined in reviewing the relevant literature in
-Chapter~\ref{literature_review}.
+Chapter~\ref{chapter_literature_review}.
 
-The following two Sections~\ref{theoretical_framework_mean_shift} and
-\ref{theoretical_framework_mean_shift_tracker} draw heavily from the work and
-presentations of the theory by \cite{Comaniciu2002}, \cite{Comaniciu2003},
-\cite{Shah2011}. They do however take the liberty in making some changes to
-the notation and order of presentation, while adding some visual
-illustrations and context to certain steps. 
+Sections~\ref{theoretical_framework_mean_shift} and
+Section~\ref{theoretical_framework_mean_shift_tracker} draw heavily from the
+work and presentations of the theory by \cite{Comaniciu2002},
+\cite{Comaniciu2003}, \cite{Shah2011}. They do however take the liberty in
+making some changes to the notation and order of presentation, while adding some
+visual illustrations and context to certain steps. 
 
 \section{Mean Shift} \label{theoretical_framework_mean_shift}
 The Mean Shift Method is an algorithm that is capable of finding the modes of a 
@@ -37,7 +37,7 @@ must be chosen. This choice could be anything from grayscale intensity, RGB
 intensity or Texture of the particular object. Objects are geometrically described 
 as elliptical sub-domains $\mathbf{D}$ of a frame, with dimensions $h_x$ and
 $h_y$, centered at pixel location $\mathbf{c}=(x,y)$ within the frame. (see
-Figure~\ref{epanechnikov_kernel} for an illustration)
+Figure~\ref{fig:epanechnikov_kernel} for an illustration)
 
 Target and candidate models are defined as pdf's within the chosen feature
 space defined over $\mathbf{D}$. In the initial frame, $\mathbf{f}_k$, a target
@@ -78,31 +78,31 @@ computationally convenient to pre-calculate its values for use in the subsequent
 derivation of the histogram.
 
 The calculation of the Epanechnikov Kernel Matrix for a particular $\mathbf{D}$ is
-illustrated in Figure \ref{epanechnikov_kernel}.
+illustrated in Figure~\ref{fig:epanechnikov_kernel}.
 
-\Figure[width=0.8\columnwidth]{Illustration of Epanechnikov Matrix Derivation\label{epanechnikov_kernel}}{design_epanechnikov_kernel_illustration}
+\Figure[width=0.8\columnwidth]{Illustration of Epanechnikov Matrix Derivation\label{fig:epanechnikov_kernel}}{design_epanechnikov_kernel_illustration}
 
 The pixels in the elliptical mask of the target/candidate are normalized to a unit
 circle by scaling the ellipse by $h_y$ and $h_x$ (which are the major and minor
 axes size of the ellipse). Each pixel is then assigned a weight according to the
 value of the 2D Epanechnikov Kernel profile for said pixel's normalized euclidean
-distance from the unit circle centre as illustrated in Figure \ref{epanechnikov_kernel}.
+distance from the unit circle centre as illustrated in Figure~\ref{fig:epanechnikov_kernel}.
 
 These weights derived from the kernel profile are subsequently used to scale
 pixel counts when creating m-bin histogram. The monotonically decreasing Kernel
 assigns higher weight to pixels at the centre of $\mathbf{D}$ while giving lower
 weighting to pixels further away from the domain center $\mathbf{c}$. 
 This is desirable because not only does it enable the development of a spatially
-smooth similarity function as addressed in Section \ref{maximising_bhat} but it
+smooth similarity function as addressed in Section~\ref{maximising_bhat} but it
 also encodes into our model robustness to the effects of occlusions at the
 periphery of the object domain.
 
 \subsection{pdf development}
 Computing the pdf then occurs according to the following equation:
-\begin{equation}\label{eqn_histogram}
+\begin{equation}\label{eqn:mean_shift_histogram}
     \text{pdf}(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\delta[b(\mathbf{x_i}^*)-u]    
 \end{equation}
-\begin{equation}
+\begin{equation}\label{eqn:histogram_normalisation}
     C=\frac{1}{\sum_{i=1}^{n_x}\kappa({\parallel\mathbf{x_i}^*\parallel}^2)}
 \end{equation}
 where:
@@ -117,8 +117,7 @@ where:
     \item $b({\mathbf{x_i}}^*)$: A function which maps the normalized pixel
         values in $\mathbf{n_x}$ to their RGB pixel value in $\mathbf{D}$.
     \item $\delta[b({\mathbf{x_i}}^*)-u]$: Abstraction to say only evaluate for bin u.
-    \item $C$: Normalisation constant to ensure histogram satisfies equation
-        \ref{eqn_histogram_normalisation}.
+    \item $C$: Normalisation constant to ensure histogram satisfies Equation~\ref{eqn:histogram_normalisation}.
 \end{itemize}
 
 Depending on the number of features used computational complexity of calculating
@@ -133,9 +132,7 @@ $$\text{candidate model: } \hat{p}(\mathbf{c_i})=\{\hat{p}_u(\mathbf{c_i})\}_{u=
 All model/candidate histograms are normalized. Therefore, a general m-bin
 histogram, $\hat{p}(\mathbf{c_i})$ defined over spacial sub-domain, $\mathbf{D}$
 within a frame $\mathbf{f}_k$, satisfies the following normalisation condition:
-\begin{equation}\label{eqn_histogram_normalisation}
-    \sum_{u=1}^{m}\hat{p}_u = 1
-\end{equation}
+$$\sum_{u=1}^{m}\hat{p}_u = 1$$
 
 \subsection{Similarity Measure}
 Given a target model's pdf $\hat{q}(\mathbf{c_0})$, and a candidate pdf,
@@ -148,7 +145,7 @@ $\rho_i \equiv \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]$
 As per \cite{Comaniciu2003} we make use of the Bhattacharyya coefficient, $BC$ as our
 measure of similarity measure $\rho$ between the target and candidate pdfs. The
 Bhattacharyya coefficient is defined by the following equation:
-\begin{equation}
+\begin{equation}\label{eqn:bhattacharyya}
     BC = \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]=\sum_{u=1}^{m}\sqrt{\hat{p}_u(\mathbf{c_i})\hat{q}_u(\mathbf{c_0})}
 \end{equation}
 
@@ -162,10 +159,9 @@ model at the same location $\hat{p}(c_0)$ in $\mathbf{f}_{k+1}$. We compute
 $\rho_0=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]$ 
 
 Since $\rho$ is spatially smooth, we can apply optimization. This involves
-taking the first order Taylor Series approximation of $\rho$ around our initial estimate
-The relevant calculation is detailed in \ref{AppendixA}. 
-$\mathbf{c_0}$. 
-\begin{equation}\label{eqn_rho_taylor}
+taking the first order Taylor Series approximation of $\rho$ around our initial
+estimate $\mathbf{c_0}$. 
+\begin{equation}\label{eqn:rho_taylor}
     \rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_i})]=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]+\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}
 \end{equation}
 
@@ -177,15 +173,15 @@ term
 $$\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}$$
 We maximise $\rho$ and in doing so we locate our object in frame k+1.
 
-By substitution of Equation~\ref{eqn_histogram} for $\hat{p}(\mathbf{c_i})$ in
-the second term of Equation~\ref{eqn_rho_taylor} it can be observed that is that the
+By substitution of Equation~\ref{eqn:mean_shift_histogram} for $\hat{p}(\mathbf{c_i})$ in
+the second term of Equation~\ref{eqn:rho_taylor} it can be observed that is that the
 second term is the density estimate of the underlying pdf at center
 $\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to the
 following equation:
 
 $$\rho_0=\rho[\hat{q}(\mathbf{c_0})=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)$$
 
-\begin{equation} 
+\begin{equation}\label{eqn:mean_shift_weights}
     w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\delta[b(\mathbf{x_i}^*-u)]
 \end{equation}
 
@@ -194,12 +190,12 @@ our object in frame $\mathbf{f}_{k+1}$.
 
 \subsection{The General Algorithm}\label{theoretical_framework_mean_shift_algorithm}
 The general algorithm for Mean Shift Tracking between two frames is defined by
-flow chart in Figure \ref{mean_shift_tracking_algorithm}. This algorithm follows
+flow chart in Figure \ref{fig:mean_shift_tracking_algorithm}. This algorithm follows
 the optimized practical implementation expanded on by \cite{Comaniciu2003}. 
 
 \Figure[width=0.75\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
 between two frames $\mathbf{f}_k$ and
-$\mathbf{f}_{k+1}$\label{mean_shift_tracking_algorithm}}{design_mean_shift_tracking_algorithm}
+$\mathbf{f}_{k+1}$\label{fig:mean_shift_tracking_algorithm}}{design_mean_shift_tracking_algorithm}
 
 The preceding theory for the basis for the implementation of the Mean Shift
 Tracker implemented in Chapter~\ref{chapter_implementation}.
