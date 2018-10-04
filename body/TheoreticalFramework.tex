@@ -42,7 +42,7 @@ Figure~\ref{epanechnikov_kernel} for an illustration)
 Target and candidate models are defined as pdf's within the chosen feature
 space defined over $\mathbf{D}$. In the initial frame, $\mathbf{f}_k$, a target
 model of the object to be tracked located at $\mathbf{c_0}$ is defined by it's
-pdf, $\hat{q}(\mathbf{c_0})$. In the subsequent frame, $\mathbf{f_{k+1}}$, a
+pdf, $\hat{q}(\mathbf{c_0})$. In the subsequent frame, $\mathbf{f}_{k+1}$, a
 candidate model is defined with pdf $\hat{p}(\mathbf{c_0})$ starting at the last
 known object position $\mathbf{c_0}$. 
 
@@ -158,7 +158,7 @@ derivation of our feature histograms, the similarity function $\rho$ defined by 
 Bhattacharyya Coefficient is smooth over the (x,y) domain.
 
 As stated, we begin with a target model $\hat{q}(\mathbf{c_0})$ in frame k and a candidate
-model at the same location $\hat{p}(c_0)$ in frame k+1. We compute
+model at the same location $\hat{p}(c_0)$ in $\mathbf{f}_{k+1}$. We compute
 $\rho_0=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]$ 
 
 Since $\rho$ is spatially smooth, we can apply optimization. This involves
@@ -177,10 +177,10 @@ term
 $$\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}$$
 We maximise $\rho$ and in doing so we locate our object in frame k+1.
 
-By substitution of Equation \ref{eqn_histogram} for $\hat{p}(\mathbf{c_i})$ in
-the second term of \ref{eqn_rho_taylor} it can be observed that is that the
+By substitution of Equation~\ref{eqn_histogram} for $\hat{p}(\mathbf{c_i})$ in
+the second term of Equation~\ref{eqn_rho_taylor} it can be observed that is that the
 second term is the density estimate of the underlying pdf at center
-$\mathbf{c_i}$ in frame $\mathbf{f}_{k+1}$ with pixels weighted according to the
+$\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to the
 following equation:
 
 $$\rho_0=\rho[\hat{q}(\mathbf{c_0})=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)$$
@@ -189,8 +189,7 @@ $$\rho_0=\rho[\hat{q}(\mathbf{c_0})=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\paralle
     w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\delta[b(\mathbf{x_i}^*-u)]
 \end{equation}
 
-Using the Mean Shift Procedure outlined in Section
-\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus locating
+Using the Mean Shift Procedure outlined in Section~\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus locating
 our object in frame $\mathbf{f}_{k+1}$.
 
 \subsection{The General Algorithm}\label{theoretical_framework_mean_shift_algorithm}

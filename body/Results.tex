@@ -3,8 +3,7 @@
 This Chapter is concerned with the presentation of results of the application of
 the algorithms at a modular level and the performance of the overall integrated system.
 
-
-\section{Colour Co-occurrence Histogram Detection}
+\section{Colour Co-occurrence Histogram}
 
 
 
@@ -18,43 +17,136 @@ in Section~\ref{literature_review_challenges}.
 The image sequences used are taken from the datasets provided by the VOT2017
 challenge. \cite{VOT_TPAMI}
 
-\subsection{Experiment 1: Girl}
+\subsection{Sequence 1: Fish}
+
+\subsubsection{Partial Occlusion}
+
+\begin{figure} \label{fig:mean_shift_partial_occlusion}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cccc}
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/1.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/2.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/3.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/4.jpg}} \\
+
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/5.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/6.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/7.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/8.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/9.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/10.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/11.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/12.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/13.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/14.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/15.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/occlusion/16.jpg}} \\   
+
+        \end{tabular}}
+    \caption{Challenge: Partial Occlusion}
+\end{figure}
+
+\subsubsection{Changing Orientation}
+
+\begin{figure} \label{fig:mean_shift_orientation}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cccc}
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/1.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/2.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/3.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/4.jpg}} \\
+
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/5.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/6.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/7.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/8.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/9.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/10.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/11.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/12.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/13.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/14.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/15.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/fish3/orientation/16.jpg}} \\   
+
+        \end{tabular}}
+    \caption{Challenge: Changing Orientation}
+\end{figure}
+
+\subsection{Sequence 2: Girl}
 This sequence is that of a Girl in a park riding around on a scooter. The
 relevant challenges presented in this scene are:
 
 \begin{itemize}
-    \item Occlusion (full)
+    \item Occlusion (complete)
     \item Scaling 
     \item Ego motion (slight) 
 \end{itemize}
 
-The relevant subsequence exhibiting these Occlusion is presented in
-Figure~\ref{fig:mean_shift_occlusion}.
+\subsubsection{Complete Occlusion}
+The relevant subsequence exhibiting occlusion ranges from $\mathbf{f}_{97}$ to
+$\mathbf{f}_{127}$ and is presented in Figure~\ref{fig:mean_shift_girl_occlusion}.
 
-\begin{figure} \label{fig:mean_shift_occlusion}
+
+\begin{figure} \label{fig:mean_shift_complete_occlusion}
+    \makebox[\linewidth][c]{
     \begin{tabular}{cccc}
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/1.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/2.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/3.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/4.jpg}} \\
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/1.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/2.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/3.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/4.jpg}} \\
 
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/5.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/6.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/7.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/8.jpg}} \\
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/5.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/6.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/7.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/8.jpg}} \\
        
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/9.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/10.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/11.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/12.jpg}} \\
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/9.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/10.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/11.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/12.jpg}} \\
        
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/13.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/14.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/15.jpg}} &
-        \subfloat{\includegraphics[width = 1.2in]{figures/results/girl/16.jpg}} \\   
-    \end{tabular}
-    \caption{Challenge: Occlusion in ``Girl'' sequence}
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/13.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/14.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/15.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/occlusion/16.jpg}} \\   
+
+        \end{tabular}}
+    \caption{Challenge: Complete Occlusion}
 \end{figure}
+
+\subsubsection{Scaling}
+
+\begin{figure} \label{fig:mean_shift_girl_occlusion}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cccc}
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/1.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/2.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/3.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/4.jpg}} \\
+
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/5.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/6.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/7.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/8.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/9.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/10.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/11.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/12.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/13.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/14.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/15.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/girl/scale/16.jpg}} \\   
+    \end{tabular}}
+    \caption{Challenge: Scale Change}
+\end{figure}
+
 
 \subsection{Experiment: }
 
