@@ -1,4 +1,4 @@
-\chapter{Literature Review} \label{chapter_literature_review}
+\chapter{Literature Review}\label{chapter_literature_review}
 This Literature Review is structured as follows: It begins by establishing key
 definitions necessary for navigating the literature.
 
@@ -28,7 +28,7 @@ that can feature multiple motions.~\cite{Tekalp2014}
 
 Object Recognition: This a method by which Given an image, the objects within
 said image are detected and classified as one of a set of predefined Object
-Category.  I.e. “What Object(s) are in this frame?”
+Category i.e.\ ``What Object (s) are in this frame?''
 
 Object Detection: Object Detection can be seen as targeted recognition, it deals
 with finding instances of objects within a given image or video frame, this
@@ -57,7 +57,7 @@ with determining motion vectors that describe the transformation of one 2D
 image to another over time~\cite{Tekalp2014}.
 
 NOTE:\@
-tracking data to another object.\ e.g.\ animation. Or as it is used in the
+tracking data to another object for example in animation. Or as it is used in the
 case of this paper Video/Object Tracking.
 
 \section{Brief History of Computer Vision and Motion Tracking}
@@ -74,7 +74,7 @@ The approaches to Motion Tracking are broadly two-fold:
         Assuming that there is only one object of interest in each frame of
         video, and that there exists a reliable detector for the object of
         interest. The tracking problem can be reduced to applying the detector
-        to each frame of video and outputting it's response \cite{Forsyth2012}.
+        to each frame of video and outputting it's response~\cite{Forsyth2012}.
 
         Certain situations lend themselves well to this approach, for example;
         One could imagine that an overhead camera in a game of billiards could
@@ -94,8 +94,7 @@ The approaches to Motion Tracking are broadly two-fold:
         frames.
         Given a model of an objects motion, as well a domain within a particular
         frame in which the object of interest is located. The motion model can
-        be used to search for the domain of interest within a subsequent frame.
-        \cite{Forsyth2012}
+        be used to search for the domain of interest within a subsequent frame~\cite{Forsyth2012}.
 \end{itemize}   
 
 The above approaches to the overall problem highlight two key subtasks:
@@ -123,7 +122,7 @@ Table~\ref{tbl:computer_vision_challenges}. Experts of image sequences
 from the VOT2017~\cite{VOT_TPAMI} datasets are used to illustrate the various
 challenges.
 
-\begin{longtable}{ c  p{3cm}  p{4cm} }
+\begin{longtable}{c  p{3cm}  p{4cm}}
     \hline
     \textbf{Illustration} & \textbf{Challenge} & \textbf{Description} \\ 
     \hline\hline
@@ -190,19 +189,18 @@ challenges.
     deal with this.
     \\ \bottomrule
     \caption{Table illustrating Computer Vision Challenges}
-    \label{tbl:computer_vision_challenges}
-\end{longtable}
+\end{longtable}\label{tbl:computer_vision_challenges}
 
 \section{Object Detection}
 Object detection generally refers to the identification of objects within
 an image. It is thereby a segmentation of the image into foreground
-and background with foreground containing the object(s) of interest for subsequent
+and background with foreground containing the object (s) of interest for subsequent
 operations.
 
 In the context of motion tracking, the problem of object detection is a key
 step. It becomes narrowed down to the more specific task of motion segmentation.
 The literature details several approaches to this task, summarised in 
-Figure \ref{motion_detection_taxonomy} below.
+Figure~\ref{motion_detection_taxonomy} below.
 
 \Figure[width=0.7\columnwidth]{Taxonomy of Motion Detection
 Approaches\label{motion_detection_taxonomy}}{literaturereview_taxonomy_motion_detection}
@@ -216,14 +214,14 @@ of observable states such as the object's velocity.
 
 In Object Tracking, the state we are interested in is the position of an object
 of interest in successive frames of video. We may use states or derivatives of
-them to reliably determine this \cite{Forsyth2012}.
+them to reliably determine this~\cite{Forsyth2012}.
 
 The literature states several approaches to the motion tracking problem. The can
-conveniently be expressed in the following taxonomy, Figure \ref{motion_tracking_taxonomy},
-adapted from Prajapati \cite{Prajapati2015}.
+conveniently be expressed in the following taxonomy, Figure~\ref{fig:motion_tracking_taxonomy},
+adapted from Prajapati~\cite{Prajapati2015}.
 
 \Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking
-Approaches\label{motion_tracking_taxonomy}}{literaturereview_taxonomy_motion_tracking}
+Approaches\label{fig:motion_tracking_taxonomy}}{literaturereview_taxonomy_motion_tracking}
 
 *Explain Higher Level*
 
@@ -234,7 +232,7 @@ interest.
 Formally we have a source image, $I$ in which we would like to obtain matches to
 an element of interest defined by a template image $T$.
 
-\subsubsection{Mean-Shift} \label{literature_review_mean_shift}
+\subsubsection{Mean-Shift}\label{literature_review_mean_shift}
 
 
 \section{GUI Design}

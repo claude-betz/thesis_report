@@ -1,4 +1,4 @@
-\chapter{Implementation} \label{chapter_implementation}
+\chapter{Implementation}\label{chapter_implementation}
 
 This Chapter details the implementation of the relevant software modules of the
 Overall MOT System. The work is firmly grounded within the Theoretical Framework
@@ -14,94 +14,173 @@ This Section begins by laying out some preliminaries choices for the algorithm
 implementation, then details the implementation of the various functions and
 their overall integration into a working Mean Shift Tracker. The  
 
-\subsection{Preliminaries}
-This Section details implementation choices for the Mean Shift Tracker:
-\begin{itemize}
-    \item Feature Space
-    \item  
-\end{itemize}
-
-\subsection{Computing target/candidate pdfs}
+\subsection{Computing Target and Candidate pdfs}
 As outlined in the class structure in the UML diagram, %Figure~\ref{design_UML}, 
-computing the pdf according to Equation~\ref{eqn:mean_shift_histogram} requires the following functions to be
-defined
+computing the pdf according to Equation~\ref{eqn:mean_shift_histogram} is
+performed by the \textbf{get\_pdf (template, m)} method shown in
+Listing~\ref{lst:pdf}.
 
-\begin{itemize}
-    \item get\_ROI(frame)
-    \item get\_elliptical\_mask(height, width)
-    \item get\_euclidean\_distance(x1, x2):
-    \item get\_epanechnikov\_weight(x):
-    \item get\_epanechnikov\_kernel(ROI):
-    \item get\_histogram(template, m\_bins): 
-\end{itemize}
-
-The above function implementations are provided in the following code snippet.
-
-\begin{lstlisting}[language=Python]
-def get_elliptical_mask(height, width):
-    """computes elliptical mask for particular ROI dimensions"""
-    y0, x0 = height//2, width//2 # get center of kernel (treated as 0,0) - note these are also hy and hx 
-    yy, xx = np.mgrid[:height, :width] # create layers for subsequent mask
-    ellipse_eqn = ((yy-y0)/y0)**2 + ((xx-x0)/x0)**2 # ellipse equation
-    return np.logical_and(ellipse_eqn<=1, ellipse_eqn<=1) # elliptical mask for kernel
-
-def euclidean_distance(v1,v2):
-    """computes the euclidean distance between two 2D vectors"""
-    return np.sqrt((v2[0]-v1[0])**2+(v2[1]-v1[1])**2)
-
-def epanechnikov_eqn(x):
-    """equation of epanechnikov kernel based on normalised euclidean norm squared"""
-    d = 2 #number of dimensions
-    c_d = np.pi # area of a unit circle in d  
-    return 1/2*(1/c_d)*(d+2)*(1-x) # |x|<=1 i.e. normalised
+\begin{lstlisting}[language=Python, caption={Computing pdf}, captionpos=b, label={lst:pdf}]
+def get_pdf(roi, m=8):
+    """compute 2d colour histogram given roi,bin number,m and kernel function"""
+    # step1: limit pixels to elliptical region inscribed in rectange
+    height, width = roi.shape[0], roi.shape[1]
+    y0, x0 = (height//2, width//2) # get center of kernel (treated as 0,0) - note these are also hy and hx 
+    elliptical_mask = get_elliptical_mask(height, width)
+       
+    # step2: fetch pixel values
+    hist = np.zeros(shape=(256//m, 256//m)) # 2d-histogram to hold values 
+    kernel, C = epanechnikov_kernel(roi) # kernel and normalisation constant, C
+    for y in range(0,height):
+        for x in range(0,width): 
+            if(elliptical_mask[y,x]==True): # only deal with points in the mask
+                u, v = roi[y,x,0],roi[y,x,1] # get the R and G components
+                index_r, index_g = u//m, v//m # used to index 2d-histogram
+                hist[index_r,index_g] = hist[index_r,index_g] + kernel[y,x] # add point to histogram with weight
+    
+    # normalize histogram
+    C = np.sum(hist) # normalisation constant
+    histogram = np.true_divide(hist, C) # normalise histogram
+    return histogram
 \end{lstlisting}
+
+This above method is dependent on the implementation of the following support
+methods. See Appendix~\ref{appendix_A} for code listings of their implementation.
+\begin{itemize}
+    \item get\_elliptical\_mask (height, width)
+    \item get\_euclidean\_distance (x1, x2):
+    \item get\_epanechnikov\_weight (x):
+    \item get\_epanechnikov\_kernel (roi):
+    \item get\_pdf (roi, m):
+\end{itemize}
 
 \subsection{Computing Bhattacharyyaa Coefficient}
-Computing the Bhattacharyyaa coefficient between two pdfs is implemented by the
-following function according to Equation~\ref{eqn:bhattacharyya}
-\begin{itemize}
-    \item get\_BC(q,p)
-\end{itemize}
+Computing the Bhattacharyyaa coefficient between two pdfs is implemented in
+Listing~\ref{lst:BC} according to Equation~\ref{eqn:bhattacharyya}. 
+
+\begin{lstlisting}[language=Python, caption={Computing Bhattacharyya Coefficient}, captionpos=b, label={lst:BC}]
+def get_BC(q, p):
+    """compute the bhattacharyya coefficient between two 2D pdfs """
+    height, width = q.shape[0], q.shape[1] # get pdf dimensions
+    batt = 0 # store final result
+    for y in range(0,height):
+        for x in range(0,width):
+            batt = batt + np.sqrt(q[y,x]*p[y,x])
+    return batt
+\end{lstlisting}
 
 \subsection{Computing pixel weights}
-Computing the pixel weights within the region of interest requires the following
-functions according to Equation~\ref{eqn:mean_shift_weights}.
+Computing the pixel weights within the region of interest is performed by the
+method \textbf{get\_weights (roi, q, p, m=8)} in Listing~\ref{lst:weights} according to Equation~\ref{eqn:mean_shift_weights}.
 
-\begin{itemize}
-    \item get\_elliptical\_mask(height, width)
-    \item get\_pixel\_weights(ROI, q, p)
-\end{itemize}
-
-\subsection{Computing mean shift vector}
-Computing of the Mean Shift Vector is implemented the following functions
-according to 
-%Equation~\ref{eqn:mean_shift_vector}.
-
-\begin{itemize}
-    \item get\_elliptical\_mask(ROI)
-    \item get\_mean\_shift\_vector(ROI, pixel\_weights)
-\end{itemize}
-
-\begin{lstlisting}
-
+\begin{lstlisting}[language=Python, caption={Computing Mean Shift Weights}, captionpos=b, label={lst:weights}]
+def get_weights(roi, q, p, m=8):
+    """compute the weights necessary for the mean shift algorithm given target and candidate distributions q and p"""
+    # step1: limit pixels to elliptical region inscribed in rectangle
+    height, width = roi.shape[0],roi.shape[1]
+    y0, x0 = (height//2, width//2) # get centre 
+    elliptical_mask = get_elliptical_mask(height, width)
+    
+    # step2: compute weights
+    weights = np.zeros(shape=(height,width))
+    for y in range(0,height):
+        for x in range(0,width): 
+            if(elliptical_mask[y,x]==True):  
+                u, v = roi[y,x,0], roi[y,x,1] # get colour index ,u with which we can index the histograms
+                index_r, index_g = u//m, v//m # used to index 2d-histogram
+                if(p[index_r,index_g]>0): # stop infinity division
+                    weights[y,x] = np.sqrt(q[index_r,index_g]/p[index_r,index_g]) # compute weights based on equation
+    return weights 
 \end{lstlisting}
+
+The implementation of listing~\ref{lst:weights} requires the following methods to
+be available. See Appendix~\ref{appendix_A} for code listings of their implementation. 
+\begin{itemize}
+    \item get\_elliptical\_mask (height, width)
+\end{itemize}
+
+\subsection{Computing Mean Shift Vector}
+Computing of the Mean Shift Vector is implemented in Listing~\ref{lst:msv}
+according to %Equation~\ref{eqn:mean_shift_vector}.
+
+\begin{lstlisting}[language=Python, caption={Computing Mean Shift Vector}, captionpos=b, label={lst:msv}]
+def get_msv(roi, weights):
+    """compute the mean shift vector of the roi based on the weights"""
+    # step 1: limit pixels to elliptical region inscribed in rectangle
+    height, width = roi.shape[0], template.shape[1]
+    y0, x0 = (height//2, width//2) # get centre 
+    elliptical_mask = get_elliptical_mask(height,width)
+
+    # step 2: estimate shift vector
+    v_y,v_x = 0,0 # to hold estimated shift vector
+    for y in range(0,height):
+        for x in range(0,width): 
+            if(elliptical_mask[y,x]==True):
+                v_y = v_y + weights[y,x]*((y-y0)) 
+                v_x = v_x + weights[y,x]*((x-x0))
+    w_sum = np.sum(weights) # compute denominator of expression
+    if(w_sum!=0):
+        return int(v_y/w_sum), int(v_x/w_sum)
+    else:
+        return 0,0
+\end{lstlisting}
+
+The implementation of Listing~\ref{lst:vector} requires the following methods to
+be available. See Appendix~\ref{appendix_A} for code listings of their implementation. 
+\begin{itemize}
+    \item get\_elliptical\_mask (roi)
+\end{itemize}
 
 \subsection{Performing the Mean Shift Loop}
 The Mean Shift Loop is outlined by the Algorithm in
 Figure~\ref{fig:mean_shift_tracking_algorithm}, the mean shift loop is
-applied to a frame $\mathbf{f}\_{k+1}$ given the model pdf of the object of
+applied to a frame $\mathbf{f}_{k+1}$ given the model pdf of the object of
 interest $\hat{q}$ and its location $\mathbf{c_0}$ in the previous frame
 $\mathbf{f}_{k}$, to compute it's current position $\mathbf{c_1}$ in
 $\mathbf{f}_{k+1}$
 
-It depends on the following functions.
+\begin{lstlisting}[language=Python, caption={Mean Shift Loop}, captionpos=b, label={lst:loop}]
+def mean_shift_loop(roi, q, y0, x0, h, w, eps=5):
+    """perform mean shift to get new location"""
+    t1 = roi[y0:y0+h, x0:x0+w] # candidate template
+    p0 = get_pdf(t1, m=8) # candidate histogram
 
+    for i in range(0,10): # mean shift loop 20 iterations
+        weights = get_weights(t1, q, p0, m=8) # calculate weights
+        vy, vx = get_msv(t1, weights) # calculate mean shift vector
+        y1, x1 = int(y0+vy), int(x0+vx) # y1
+
+        step_size = euclidean_distance((vy,vx),(0,0))
+        if(step_size<eps): # likely to converge so check last
+            # found target object
+            return y1, x1
+
+        else: # step not small enough use bhattacharyya coefficient to refine step
+            tc = roi[y1:y1+h,x1:x1+w] # get ROI at x1
+            p1 = get_pdf(tc, m=8) # compute p(x1)
+            BC0 = get_BC(q, p0) # similarity measure between q(x0) and p(x0) 
+            BC1 = get_BC(q, p1) # similiarty measure betweem q(x0) and p(x1)
+
+            while(BC0>BC1):
+            # so we don't step too far
+                vy, vx = vy//2, vx//2 # halve the step size
+                y1, x1 = int(y0+vy), int(x0+vx) # get new smaller distance 
+                tc = roi[y1:y1+h, x1:x1+w]
+                p1 = get_pdf(tc,m=8)
+                BC1 = get_BC(q, p1)
+                if(np.abs(vy)<=1 and np.abs(vx)<=1): # avoid infinite loop
+                    break
+            return y1, x1
+    return y1, x1 # new location
+\end{lstlisting}
+
+The implementation of the Mean Shift Loop in Listing~\ref{lst:loop} 
 \begin{itemize}
-    \item histogram(ROI, m\_bins)
-    \item get\_pixel\_weights(ROI, q, p)
-    \item euclidean\_distance(x1, x2)
-    \item get\_mean\_shift\_vector(ROI, pixel\_weights)
-    \item get\_BC
+    \item get\_pdf (roi, m)
+    \item get\_weights (roi, q, p)
+    \item get\_euclidean\_distance (x1, x2)
+    \item get\_msv (roi, pixel\_weights)
+    \item get\_BC (q, p)
 \end{itemize}
 
 

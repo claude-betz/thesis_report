@@ -8,27 +8,24 @@ Chapter~\ref{chapter_literature_review}.
 
 Sections~\ref{theoretical_framework_mean_shift} and
 Section~\ref{theoretical_framework_mean_shift_tracker} draw heavily from the
-work and presentations of the theory by \cite{Comaniciu2002},
-\cite{Comaniciu2003}, \cite{Shah2011}. They do however take the liberty in
+work and presentations of the theory by~\cite{Comaniciu2002, Comaniciu2003, Shah2011}. They do however take the liberty in
 making some changes to the notation and order of presentation, while adding some
 visual illustrations and context to certain steps. 
 
-\section{Mean Shift} \label{theoretical_framework_mean_shift}
+\section{Mean Shift}\label{theoretical_framework_mean_shift}
 The Mean Shift Method is an algorithm that is capable of finding the modes of a 
 non-parametric distribution by use of samples of the unknown underlying distribution. 
 
-\section{Mean Shift Tracker} \label{theoretical_framework_mean_shift_tracker}
+\section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
 As summarised in Section~\ref{literature_review_mean_shift}, the Mean Shift Tracker was
-first proposed by Commaniciu et al. It is addresses the
+first proposed by Commaniciu et al~\cite{Comaniciu2003}. It is addresses the
 visual tracking problem of Target Representation and Localisation.
 
 The idea of this tracker is that spatially masking an object with an
 isotropic kernel allows for the definition of a spatially-smooth similarity
 function relating a target and potential candidate model in a particular feature
 space. This smooth similarity lends itself to gradient-based optimization,
-thereby enabling efficient target localisation in subsequent frames
-\cite{Comaniciu2003}.
-
+thereby enabling efficient target localisation in subsequent frames.
 A description of theory underlying the Mean Shift Tracker follows:
 
 \subsection{Model Representation}
@@ -54,7 +51,7 @@ by use of a Kernel.
 \subsection{Kernel Function}
 A Kernel is a weighting function employed in non-parametric density estimation.
 The recommended kernel function for the mean shift tracker is that of the
-Epanechnikov kernel \cite{Comaniciu2002}.
+Epanechnikov kernel~\cite{Comaniciu2002}.
 The Epanechnikov Kernel has the following general equation:
 \begin{equation}
     \kappa(x)=
@@ -126,13 +123,13 @@ $m$, as we are increasing the dimensionality of our feature space by 1 for each
 additional feature thus incrementing the size by a factor of $m$-bins.
 
 The models for the target and candidate are summarised below:
-$$\text{target model: } \hat{q}(\mathbf{c_0})=\{\hat{q}_u(\mathbf{c_0})\}_{u=1,...,m}$$
-$$\text{candidate model: } \hat{p}(\mathbf{c_i})=\{\hat{p}_u(\mathbf{c_i})\}_{u=1,...,m}$$
+\[\text{target model:}\hat{q}(\mathbf{c_0}) = {\{\hat{q}_u(\mathbf{c_0})\}}_{u=1,\ldots,m}\]
+\[\text{candidate model:}\hat{p}(\mathbf{c_i}) = {\{\hat{p}_u(\mathbf{c_i})\}}_{u=1,\ldots,m}\]
 
 All model/candidate histograms are normalized. Therefore, a general m-bin
 histogram, $\hat{p}(\mathbf{c_i})$ defined over spacial sub-domain, $\mathbf{D}$
 within a frame $\mathbf{f}_k$, satisfies the following normalisation condition:
-$$\sum_{u=1}^{m}\hat{p}_u = 1$$
+\[\sum_{u=1}^{m}\hat{p}_u = 1\]
 
 \subsection{Similarity Measure}
 Given a target model's pdf $\hat{q}(\mathbf{c_0})$, and a candidate pdf,
@@ -142,7 +139,7 @@ $\hat{q}(\mathbf{c_0})$ i.e.
 $\rho_i \equiv \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]$
 
 
-As per \cite{Comaniciu2003} we make use of the Bhattacharyya coefficient, $BC$ as our
+As per~\cite{Comaniciu2003} we make use of the Bhattacharyya coefficient, $BC$ as our
 measure of similarity measure $\rho$ between the target and candidate pdfs. The
 Bhattacharyya coefficient is defined by the following equation:
 \begin{equation}\label{eqn:bhattacharyya}
@@ -170,7 +167,7 @@ which usually holds between adjacent frames in the video sequence.
 
 The first term on the right hand side is a constant, by maximising the second
 term 
-$$\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}$$
+\[\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\]
 We maximise $\rho$ and in doing so we locate our object in frame k+1.
 
 By substitution of Equation~\ref{eqn:mean_shift_histogram} for $\hat{p}(\mathbf{c_i})$ in
@@ -179,7 +176,7 @@ second term is the density estimate of the underlying pdf at center
 $\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to the
 following equation:
 
-$$\rho_0=\rho[\hat{q}(\mathbf{c_0})=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)$$
+\[\rho_0=\rho[\hat{p}(\mathbf{c_0})]=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\]
 
 \begin{equation}\label{eqn:mean_shift_weights}
     w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\delta[b(\mathbf{x_i}^*-u)]
@@ -190,8 +187,8 @@ our object in frame $\mathbf{f}_{k+1}$.
 
 \subsection{The General Algorithm}\label{theoretical_framework_mean_shift_algorithm}
 The general algorithm for Mean Shift Tracking between two frames is defined by
-flow chart in Figure \ref{fig:mean_shift_tracking_algorithm}. This algorithm follows
-the optimized practical implementation expanded on by \cite{Comaniciu2003}. 
+flow chart in Figure~\ref{fig:mean_shift_tracking_algorithm}. This algorithm follows
+the optimized practical implementation expanded on by Comaniciu~\cite{Comaniciu2003}. 
 
 \Figure[width=0.75\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
 between two frames $\mathbf{f}_k$ and
@@ -199,6 +196,3 @@ $\mathbf{f}_{k+1}$\label{fig:mean_shift_tracking_algorithm}}{design_mean_shift_t
 
 The preceding theory for the basis for the implementation of the Mean Shift
 Tracker implemented in Chapter~\ref{chapter_implementation}.
-
-
-
