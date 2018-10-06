@@ -5,7 +5,6 @@ the algorithms at a modular level and the performance of the overall integrated 
 
 \section{Colour Co-occurrence Histogram}
 
-
 \section{Mean Shift Tracking}
 This section deals with the qualitative analysis of the Mean Shift Tracker
 implemented in Section~\ref{implementation_mean_shift_tracker}. The analysis is
@@ -16,7 +15,18 @@ in Section~\ref{literature_review_challenges}.
 The image sequences used are taken from the datasets provided by the VOT2017
 challenge \cite{VOT_TPAMI}.
 
-\subsection{Sequence 1: Fish}
+The parameters that are within the control of the User of the MOT System Mean
+Shift implementation are.
+\begin{itemize}
+    \item kernel size 
+    \item step threshold, $\epsilon$
+    \item number of histogram bins, $m$
+\end{itemize}
+
+We subsequently assess the performance of the Mean Shift Tracker implementation
+against variations of these three parameters on a diverse set of sequences.
+\subsection{Experiment: Effect of bin histogram bin count on Mean Shift Tracker Performance}
+\subsubsection{Sequence 1: Fish}
 This sequence is one of a several fish, of which a distinctly yellow fish is
 tracked. The challenges to motion tracking that arise in this image sequence are the following.
 \begin{itemize}
@@ -27,7 +37,7 @@ tracked. The challenges to motion tracking that arise in this image sequence are
 
 The relevant sub-sequences of interest are documented below:
 
-\subsubsection{Partial Occlusion}
+\paragraph{Partial Occlusion}
 
 \begin{figure} \label{fig:mean_shift_partial_occlusion}
     \makebox[\linewidth][c]{
@@ -56,7 +66,7 @@ The relevant sub-sequences of interest are documented below:
     \caption{Challenge: Partial Occlusion}
 \end{figure}
 
-\subsubsection{Changing Orientation}
+\paragraph{Changing Orientation}
 
 \begin{figure} \label{fig:mean_shift_orientation}
     \makebox[\linewidth][c]{
@@ -85,7 +95,7 @@ The relevant sub-sequences of interest are documented below:
     \caption{Challenge: Changing Orientation}
 \end{figure}
 
-\subsection{Sequence 2: Girl}
+\subsubsection{Sequence 2: Girl}
 This sequence is one of a Girl in a park riding around on a scooter. She is
 wearing a distinctive colourful outfit relative to the rest of the moving objects in the
 scene, which consist mostly other humans.
@@ -96,10 +106,9 @@ The relevant challenges presented in this scene are:
     \item Ego motion (slight) 
 \end{itemize}
 
-\subsubsection{Complete Occlusion}
+\paragraph{Complete Occlusion}
 The relevant subsequence exhibiting occlusion ranges from $\mathbf{f}_{97}$ to
 $\mathbf{f}_{127}$ and is presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
-
 
 \begin{figure}    
     \makebox[\linewidth][c]{
@@ -129,7 +138,7 @@ $\mathbf{f}_{127}$ and is presented in Figure~\ref{fig:mean_shift_complete_occlu
     \caption{Challenge: Complete Occlusion}
 \end{figure}
 
-\subsubsection{Scaling}
+\paragraph{Scaling}
 
 \begin{figure} \label{fig:mean_shift_girl_scale}
     \makebox[\linewidth][c]{
@@ -158,7 +167,7 @@ $\mathbf{f}_{127}$ and is presented in Figure~\ref{fig:mean_shift_complete_occlu
 \end{figure}
 
 
-\subsection{Sequence 3: Ants}
+\subsubsection{Sequence 3: Ants}
 This image sequence is of multiple ants in motion within a Petri dish.
 
 The challenges presented by this sequence are the following:
