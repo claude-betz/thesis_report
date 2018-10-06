@@ -1,18 +1,6 @@
 \chapter{Design}\label{chapter_design}
 *insert summary of section content and structure*
 
-\section{System Level Design}
-Development of the overall system design can conveniently be divided into
-Front-End and Back-End. The Front-End system is the point of interaction for the
-system user. It is GUI application that thereby satisfying the User Requirements
-of the system. The Back-End consists of the algorithms enabling the tracking of
-objects of interest within video, thereby addressing the Technical
-Specifications of the system.
-
-The Overall System Design is summarised by the Block Diagram in Figure~\ref{motion_tracking_subtasks}.
-
-\Figure[width=0.8\columnwidth]{Block Diagram of System Overview\label{motion_tracking_subtasks}}{design_system_overview}
-
 \section{User Requirements}
 The end-user requirements of the proposed system are elaborated upon below:
 \begin{itemize}
@@ -39,15 +27,72 @@ project brief.
 This following Section are concerned with the detailed design of of the Front- and Back-end
 subsystems of the Motion Tracking System.
 
-\section{Front-End Design}
+\section{System Level Design}
+Development of the overall system design can conveniently be divided into
+Front-End and Back-End. The Front-End system is the point of interaction for the
+system user. It is GUI application that thereby satisfying the User Requirements
+of the system. The Back-End consists of the algorithms enabling the tracking of
+objects of interest within video, thereby addressing the Technical
+Specifications of the system.
+
+The Overall System Design is summarised by the Block Diagram in Figure~\ref{motion_tracking_subtasks}.
+\Figure[width=0.8\columnwidth]{Block Diagram of System Design\label{fig:design_overview}}{design_system_overview}
+
+Figure~\ref{fig:design_overview} highlights the communication between the two MOT
+subsystems, in a general use case. The System is controlled via a user
+friendly GUI which allows for convenient selection of parameters such as
+image sequence, algorithm etc.
+
+An in depth treatment of the Front- and Back-end follows:
+
+\subsection{Front-End Design}
 The Front-End is the GUI that user's of the Motion Tracking System interact with 
-It interacts with the underlying functionality implemented in the Back-End to
+It interacts with the underlying functionality encapsulated in the Back-End API to
 satisfy the System User Requirements. 
 
-\section{Back-End Design}
+As the functionality of the system is not, the tasks that the front
+end must achieve can be easily extracted from the user requirements. The GUI
+application should afford a User the following functions.
+\begin{itemize}
+    \item A User should be able to load a desired image sequence
+    \item A User should be able play, pause and iterate the image sequence 
+    \item A User should be able to select one of the implemented tracking
+        Algorithms and apply it.
+    \item A User should be able to specify a directory in results of the
+        relevant Algorithm are stored.
+\end{itemize}
+
+In line with these requirements the following, the following markups for the
+GUIs were devised.
+
+*Insert GUI Markups* 
+
+\subsection{Back-End Design}
 As indicated by the indicated by the literature in
-Section~\ref{literature_review_general_approach}. Three variants of kernel based
-object trackers were implemented.
+Section~\ref{literature_review_general_approach}. 
+
+\subsection{Integration}
+The development of the Front- and Back-end will occur in isolation during the
+early stages of the design. This is due to the face that the subject matter of
+the two sub-modules is largely unrelated.  To ensure that this occurs smoothly,
+it is necessary to have a clear understanding of exactly how the two subsystems
+interact, essentially what API end-points they must avail each other.
+
+The following UML diagram summarises the class and interface dependencies of the
+MOT system.
+
+\newpage
+\Figure[width=1\columnwidth, angle=90, scale=1.2]{Block Diagram of SystemDesign\label{fig:design_uml}}{design_uml} 
+\newpage
+As touched upon in Section~\ref{design_back_end}, the design in
+Figure~\ref{fig:design_uml} attempts to stick firmly to the Object Oriented
+Programming and particularly to leverage the concepts of Inheritance and
+Polymorphism to maintain a clean and easily extendible code base, without
+unnecessary duplication of functionality.  Thought was given to adequately
+abstract away the low level complexity especially in developing the Back-end to
+allow for easy implementation. 
+
+
 
 \subsection{Template Matching Tracker}
 
@@ -60,8 +105,6 @@ object trackers were implemented.
 This section details underlying Tech-Stack of the Motion Tracking System. The
 purpose of this section is to ensure easy reproducibility of the implemented
 system.
-
-\subsubsection{}
 
 \section{Integration Design}
 This section details the specifics of how 
