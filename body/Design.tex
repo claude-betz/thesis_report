@@ -1,5 +1,13 @@
 \chapter{Design}\label{chapter_design}
-*insert summary of section content and structure*
+This Chapter aims to document the design process of the MOT system. It begins by
+elaborating on the User Requirements highlighted in
+Section~\ref{introduction_user_requirements}. It then details the design from a
+higher-level System Overview in terms of a delineation of the Front- and
+Back-end subsystems.
+The detailed the design of these Subsystems is then presented with care given to
+clearly define their interfaces and dependencies with each other, this allows for
+independent development of the Subsystems in the early stages of the Development
+Life cycle, and should help result in a smooth Integration Phase.
 
 \section{User Requirements}
 The end-user requirements of the proposed system are elaborated upon below:
@@ -86,12 +94,12 @@ MOT system.
 \newpage
 As touched upon in Section~\ref{design_back_end}, the design in
 Figure~\ref{fig:design_uml} attempts to stick firmly to the Object Oriented
-Programming and particularly to leverage the concepts of Inheritance and
+Programming paradigm with the intention to leverage the concepts of Inheritance and
 Polymorphism. The rationale behind this is to be able to maintain a clean and
 easily extendible code base, without unnecessary duplication of functionality.
 Thought was given to adequately abstract away the low level complexity
-especially in developing the Back-end to allow for easy integration. 
-
+especially in developing the Back-end Algorithms to allow for easy integration
+towards the end of the development lifecycle. 
 
 
 \subsection{Template Matching Tracker}
@@ -100,14 +108,9 @@ especially in developing the Back-end to allow for easy integration.
 
 \subsubsection{Adaptive Template Tracking}
 
-
 \subsection{Development Environment and Tech-Stack}
 This section details underlying Tech-Stack of the Motion Tracking System. The
 purpose of this section is to ensure easy reproducibility of the implemented
 system.
-
-
-
-
 
 
