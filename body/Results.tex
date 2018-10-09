@@ -110,11 +110,12 @@ of the sequence. It should however be noted that there is a noticeable ``drift''
 the localisation. 
 This is due to the fact that the template selected does not solely 
 
-
 \section{Colour Co-occurrence Histogram}
+This Section details the 
+
 
 \section{Mean Shift Tracking}
-This Section deals with the qualitative analysis of the Mean Shift Tracker
+This Section deals with the analysis of the Mean Shift Tracker
 implemented in Section~\ref{implementation_mean_shift_tracker}. The analysis is
 broken down into a set of experiments,
 
@@ -138,11 +139,16 @@ in Section~\ref{literature_review_challenges}.
 The image sequences presented are taken from the datasets provided by the VOT2017
 challenge \cite{VOT_TPAMI}.
 
+\subsection{Step Size, $\epsilon$}
+
+\subsection{Bin Count, $m$}
+
 \subsection{Experiment 1: Fish}
 This sequence is one in which there are several fish, of which a distinctly yellow fish is
 tracked. The challenges to motion tracking that arise in this image sequence are the following.
 \begin{itemize}
-    \item Occlusion (complete)
+    \item Occlusion (partial)
+    \item Track Overlap
     \item Scaling 
     \item Ego motion (slight) 
 \end{itemize}
@@ -150,6 +156,9 @@ tracked. The challenges to motion tracking that arise in this image sequence are
 The relevant sub-sequences of interest are documented below:
 
 \subsubsection{Partial Occlusion}\label{mean_shift_partial_occlusion}
+The relevant subsequence exhibiting Partial Occlusion is in from
+$\mathbf{f}_{178}$ to $\mathbf{f}_{240}$ of the original sequence. This interval
+is represented in Figure~\ref{fig:mean_shift_partial_occlusion}.
 
 \begin{figure}     
     \makebox[\linewidth][c]{
@@ -179,6 +188,17 @@ The relevant sub-sequences of interest are documented below:
  }
 \end{figure}
 
+Our target, the yellow fish remains stationary from
+$\mathbf{F_1}$ to $\mathbf{F_16}$. Both kernels are unaffected by the second
+gray fish, occupying the same pixel space as our target. The tracker proves to be
+robust to this form of occlusion and track overlap.
+This is due to the fact that the target fish and the second fish are easily
+distinguishable within the RGB colour-space from which we derive our histograms.
+Therefore, the tracker is not drawn to the second fish.
+As we still partially see a large part of our target when occluded, our
+similarity, $\rho$ at the should remain greatest at the position of the target
+despite the partial occlusion, which seems to be the case as the tracker does
+not drift.
 
 \subsubsection{Changing Orientation}
 
@@ -223,7 +243,7 @@ The relevant challenges presented in this scene are:
 
 \subsubsection{Complete Occlusion}
 The relevant subsequence exhibiting occlusion ranges from $\mathbf{f}_{97}$ to
-$\mathbf{f}_{127}$ and is presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
+$\mathbf{f}_{127}$ in the original sequence and is presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
 
 \begin{figure}    
     \makebox[\linewidth][c]{
@@ -252,6 +272,15 @@ $\mathbf{f}_{127}$ and is presented in Figure~\ref{fig:mean_shift_complete_occlu
     }
     \caption{Challenge: Complete Occlusion\label{fig:mean_shift_complete_occlusion}}
 \end{figure}
+
+Figure~\ref{fig:mean_shift_complete_occlusion} shows the Mean Shift Tracker
+managing to stay relocate the Girl after a man completely obscures her, we see
+that the smaller Green Kernel is offset by man for a bit, whereby the larger
+Yellow Kernel remains relatively stable.
+The Green Kernel behaviour can be explained by the fact that it's model
+$\hat(q)$ was defined solely around the Girl's yellow top. This is sufficiently
+close for the Man's white top to cause a small drift which lasts only until the
+girl is visible again upon which the.
 
 \subsubsection{Scaling}
 
@@ -321,10 +350,31 @@ Ant for the due to its relatively large inter-frame displacement.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/15.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/16.jpg}} \\   
     \end{tabular}}
-    \caption{Challenge: Target Speed\label{fig:mean_shift_ant_speed}}
+    \caption{Challenge: target speed losing small kernel\label{fig:mean_shift_ant_speed}}
 \end{figure}
 
-As the displacement of an Object between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
+\begin{figure}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cccc}
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/1.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/2.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/3.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/4.jpg}} \\
+    \end{tabular}}
+    \caption{Challenge: target speed losing large kernel\label{fig_mean_shift_ant_speed2}}
+\end{figure}
+
+Keeping in mind that a digital video is a sampling of an analogue scene.
+In order to discuss the effect of the ``speed'' of a target on tracker
+performance it is necessary to interpret this speed more clearly
+as the magnitude of an object's inter-frame displacement, $\delta$ - which
+we define as the distance between an object's
+position between two adjacent frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ .
+This is an adequate formulation because, depending on the sampling frequency $f_s$ of
+a particular sequence, a fast object such as a car sampled at a high $f_s$ can
+have a smaller $\delta$ than a relatively slow snail sampled at a lower $f_s$. 
+
+As the $\delta$ of an Object between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
 increases in magnitude, less of the Object lies within the dimensions
 $(h_x,h_y)$ of the Kernel that we initialise at it's last known pixel location
 $\mathbf{c_0}$ in $\mathbf{f}_k$. In terms of the mean shift tracking algorithm this simply
@@ -336,23 +386,40 @@ $\mathbf{f}_{k}$ and $\mathbf{f}_{k+1}$ - can increase the tracker's tolerance
 to challenges such as Object speed and occlusion, at the
 cost of increased track ``jitter''. 
 
-However Figure~\ref{fig:mean_shift_ant_speed} highlights the extreme case in
-which none of the object in  
+However the Green Kernel throughout Figure~\ref{fig:mean_shift_ant_speed}
+highlights the extreme case in which the kernel initialised at $\mathbf{c_0}$ in
+$\mathbf{f}_{k+1}$ does not even partly contain the Target.  
 
-It is important to clarify in the case of the Ant sequence in particular, the speed of the
-object, but the sampling rate, $f_s$ used to obtain the sequence. If a higher
-sampling rate were used, would mean higher redundancy between frames with
-smaller displacements. So lazy solution could be provide the same sequence
-sampled at a higher $f_s$.
+We do see that the larger Yellow Kernel manages to track the Ant successfully
+from $\mathbf{F_1}$ to $\mathbf{F_7}$ before changing tracks for a better closer
+candidate as elaborated in section~\ref{mean_shift_track_overlap}.
+Figure~\ref{fig:mean_shift_ant_speed2} shows $f_{271}$ to $f_{274}$ of the original
+sequence, highlighting that even the larger Yellow Kernel can to track the if
+at sufficiently high inter-frame displacement.
 
-Thinking further, there may be situation in which the available technology is
-constrained by factors such as budget, size etc. In such situations, we would
-still like to be able to track our object of interest. 
-A possible solution could be to augment the basic Mean Shift Algorithm with
-other forms of more information possibly from other tracking methodologies highlighted in
-Figure\ref{fig:motion_tracking_taxonomy}. 
+The results in Figures~\ref{mean_shift_ant_speed} tell us
+that a larger kernel larger kernel size is more robust to the effects of large
+$\delta$, but as Figure~\ref{fig:mean_shift_ant_speed2}, even a
+kernel enclosing the whole object of interest can lose track of the object given
+a sufficiently large $\delta$. It is also not feasible to increase our kernel
+size largely beyond the object dimensions, as it would incorporate a lot of
+noise into the object model $\hat(q)$, likely deteriorating tracker performance
+when faced with other challenges.
 
-\subsubsection{Track Overlap}
+It is important to note that a solution to the problem can be tied back to
+sampling rate, $f_s$ used to obtain the sequence. If a higher sampling rate were
+used, it would mean higher redundancy between frames with smaller $\delta$
+values. An impractical solution therefore could be to try and obtain the
+same sequence again, but sampled at a higher $f_s$.
+
+This is likely unfeasible. Furthermore, one can imaging situations in which the
+available technology is constrained by factors such as budget, size etc. In such
+situations, we would still like to be able to track our object of interest.  A
+possible solution could be to augment the basic Mean Shift Algorithm with other
+forms of more information possibly from other tracking methodologies highlighted
+in Figure\ref{fig:motion_tracking_taxonomy}. 
+
+\subsubsection{Track Overlap}\label{mean_shift_track_overlap}
 In Figure~\ref{fig:mean_shift_ant_speed}, $\mathbf{F}_5$ to $\mathbf{F}_{11}$
 highlight this challenge. We have two ants coming within close proximity of
 each other, we can see that the yellow kernel switches to track the second Ant
@@ -377,4 +444,4 @@ $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ is easily be large enough to place $A_1$
 closer to $A_0$ in $\mathbf{f}_{k+1}$, which makes the mean shift iteration
 likely to pick $A_1$ as the target location in $\mathbf{f}_{k+1}$
 
-
+\section{Graphical User Interface}
