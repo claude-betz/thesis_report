@@ -9,24 +9,34 @@ reliability, speed, resistance to ``noise'' and the ability to generalize that
 humans or other animals exhibit in performing this task.
 
 Motion Tracking is a very application specific endeavour. For example, An
-algorithm that
-reliably tracks the motion of pedestrian in a city scene may fall short at
-detecting the motion of an animal in the woods. Even after evaluation the
-trade-offs between various approach, this problem still requires considerable fine
-tuning of model parameters assumptions before arrival at a reliable solution
-to a problem.  For example, the introduction of occlusion to a scene, or changes
-in illumination of a scene can all drastically affect model performance should
-it not intrinsically account for this.
+algorithm that reliably tracks the motion of pedestrian in a city scene may fall
+short at detecting the motion of an animal in the woods. Even after evaluation
+the trade-offs between various approach, this problem still requires
+considerable fine tuning of model parameters assumptions before arrival at a
+reliable solution to a problem.  For example, the introduction of occlusion to a
+scene, or changes in illumination of a scene can all drastically affect model
+performance should it not intrinsically account for this.
 
 \section{Objectives}\label{introduction_objectives}
-The problem investigated in this study is that of Motion Tracking - The
+
+\subsection{Problems of Interest}
+The general problem investigated in this study is that of Motion Tracking - The
 localisation of a known object within a frame $\mathbf{f}_k$ in subsequent
 frames, $\mathbf{f}_{k+1}$ of a given video or image sequence.  
 
+The idea is to explore a solutions that address this problem and assess the
+strengths and weaknesses of the solutions when applied to a variety of
+situations.
+
 \subsection{Purpose of study}
-The purpose of this study is the building of a piece software that can be used
-to analyse scenes and allow users to isolate objects of interest within said
-scenes
+The purpose of this study is to gain traction in the field in Computer Vision,
+specifically by exploring the task of Motion Tracking. The approach taken is a
+bottom up approach in which emphasis is placed on firm theoretical
+understanding, which is then translated into a product.
+
+The outcome of this endeavour is the development of a ``Moving Object Tracker''
+(MOT) System that enables a user to analyse video sequences in which they would like
+to track a particular Object in Motion, and isolate it's motion.
 
 \section{Scope and Limitations}
 The scope of this these includes: 
@@ -48,21 +58,27 @@ The scope of this these includes:
 This thesis is a 12-week undertaking.
 
 \section{User Requirements}\label{introduction_user_requirements}
-The System has the following user requirements:
+The base user requirements of the proposed system are elaborated upon below:
 \begin{itemize}
-    \item  
-    \item
+    \item The GUI application should have a menu that allows for a system
+        user to select a video or image sequence of interest.
+    \item Upon the selection of an image sequence, the system will allow for a
+        user to specify an object or point of interest within the first sequence
+        frame for tracking in subsequent frames.
+    \item The system should reliably output a bounding box around the user
+        specified point or object of interest in subsequent frames of the
+        sequence. 
+    \item At termination of the sequence, snapshots of the bounding box
+        surrounding the relevant point of interest or object should be stored in
+        a user selected directory.
 \end{itemize}
-
-\section{Technical Requirements}
-
 
 \section{Outline of Thesis}
 The layout of this thesis is as follows: In line with the objectives and scope
 of this study, Chapter~\ref{chapter_literature_review} provides a review of the
 relevant literature. We first identify the general sub-tasks of the overall
 Motion Tracking problem. Solutions to these sub-tasks are then surveyed and
-assessed in line with the Objectives and Purpose to narrow down the scope. The
+assessed in line with the objectives, purpose and user requirements. 
 
 Chapter~\ref{chapter_theoretical_framework}  
 

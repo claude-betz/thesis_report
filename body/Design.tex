@@ -1,39 +1,16 @@
 \chapter{Design}\label{chapter_design}
-This Chapter aims to document the design process of the MOT system. It begins by
-elaborating on the User Requirements highlighted in
-Section~\ref{introduction_user_requirements}. It then details the design from a
-higher-level System Overview in terms of a delineation of the Front- and
-Back-end subsystems.
-The detailed the design of these Subsystems is then presented with care given to
-clearly define their interfaces and dependencies with each other, this allows for
-independent development of the Subsystems in the early stages of the Development
-Life cycle, and should help result in a smooth Integration Phase.
+In this Chapter we aim to document the design process of the MOT system. It does so
+while in line with the User Requirements detailed in 
+Section~\ref{introduction_user_requirements}. 
+We then detail the Design from a higher-level System Overview in terms of a
+delineation of the Front- and Back-end subsystems. The detailed the design of
+these Subsystems is then presented with care given to clearly define their
+interfaces and dependencies with each other, this allows for independent
+development of the Subsystems in the early stages of the Development Life cycle,
+and should help result in a smooth Integration Phase.
 
-\section{User Requirements}
-The end-user requirements of the proposed system are elaborated upon below:
-\begin{itemize}
-    \item The GUI application should have a menu that allows for a system
-        user to select a video or image sequence of interest.
-    \item Upon the selection of an image sequence, the system will allow for a
-        user to specify an object or point of interest within the first sequence
-        frame for tracking in subsequent frames.
-    \item The system should reliably output a bounding box around the user
-        specified point or object of interest in subsequent frames of the
-        sequence. 
-    \item At termination of the sequence, snapshots of the bounding box
-        surrounding the relevant point of interest or object should be stored in
-        a user selected directory.
-    \item
-    \item
-\end{itemize}
-
-\section{Specification}
-This section aims to present functional specifications, set out in the
-project brief.
-
-\subsection{Use Cases}
-This following Section are concerned with the detailed design of of the Front- and Back-end
-subsystems of the Motion Tracking System.
+This following Section is concerned with the System Level design of the
+Front- and Back-end subsystems of the Moving Object Tracking (MOT) System.
 
 \section{System Level Design}
 Development of the overall system design can conveniently be divided into
@@ -43,7 +20,9 @@ of the system. The Back-End consists of the algorithms enabling the tracking of
 objects of interest within video, thereby addressing the Technical
 Specifications of the system.
 
-The Overall System Design is summarised by the Block Diagram in Figure~\ref{motion_tracking_subtasks}.
+The Overall System Design is summarised by the Block Diagram in
+Figure~\ref{motion_tracking_subtasks}.  
+
 \Figure[width=0.8\columnwidth]{Block Diagram of System Design\label{fig:design_overview}}{design_system_overview}
 
 Figure~\ref{fig:design_overview} highlights the communication between the two MOT
@@ -51,16 +30,16 @@ subsystems, in a general use case. The System is controlled via a user
 friendly GUI which allows for convenient selection of parameters such as
 image sequence, algorithm etc.
 
-An in depth treatment of the Front- and Back-end follows:
+An in depth treatment of the Front- and Back-end follows
 
 \subsection{Front-End Design}
-The Front-End is the GUI that user's of the Motion Tracking System interact with 
-It interacts with the underlying functionality encapsulated in the Back-End API to
+The Front-End is the Graphical User Interface (GUI) that Users of the MOT
+System interact. 
+It interfaces with the underlying functionality encapsulated in the Back-End API to
 satisfy the System User Requirements. 
 
-As the functionality of the system is not, the tasks that the front
-end must achieve can be easily extracted from the user requirements. The GUI
-application should afford a User the following functions.
+The tasks that the front end must achieve relate directly to the User
+Requirements. The basic GUI application should afford a User the following functions.
 \begin{itemize}
     \item A User should be able to load a desired image sequence
     \item A User should be able play, pause and iterate the image sequence 
@@ -86,27 +65,21 @@ the two sub-modules is largely unrelated.  To ensure that this occurs smoothly,
 it is necessary to have a clear understanding of exactly how the two subsystems
 interact, essentially what API end-points they must avail each other.
 
-The following UML diagram summarises the class and interface dependencies of the
+The UML diagram in Figure~\ref{fig:design_uml} summarises the Class and Interface dependencies of the
 MOT system.
 
 \newpage
 \Figure[width=1\columnwidth, angle=90, scale=1.2]{UML Diagram Outlining the MOT System Class Structure\label{fig:design_uml}}{design_uml} 
 \newpage
-As touched upon in Section~\ref{design_back_end}, the design in
+
+As touched upon in Section~\ref{design_back_end}, the Design in
 Figure~\ref{fig:design_uml} attempts to stick firmly to the Object Oriented
 Programming paradigm with the intention to leverage the concepts of Inheritance and
 Polymorphism. The rationale behind this is to be able to maintain a clean and
 easily extendible code base, without unnecessary duplication of functionality.
 Thought was given to adequately abstract away the low level complexity
 especially in developing the Back-end Algorithms to allow for easy integration
-towards the end of the development lifecycle. 
-
-
-\subsection{Template Matching Tracker}
-
-\subsubsection{Simple Template Tracking}
-
-\subsubsection{Adaptive Template Tracking}
+towards the end of the development life-cycle. 
 
 \subsection{Development Environment and Tech-Stack}
 This section details underlying Tech-Stack of the Motion Tracking System. The
