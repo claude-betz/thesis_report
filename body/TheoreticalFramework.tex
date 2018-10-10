@@ -8,21 +8,29 @@ Chapter~\ref{chapter_literature_review}.
 
 Sections~\ref{theoretical_framework_mean_shift} and
 Section~\ref{theoretical_framework_mean_shift_tracker} draw heavily from the
-work and presentations of the theory by~\cite{Comaniciu2002, Comaniciu2003, Shah2011}. They do however take the liberty in
-making some changes to the notation and order of presentation, while adding some
-visual illustrations and context to certain steps. 
+work and presentations of the theory by~\cite{Comaniciu2002, Comaniciu2003,
+Shah2011}. They do however take the liberty in making some changes to the
+notation and order of presentation, while adding some visual illustrations and
+context to certain steps. 
 
-\section{Color Co-occurrence Histogram Detection}
-As stated in Section~\ref{introduction_scope}, part of the purpose of this study
-is to gauge the feasibility of as system deployed with database of objects to
-look out for.
+\section{Template Matching}
+The detection and recognition of objects within an image is one of the
+fundamental Computer vision problems. A basic approach to this task is Template
+Matching.
 
-The purpose of exploring this avenue is to see whether it is possible to
-automate 
+Template Matching is easily defined by its constituent words. A template is a
+model, representation for a particular object or task and matching is
+association of one or more objects by some measure of similarity. Template
+Matching is a technique by which a known object represented by a template, $t$
+can be localised within a larger image or frame of interest, $\mathbf{f}_k$.
 
-\section{Mean Shift}\label{theoretical_framework_mean_shift}
-The Mean Shift Method is an algorithm that is capable of finding the modes of a 
-non-parametric distribution by use of samples of the unknown underlying distribution. 
+\subsection{Simple Template Matching}
+In it's simplest form, 
+
+\subsection{Adaptive Template Matching}
+
+\subsection{Color Co-occurrence Histogram Detection}
+
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
 As summarised in Section~\ref{literature_review_mean_shift}, the Mean Shift Tracker was
@@ -35,6 +43,10 @@ function relating a target and potential candidate model in a particular feature
 space. This smooth similarity lends itself to gradient-based optimization,
 thereby enabling efficient target localisation in subsequent frames.
 A description of theory underlying the Mean Shift Tracker follows:
+
+\subsection{Mean Shift}\label{theoretical_framework_mean_shift}
+The Mean Shift Method is an algorithm that is capable of finding the modes of a 
+non-parametric distribution by use of samples of the unknown underlying distribution. 
 
 \subsection{Model Representation}
 To represent a particular target or candidate Model, a suitable feature space

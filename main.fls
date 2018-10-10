@@ -226,6 +226,9 @@ INPUT body/Design.tex
 INPUT figures/design_system_overview.pdf
 INPUT ./figures/design_system_overview.pdf
 INPUT ./figures/design_system_overview.pdf
+INPUT figures/design_gui_mockup.png
+INPUT ./figures/design_gui_mockup.png
+INPUT ./figures/design_gui_mockup.png
 INPUT figures/design_uml.pdf
 INPUT ./figures/design_uml.pdf
 INPUT ./figures/design_uml.pdf
