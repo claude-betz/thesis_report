@@ -6,23 +6,24 @@ objectives of the study outlined in Section~\ref{introduction_objectives} and
 the research direction determined in reviewing the relevant literature in
 Chapter~\ref{chapter_literature_review}.
 
-In Section~\ref{theoretical_framework_tm} we first explore the possibility of a
-Tracker that is based purely on Detection. We review both correlation based and
-feature based approaches within the field of Template Matching.
+In Sections~\ref{theoretical_framework_tm} and~\ref{theoretical_framework_ch} we first
+explore the development of a Tracker that is based purely on Detection. We
+review both correlation based and feature based approaches within field of Template Matching.
 
 Section~\ref{theoretical_framework_ch} presents the feature based Template
 Matching based on the Co-occurrence Histogram texture feature as proposed by
-Chang~\cite{Chang}. The presentation is also supplemented treatment of the
-feature extraction by Hall~\cite{Hall-beyer2018}
+Chang~\cite{Chang1999}. The presentation is also supplemented treatment of the
+feature extraction by Hall~\cite{Hall-beyer2018}.
 
 Section~\ref{theoretical_framework_mean_shift_tracker} draw heavily from the
-work and presentations of the theory by~\cite{Comaniciu2002, Comaniciu2003,
-Shah2011}. They do however take the liberty in making some changes to the
-notation and order of presentation, while adding some visual illustrations and
+work and presentations of the by~\cite{Comaniciu2002, Comaniciu2003,
+Shah2011} of the theory behind the Mean Shift Tracker. They do however take the
+liberty in making some changes to the notation and order of presentation, while
+adding some visual illustrations and
 context to certain steps. 
 
 
-\section{Template Matching}\label{theoretical_framework_template_matching}
+\section{Template Matching}\label{theoretical_framework_tm}
 The detection and recognition of objects within an image is one of the
 fundamental Computer vision problems. A basic approach to this task is Template
 Matching.
@@ -37,6 +38,7 @@ can be localised within a larger image or frame of interest, $\mathbf{f}_k$.
 In it's simplest form, 
 
 \subsection{Adaptive Template Matching}\label{theoretical_framework_adaptive_tm}
+
 
 
 \section{Color Co-occurrence Histogram Detection}\label{theoretical_framework_ch}
@@ -57,16 +59,97 @@ that templates be characterized by the joint use of geometrical and textural
 information~\cite{Brunelli}, i.e.\ a Feature Based approach.
 
 Furthering the concept that a reliable detector can make for a reliable tracker,
-the work by Chang et al.~\ref{Chang1999}, proposed a robust template
+the work by Chang et al.~\cite{Chang1999}, proposed a robust template
 localization approach based on the use of Co-occurrence Histograms as template
-features. A description of the theory underlying the implementation of CCH
-Detector follows:
+features. A description of the theory underlying the implementation of CH-Detector 
+follows:
 
-\subsection{Color Co-occurance Histograms (CCH)}
-A CCH can be thought of as a colour histogram that augments it's dimensionality
-with spacial information in addition to the counts of it's values in the colour
-space of interest.
+\subsection{Color Co-occurrence Histograms, (CH)}
+A colour histogram is a binned count of pixel values over a particular image
+region, within a particular colour space. This entirely abstracts away the geometry of
+the image.
+A CH can be thought of as a colour histogram augmented with with spacial
+information in addition to the frequencies of it's values in a particular colour
+space.
 
+Defined within the RGB-colour space, a CH holds the number of occurrences of
+pixel pairs $\mathbf{P_i}=(R_i,G_i,B_i)$ and $\mathbf{P_j}=(R_j,G_j,B_j)$ that
+are separated by a vector $\vec{v}=(\Delta{x}, \Delta{y})$ in the pixel plane.
+
+For the CH-Detector, instead of $\vec{v}$, we use it's euclidean norm $d$ as our
+augmented feature where 
+$$d = \sqrt{{(\Delta{x})}^2 + {(\Delta{y})}^2}$$ 
+This is a necessary step in order to reintroduce invariance to orientation for
+the CH feature. 
+
+The colours are quantized into a set $C$ of $n_c$ colour levels, where 
+$C = \{c_1,c_2,\dots,c_{n_c}\}$. Likewise the distances are quantized into
+a set $\mathbf{D}$ consisting of $n_d$ distances, where $D = \{\left[ 0,1
+\right),\left[ 1,2\right), \dots , \left[ n_{d-1},n_{d} \right)\}$.
+
+The colour quantization is conveniently achieved by application of the kmeans clustering
+algorithm to the set of pixels in our region of interest, characterised by their
+euclidean distance within the RGB-colour space. The number of clusters is
+specified as $n_c$. (see Appendix~\ref{appendix_A} for a review of the kmeans
+algorithm). 
+
+With this we can settle on a definition for our CH feature as
+$$\text{CH} = \{\mathbf{D},\mathbf{C}_d\}, d\in{\mathbf{D}}$$
+where:
+\begin{itemize}
+    \item $\mathbf{D}$ represents $n_d$ quantized distances.
+    \item $\mathbf{C}_d = \{{c_{src} \times c_{dst}\}_d}$ where $c_{src}$ and
+        $c_{dst}$ index the frequencies/counts of the quantized source and destination
+        pixels within an image at each distance, $d \in
+        \mathbf{D}$.
+\end{itemize}
+
+\subsection{Similarity Measure}\label{theoretical_framework_intersection}
+The problem is here is fundamentally similar to that in the Simple Template
+Matching case. Given a template we would like to locate it within a given frame.
+This is also done by the sliding window approach.
+
+The CH-Detector involves the added step of feature extraction. In a basic
+implementation, we initially extract our model $CH_m$ from the known template.
+With the sliding window approach, candidate models $CH_c$ are extracted and
+assessed for their similarity to $CH_m$. The region in which the $CH_c$ most
+similar to the $CH_m$ is regarded as the match. 
+
+The similarity measure used by \cite{Chang1999} is the 
+Intersection between $CH_m$ and a potential $CH_c$. The main motivation behind
+this is that the Intersection is relatively robust against changes in the
+dimension of the sliding window.
+We can thereby avoid a computationally expensive exhaustive search by initially
+searching with a larger search window, and hierarchically refining the search
+window.
+
+The Intersection between a model and candidate histogram is defined as
+$$I_{cm} = \sum_{k=0}^{n_d}\sum_{i=0}^{n_c}\sum_{j=0}^{n_c} = min[(CH_m(k,i,j),CH_c(k,i,j))]$$
+where:
+\begin{itemize}
+    \item $k$ iterates the $n_d$ distances of the CH lattice.
+    \item $i,j$ iterates the source and destination quantized pixel countes level respectively over the
+        region of interest.
+\end{itemize}
+Chang et al \cite{Chang1999} expresses the Intersection as a measure of how well the
+candidate CH accounts for the model CH. In taking the minimum between the two
+for each quantization level and distance two things are occurring. Firstly if a
+candidate has high counts for certain quantizations, the $I_{cm}$ ignores these
+by keeping the model counts. Conversely if a candidate has low counts for a
+model's high quantized counts they are taken pulling the $I_{cm}$ down.
+
+The similarity is measured on a scale from 0 to to the highest possible value of
+$I_{cm}$ which is a perfect match obtained by the auto-intersection of our
+model $I_{mm}$.
+The criteria for finding an object is therefore presented by a Threshold which
+is a fraction, $\alpha$ of the maximum possible Intersection $I_{mm}$
+$$T=\alpha I_{mm}$$
+
+
+\subsection{CH-Detector Algorithm}
+The general CH Search algorithm is shown in Figure~\ref{algorithm_ch}
+
+The preceding theory forms the basis of the implementation in Section~\ref{implementation_ch}
 
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
