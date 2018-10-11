@@ -6,14 +6,23 @@ objectives of the study outlined in Section~\ref{introduction_objectives} and
 the research direction determined in reviewing the relevant literature in
 Chapter~\ref{chapter_literature_review}.
 
-Sections~\ref{theoretical_framework_mean_shift} and
+In Section~\ref{theoretical_framework_tm} we first explore the possibility of a
+Tracker that is based purely on Detection. We review both correlation based and
+feature based approaches within the field of Template Matching.
+
+Section~\ref{theoretical_framework_ch} presents the feature based Template
+Matching based on the Co-occurrence Histogram texture feature as proposed by
+Chang~\cite{Chang}. The presentation is also supplemented treatment of the
+feature extraction by Hall~\cite{Hall-beyer2018}
+
 Section~\ref{theoretical_framework_mean_shift_tracker} draw heavily from the
 work and presentations of the theory by~\cite{Comaniciu2002, Comaniciu2003,
 Shah2011}. They do however take the liberty in making some changes to the
 notation and order of presentation, while adding some visual illustrations and
 context to certain steps. 
 
-\section{Template Matching}
+
+\section{Template Matching}\label{theoretical_framework_template_matching}
 The detection and recognition of objects within an image is one of the
 fundamental Computer vision problems. A basic approach to this task is Template
 Matching.
@@ -27,9 +36,37 @@ can be localised within a larger image or frame of interest, $\mathbf{f}_k$.
 \subsection{Simple Template Matching}
 In it's simplest form, 
 
-\subsection{Adaptive Template Matching}
+\subsection{Adaptive Template Matching}\label{theoretical_framework_adaptive_tm}
 
-\subsection{Color Co-occurrence Histogram Detection}
+
+\section{Color Co-occurrence Histogram Detection}\label{theoretical_framework_ch}
+As presented in Sections~\ref{results_simple_template_matching,
+results_adaptive_template_matching}, the Simple and Adaptive Template Matching
+approaches showed some success when applied to the Motion
+Tracking Problem. However, the Simple Template Tracker was unable to cope with
+slight rotation of the target as the sequence progressed.
+While the Adaptive variant could deal with these changes in target
+orientation, it suffered the problem of ``drift'' in which the model contained
+more and more noise as the sequence progressed.
+Furthermore the Adaptive Template Tracker could not cope with the problem of
+occlusion.
+
+Both variants of the Simple Template Tracking approach suffers from poor Generalisation- the
+ability to adapt to unseen data. Template Matching applications often require
+that templates be characterized by the joint use of geometrical and textural
+information~\cite{Brunelli}, i.e.\ a Feature Based approach.
+
+Furthering the concept that a reliable detector can make for a reliable tracker,
+the work by Chang et al.~\ref{Chang1999}, proposed a robust template
+localization approach based on the use of Co-occurrence Histograms as template
+features. A description of the theory underlying the implementation of CCH
+Detector follows:
+
+\subsection{Color Co-occurance Histograms (CCH)}
+A CCH can be thought of as a colour histogram that augments it's dimensionality
+with spacial information in addition to the counts of it's values in the colour
+space of interest.
+
 
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
