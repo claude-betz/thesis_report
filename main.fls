@@ -610,6 +610,9 @@ INPUT ./figures/results/mean_shift_tracker/ants/speed2/3.jpg
 INPUT figures/results/mean_shift_tracker/ants/speed2/4.jpg
 INPUT ./figures/results/mean_shift_tracker/ants/speed2/4.jpg
 INPUT ./figures/results/mean_shift_tracker/ants/speed2/4.jpg
+INPUT figures/results_gui.png
+INPUT ./figures/results_gui.png
+INPUT ./figures/results_gui.png
 INPUT body/Conclusion.tex
 INPUT body/Conclusion.tex
 INPUT main.bbl
