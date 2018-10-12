@@ -107,11 +107,53 @@ From Figure~\ref{fig:adaptive_template_tracking} it shows that the Adaptive
 Template Tracker manages to locate the car within a bounding box in each frame
 of the sequence. It should however be noted that there is a noticeable ``drift'' in
 the localisation. 
-This is due to the fact that the template selected does not solely 
+This is due to the fact that the algorithm has no way of controlling the amount of
+background noise that is allowed into the template.
 
 \section{Colour Co-occurrence Histogram Detector}
 This Section details the results of the CH-Detector implemented in
 Section~\ref{implementation_ch}.
+
+\subsection{Detection against Occlussion}
+As discussed in Section~\ref{theoretical_framework_ch}, the rational behind
+implementing the CH-Detector is assessing whether it could overcome the
+shortcomings of the Template Matching approaches in terms of drift and lack of
+generalisation.
+
+The Adaptive Template Tracker failed immediately when faced with the challenge
+of occlusion in the Girl sequence. We apply the CH-Detector to Occlusion on the
+same challenge within sequence. To see whether it can successfully overcome the
+challenge of occlusion.
+
+In the experiment is performed as follows, We extract the model of the girl in
+$\mathbf{f}_0$ of the sequence. We then proceed to use this model to localize
+the frame in another frame, $\mathbf{f}_{138}$ was chose since it exhibits
+occlusion of the model. 
+
+The localization is performed by a two level hierarchical as described in
+Section~\ref{implementation_ch}, with parameters $n_c=8$ and $n_d=12$ which
+\cite{Change} rigorously proves to be the optimal values to minimize the False
+Alarm Probability. (see Section~\ref{theoretical_framework_ch}).
+
+Figure~\ref{fig:ch_partial_occlusion} details the results, the green bounding
+box is the outcome of the initial coarse grained search of $\mathbf{f}_{138}$.
+The result of the fine grained search within the green box region is highlighted
+by the yellow bounding box. 
+The CH-Detector effectively detects the girl within the $\mathbf{f}_{139}$ in
+spite of significant occlusion on by the man obscuring the girl. 
+
+\begin{figure}     
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cc}
+        \subfloat{\includegraphics[width = 2.5in]{figures/results/ch_detector/results_girl/frame.jpg}} &
+        \subfloat{\includegraphics[width = 2.5in]{figures/results/ch_detector/results_girl/result.jpg}} \\
+
+        \end{tabular}}
+    \caption{Challenge: Partial Occlusion\label{fig:ch_partial_occlusion}
+ }
+\end{figure}
+
+
 
 \section{Mean Shift Tracker}
 This Section deals with the analysis of the Mean Shift Tracker (MST)
@@ -164,7 +206,6 @@ detailed in Figure~\ref{fig:results_m_bc}. The execution time of the get\_BC() g
 \Figure[width=0.7\columnwidth]{Graph showing effect of bin size (m) on execution time (ms) of \textit{get\_pdf()}}{results/mean_shift_tracker/results_m_pdf}
 
 \Figure[width=0.7\columnwidth]{Graph showing effect of bin size (m) on execution time (ms) of \textit{get\_BC()}}{results/mean_shift_tracker/results_m_bc}
-
 
 The Experiments 1-3 aim to assess performance of the MST in dealing with the
 various motion tracking challenges, for varying sizes of Kernel initialisation.

@@ -83,7 +83,7 @@ the CH feature.
 
 The colours are quantized into a set $C$ of $n_c$ colour levels, where 
 $C = \{c_1,c_2,\dots,c_{n_c}\}$. Likewise the distances are quantized into
-a set $\mathbf{D}$ consisting of $n_d$ distances, where $D = \{\left[ 0,1
+a set $D$ consisting of $n_d$ distances, where $D = \{\left[ 0,1
 \right),\left[ 1,2\right), \dots , \left[ n_{d-1},n_{d} \right)\}$.
 
 The colour quantization is conveniently achieved by application of the kmeans clustering
@@ -93,10 +93,10 @@ specified as $n_c$. (see Appendix~\ref{appendix_A} for a review of the kmeans
 algorithm). 
 
 With this we can settle on a definition for our CH feature as
-$$\text{CH} = \{\mathbf{D},\mathbf{C}_d\}, d\in{\mathbf{D}}$$
+$$\text{CH} = \{D,\mathbf{C}_d\}, d\in{D}$$
 where:
 \begin{itemize}
-    \item $\mathbf{D}$ represents $n_d$ quantized distances.
+    \item $D$ represents $n_d$ quantized distances.
     \item $\mathbf{C}_d = \{{c_{src} \times c_{dst}\}_d}$ where $c_{src}$ and
         $c_{dst}$ index the frequencies/counts of the quantized source and destination
         pixels within an image at each distance, $d \in
