@@ -34,15 +34,14 @@ association of one or more objects by some measure of similarity. Template
 Matching is a technique by which a known object represented by a template, $t$
 can be localised within a larger image or frame of interest, $\mathbf{f}_k$.
 
-\subsection{Simple Template Matching}
+\subsection{Simple Template Matching}\label{theoretical_framework_simple_tm}
 In it's simplest form, 
 
 \subsection{Adaptive Template Matching}\label{theoretical_framework_adaptive_tm}
 
 
-
 \section{Color Co-occurrence Histogram Detection}\label{theoretical_framework_ch}
-As presented in Sections~\ref{results_simple_template_matching,
+As presented in Sections~\ref{results_simple_template_matching} and~\ref{
 results_adaptive_template_matching}, the Simple and Adaptive Template Matching
 approaches showed some success when applied to the Motion
 Tracking Problem. However, the Simple Template Tracker was unable to cope with
@@ -64,7 +63,7 @@ localization approach based on the use of Co-occurrence Histograms as template
 features. A description of the theory underlying the implementation of CH-Detector 
 follows:
 
-\subsection{Color Co-occurrence Histograms}
+\subsection{Model Representation}
 A colour histogram is a binned count of pixel values over a particular image
 region, within a particular colour space. This entirely abstracts away the geometry of
 the image.
@@ -325,7 +324,7 @@ following equation:
 Using the Mean Shift Procedure outlined in Section~\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus locating
 our object in frame $\mathbf{f}_{k+1}$.
 
-\subsection{The General Algorithm}\label{theoretical_framework_mean_shift_algorithm}
+\subsection{MS-Tracker Algorithm}\label{theoretical_framework_mean_shift_algorithm}
 The general algorithm for Mean Shift Tracking between two frames is defined by
 flow chart in Figure~\ref{fig:mean_shift_tracking_algorithm}. This algorithm follows
 the optimized practical implementation expanded on by Comaniciu~\cite{Comaniciu2003}. 

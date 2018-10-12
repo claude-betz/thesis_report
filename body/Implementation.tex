@@ -8,12 +8,18 @@ are subsequently tested in Chapter~\ref{chapter_results}.
 
 
 \section{Colour Co-occurrence Histogram Detector}\label{implementation_ch}
-The implementation of the CH 
+The implementation of the CH-Detector follows directly from the algorithm
+description in Section~\ref{theoretical_framework_ch}.
+
+\subsection{Computing Model and Candidate CH's}
+
+
+\subsection{Computing the Similarity Measure}
 
 
 \section{Mean Shift Tracker}\label{implementation_mean_shift_tracker}
-The implementation follows directly from the General Algorithm description is
-Section~\ref{theoretical_framework_mean_shift_algorithm}.
+The implementation of the MS-Tracker follows directly from the algorithm
+description in Section~\ref{theoretical_framework_mean_shift_algorithm}.
 
 This Section begins by laying out some preliminaries choices for the algorithm
 implementation, then details the implementation of the various functions and
@@ -193,6 +199,8 @@ The implementation of the Mean Shift Loop in Listing~\ref{lst:loop}
 This Section deals with the Front-End implementation of the MOT system which is
 in form of a GUI implemented by use of the pyqt5 python3 library.
 
+The layout of the Layout follows the closely that of the mockup in
+Figure~\ref{fig:design_gui_mockup}
 
 
 
