@@ -64,7 +64,7 @@ localization approach based on the use of Co-occurrence Histograms as template
 features. A description of the theory underlying the implementation of CH-Detector 
 follows:
 
-\subsection{Color Co-occurrence Histograms, (CH)}
+\subsection{Color Co-occurrence Histograms}
 A colour histogram is a binned count of pixel values over a particular image
 region, within a particular colour space. This entirely abstracts away the geometry of
 the image.
@@ -131,8 +131,8 @@ where:
     \item $i,j$ iterates the source and destination quantized pixel countes level respectively over the
         region of interest.
 \end{itemize}
-Chang et al \cite{Chang1999} expresses the Intersection as a measure of how well the
-candidate CH accounts for the model CH. In taking the minimum between the two
+Chang et al~\cite{Chang1999} expresses the Intersection as a measure of how well the
+candidate accounts for the model CH\@. In taking the minimum between the two
 for each quantization level and distance two things are occurring. Firstly if a
 candidate has high counts for certain quantizations, the $I_{cm}$ ignores these
 by keeping the model counts. Conversely if a candidate has low counts for a
@@ -174,7 +174,7 @@ must be chosen. This choice could be anything from grayscale intensity, RGB
 intensity or Texture of the particular object. Objects are geometrically described 
 as elliptical sub-domains $\mathbf{D}$ of a frame, with dimensions $h_x$ and
 $h_y$, centered at pixel location $\mathbf{c}=(x,y)$ within the frame. (see
-Figure~\ref{fig:epanechnikov_kernel} for an illustration)
+Figure~\ref{fig:TF_epanechnikov_kernel} for an illustration)
 
 Target and candidate models are defined as pdf's within the chosen feature
 space defined over $\mathbf{D}$. In the initial frame, $\mathbf{f}_k$, a target
@@ -215,15 +215,15 @@ computationally convenient to pre-calculate its values for use in the subsequent
 derivation of the histogram.
 
 The calculation of the Epanechnikov Kernel Matrix for a particular $\mathbf{D}$ is
-illustrated in Figure~\ref{fig:epanechnikov_kernel}.
+illustrated in Figure~\ref{fig:TF_epanechnikov_kernel}.
 
-\Figure[width=0.8\columnwidth]{Illustration of Epanechnikov Matrix Derivation\label{fig:epanechnikov_kernel}}{design_epanechnikov_kernel_illustration}
+\Figure[width=0.8\columnwidth]{Illustration of Epanechnikov Matrix Derivation}{TF_epanechnikov_kernel}
 
 The pixels in the elliptical mask of the target/candidate are normalized to a unit
 circle by scaling the ellipse by $h_y$ and $h_x$ (which are the major and minor
 axes size of the ellipse). Each pixel is then assigned a weight according to the
 value of the 2D Epanechnikov Kernel profile for said pixel's normalized euclidean
-distance from the unit circle centre as illustrated in Figure~\ref{fig:epanechnikov_kernel}.
+distance from the unit circle centre as illustrated in Figure~\ref{fig:TF_epanechnikov_kernel}.
 
 These weights derived from the kernel profile are subsequently used to scale
 pixel counts when creating m-bin histogram. The monotonically decreasing Kernel
@@ -332,7 +332,7 @@ the optimized practical implementation expanded on by Comaniciu~\cite{Comaniciu2
 
 \Figure[width=0.75\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
 between two frames $\mathbf{f}_k$ and
-$\mathbf{f}_{k+1}$\label{fig:mean_shift_tracking_algorithm}}{design_mean_shift_tracking_algorithm}
+$\mathbf{f}_{k+1}$}{design_mean_shift_tracking_algorithm}
 
 The preceding theory for the basis for the implementation of the Mean Shift
 Tracker implemented in Chapter~\ref{chapter_implementation}.

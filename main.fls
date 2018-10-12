@@ -174,6 +174,7 @@ INPUT main.lof
 INPUT main.lof
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 OUTPUT main.lof
 INPUT main.lot
 INPUT main.lot
@@ -211,9 +212,9 @@ INPUT ./figures/methodology_v_diagram.pdf
 INPUT ./figures/methodology_v_diagram.pdf
 INPUT body/TheoreticalFramework.tex
 INPUT body/TheoreticalFramework.tex
-INPUT figures/design_epanechnikov_kernel_illustration.pdf
-INPUT ./figures/design_epanechnikov_kernel_illustration.pdf
-INPUT ./figures/design_epanechnikov_kernel_illustration.pdf
+INPUT figures/TF_epanechnikov_kernel.pdf
+INPUT ./figures/TF_epanechnikov_kernel.pdf
+INPUT ./figures/TF_epanechnikov_kernel.pdf
 INPUT figures/design_mean_shift_tracking_algorithm.pdf
 INPUT ./figures/design_mean_shift_tracking_algorithm.pdf
 INPUT ./figures/design_mean_shift_tracking_algorithm.pdf
@@ -226,12 +227,12 @@ INPUT body/Design.tex
 INPUT figures/design_system_overview.pdf
 INPUT ./figures/design_system_overview.pdf
 INPUT ./figures/design_system_overview.pdf
-INPUT figures/design_gui_mockup.png
-INPUT ./figures/design_gui_mockup.png
-INPUT ./figures/design_gui_mockup.png
 INPUT figures/design_uml.pdf
 INPUT ./figures/design_uml.pdf
 INPUT ./figures/design_uml.pdf
+INPUT figures/design_gui_mockup.png
+INPUT ./figures/design_gui_mockup.png
+INPUT ./figures/design_gui_mockup.png
 INPUT body/Implementation.tex
 INPUT body/Implementation.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
@@ -344,6 +345,13 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
+INPUT figures/results/mean_shift_tracker/results_m_pdf.png
+INPUT ./figures/results/mean_shift_tracker/results_m_pdf.png
+INPUT ./figures/results/mean_shift_tracker/results_m_pdf.png
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT figures/results/mean_shift_tracker/results_m_bc.png
+INPUT ./figures/results/mean_shift_tracker/results_m_bc.png
+INPUT ./figures/results/mean_shift_tracker/results_m_bc.png
 INPUT figures/results/mean_shift_tracker/fish3/occlusion/1.jpg
 INPUT ./figures/results/mean_shift_tracker/fish3/occlusion/1.jpg
 INPUT ./figures/results/mean_shift_tracker/fish3/occlusion/1.jpg
@@ -600,7 +608,6 @@ INPUT body/Conclusion.tex
 INPUT body/Conclusion.tex
 INPUT main.bbl
 INPUT main.bbl
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT body/Appendices.tex
 INPUT body/Appendices.tex
 INPUT main.aux
@@ -620,6 +627,7 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb

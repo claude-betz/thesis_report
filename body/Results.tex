@@ -100,8 +100,7 @@ $\mathbf{f}_{k-1}$. becomes the template for $\mathbf{f}_k$.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/taxi_sequence/16.jpg}} \\   
 
         \end{tabular}}
-    \caption{Adaptive Template Tracking Hamburg Sequence\label{fig:adaptive_template_tracking}
- }
+    \caption{Adaptive Template Tracking Hamburg Sequence\label{fig:adaptive_template_tracking}}
 \end{figure}
 
 From Figure~\ref{fig:adaptive_template_tracking} it shows that the Adaptive
@@ -110,12 +109,12 @@ of the sequence. It should however be noted that there is a noticeable ``drift''
 the localisation. 
 This is due to the fact that the template selected does not solely 
 
-\section{Colour Co-occurrence Histogram}
-This Section details the 
+\section{Colour Co-occurrence Histogram Detector}
+This Section details the results of the CH-Detector implemented in
+Section~\ref{implementation_ch}.
 
-
-\section{Mean Shift Tracking}
-This Section deals with the analysis of the Mean Shift Tracker
+\section{Mean Shift Tracker}
+This Section deals with the analysis of the Mean Shift Tracker (MST)
 implemented in Section~\ref{implementation_mean_shift_tracker}. The analysis is
 broken down into a set of experiments,
 
@@ -126,7 +125,7 @@ shift tracker.
     \item $m$ - bin count of histograms
     \item $(h_x,h_y)$ - kernel dimensions and positioning around or on object
 \end{itemize}
-We subsequently assess the performance of the Mean Shift Tracker implementation
+We subsequently assess the performance of the MST implementation
 for varying parameters $\epsilon$ and $m$ for the sequence in order to see the
 effect their on tracker performance, the goal being to select reasonable values
 for the two parameters to asses the general practical performance of the Mean
@@ -139,9 +138,43 @@ in Section~\ref{literature_review_challenges}.
 The image sequences presented are taken from the datasets provided by the VOT2017
 challenge \cite{VOT_TPAMI}.
 
-\subsection{Step Size, $\epsilon$}
 
-\subsection{Bin Count, $m$}
+\subsection{Effect of Step Size, $\epsilon$ on MST}\label{results_eps}
+
+
+\subsection{Bin Count, $m$ on MST Execution time}\label{results_m}
+This Experiment aims to quantitatively determine the effect of varying the
+bin count, $m$ on the execution time of calculating the histogram, and computing
+the Bhattacharyya coefficient.
+
+The setup is simple enough, the execution time of the \textit{get\_pdf()} and
+\textit{get\_BC()} functions was averaged over 1000 iterations for varying
+values of m for a template of dimensions (100,100).
+
+The effect of varying $m$ on histogram generation is shown in
+Figure~\ref{fig:results_m_pdf}. There is not significant trend shown between the
+bin count and the execution time of the get\_pdf() function. This makes sense
+because we still iterate over all the pixels to allocate each of them to a
+particular bin. The access time of the bins in the underlying numpy array is not
+a significant bottle neck for array sizes (bin counts) ranging 1 to 256.
+
+The effect of varying $m$ on the calculation of the Bhattacharyya coefficient is
+detailed in Figure~\ref{fig:results_m_bc}. The execution time of the get\_BC() goes  
+
+\Figure[width=0.7\columnwidth]{Graph showing effect of bin size (m) on execution time (ms) of \textit{get\_pdf()}}{results/mean_shift_tracker/results_m_pdf}
+
+\Figure[width=0.7\columnwidth]{Graph showing effect of bin size (m) on execution time (ms) of \textit{get\_BC()}}{results/mean_shift_tracker/results_m_bc}
+
+
+The Experiments 1-3 aim to assess performance of the MST in dealing with the
+various motion tracking challenges, for varying sizes of Kernel initialisation.
+The general idea is to compare the performance of a large kernel (Yellow)
+encompassing the whole Object of Interest, and a smaller kernel (Green), that is
+initialised around some feature of the larger object. 
+
+For the subsequent experiments, the parameters $\epsilon$ and $m$ of the MST are
+kept constant as $\epsilon=5$ and $m=8$. These choices were informed by the results in
+Sections~\ref{results_eps} and~\ref{results_m}. 
 
 \subsection{Experiment 1: Fish}
 This sequence is one in which there are several fish, of which a distinctly yellow fish is
@@ -189,7 +222,7 @@ is represented in Figure~\ref{fig:mean_shift_partial_occlusion}.
 \end{figure}
 
 Our target, the yellow fish remains stationary from
-$\mathbf{F_1}$ to $\mathbf{F_16}$. Both kernels are unaffected by the second
+$\mathbf{F_{1}}$ to $\mathbf{F_{16}}$. Both kernels are unaffected by the second
 gray fish, occupying the same pixel space as our target. The tracker proves to be
 robust to this form of occlusion and track overlap.
 This is due to the fact that the target fish and the second fish are easily
@@ -323,7 +356,7 @@ The challenges presented by this sequence are the following:
 \subsubsection{Target Speed}\label{mean_shift_target_speed}
 The relevant subsequence ranges from $\mathbf{f}_{202}$ to $\mathbf{f}_{250}$
 in the original sequence.
-In Figure~\ref{fig:mean_shift_ant_speed}, $\mathbf{F}_{13}$ to $\mathbf{F}_{16}$
+In Figure~\ref{fig:mean_shift_target_speed}, $\mathbf{F}_{13}$ to $\mathbf{F}_{16}$
 highlight this issue, as can be seen by the Green Kernel failing to track the
 Ant for the due to its relatively large inter-frame displacement.
 
