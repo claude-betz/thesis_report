@@ -93,15 +93,12 @@ specified as $n_c$. (see Appendix~\ref{appendix_A} for a review of the kmeans
 algorithm). 
 
 With this we can settle on a definition for our CH feature as
-$$\text{CH} = \{D,\mathbf{C}_d\}, d\in{D}$$
-where:
-\begin{itemize}
-    \item $D$ represents $n_d$ quantized distances.
-    \item $\mathbf{C}_d = \{{c_{src} \times c_{dst}\}_d}$ where $c_{src}$ and
-        $c_{dst}$ index the frequencies/counts of the quantized source and destination
-        pixels within an image at each distance, $d \in
-        \mathbf{D}$.
-\end{itemize}
+$$\text{CH} = \{C_d\}_{d \in D}$$ 
+where $C_d \in \mathbb{Z}^{n_c \times n_c}$ index the
+frequencies/counts of the quantized source and destination pixels within an
+image at each distance $d \in D$. Row and column indices of
+$C_d$, $(i,j)$ represent source and destination bins respectively.  
+
 
 \subsection{Similarity Measure}\label{theoretical_framework_intersection}
 The problem is here is fundamentally similar to that in the Simple Template

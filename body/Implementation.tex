@@ -21,6 +21,42 @@ The implementation of the CH-Detector follows directly from the algorithm
 description in Section~\ref{theoretical_framework_ch}.
 
 \subsection{Computing Model and Candidate CH's}
+The model and candidate CH's are computed by separate functions. The reason for
+this is that the 
+Computing the model CH is implemented in the \textbf{get\_model\_CH (template,nc,nd)}
+function this
+
+\begin{lstlisting}[language=Python, caption={Computing model CH}, captionpos=b, label={lst:pdf}]
+def get_model_CH(template, nc, nd):
+    """computes overall CH along vertical and horizontal axes"""
+    # step1: quantize rgb colourspace according to nc
+    kmeans, q_labels2d = RGB_quantize_model(template, nc)
+    
+    # step2: compute vertical and horizontal CH's
+    CH_v  = CH_vertical(q_labels2d, nc, nd) # compute vertical CH
+    CH_h  = CH_horizontal(q_labels2d, nc, nd) # compute horizontal CH
+    CH_pd = CH_pos_diagonal(q_labels2d, nc, nd) # compute positve diagonal CH
+    CH_nd = CH_neg_diagonal(q_labels2d, nc, nd) # compute negative diagonal CH
+
+    # step3: combine and return overall model CH
+    return kmeans, np.sum((CH_v, CH_h, CH_pd, CH_nd), axis=0)
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:pdf}]
+def get_candidate_CH(kmeans, template, nc, nd):
+    """computes overall CH along vertical and horizontal axes"""
+    # step1: quantize rgb colourspace according to nc
+    q_labels2d = RGB_quantize_candidate(kmeans, template, nc)
+    
+    # step2: compute vertical and horizontal CH's
+    CH_v  = CH_vertical(q_labels2d, nc, nd) # compute vertical CH
+    CH_h  = CH_horizontal(q_labels2d, nc, nd) # compute horizontal CH
+    CH_pd = CH_pos_diagonal(q_labels2d, nc, nd) # compute positve diagonal CH
+    CH_nd = CH_neg_diagonal(q_labels2d, nc, nd) # compute negative diagonal CH
+
+    # step3: combine and return overall candidate CH
+    return np.sum((CH_v, CH_h, CH_pd, CH_nd), axis=0)
+\end{lstlisting}
 
 
 \subsection{Computing the Similarity Measure}
@@ -113,7 +149,7 @@ def pixel_weights(template, q, p, m=8):
     for y in range(0,height):
         for x in range(0,width): 
             if(elliptical_mask[y,x]==True):  
-                u, v = template[y,x,0], template[y,x,1] # get colour index ,u 
+                u, v = template[y,x,0], template[y,x,1] # get colour index, u 
                 index_r, index_g = u//m, v//m # used to index 2d-histogram
                 if(p[index_r,index_g]>0): # stop infinity division
                     weights[y,x] = np.sqrt(q[index_r,index_g]/p[index_r,index_g]) # comp weight
