@@ -140,16 +140,15 @@ model's high quantized counts they are taken pulling the $I_{cm}$ down.
 The similarity is measured on a scale from 0 to to the highest possible value of
 $I_{cm}$ which is a perfect match obtained by the auto-intersection of our
 model $I_{mm}$.
-The criteria for finding an object is therefore presented by a Threshold which
+The criteria for finding an object is therefore presented by a Threshold, $\tau$ which
 is a fraction, $\alpha$ of the maximum possible Intersection $I_{mm}$
-$$T=\alpha I_{mm}$$
+$$\tau=\alpha I_{mm}$$
 
 
 \subsection{CH-Detector Algorithm}
-The general CH Search algorithm is shown in Figure~\ref{algorithm_ch}
+The general CH Search algorithm is shown in Figure~\ref{fig:design_algorithm_CH}
 
-The preceding theory forms the basis of the implementation in Section~\ref{implementation_ch}
-
+\Figure[width=0.65\columnwidth]{Flow Chart of Co-occurrence Histogram Localisation Algorithm for $\mathbf{f}_k$}{design_algorithm_CH}
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
 As summarised in Section~\ref{literature_review_mean_shift}, the Mean Shift Tracker was
@@ -329,9 +328,7 @@ The general algorithm for Mean Shift Tracking between two frames is defined by
 flow chart in Figure~\ref{fig:mean_shift_tracking_algorithm}. This algorithm follows
 the optimized practical implementation expanded on by Comaniciu~\cite{Comaniciu2003}. 
 
-\Figure[width=0.75\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm
-between two frames $\mathbf{f}_k$ and
-$\mathbf{f}_{k+1}$}{design_mean_shift_tracking_algorithm}
+\Figure[width=0.75\columnwidth]{Flow Chart of Mean Shift Tracking Algorithm between two frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$}{design_mean_shift_tracking_algorithm}
 
 The preceding theory for the basis for the implementation of the Mean Shift
 Tracker implemented in Chapter~\ref{chapter_implementation}.
