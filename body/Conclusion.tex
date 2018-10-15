@@ -3,15 +3,37 @@ This Chapter discusses the implications of the results obtained in
 Chapter~\ref{chapter_results}. 
 
 \section{Template Matching Tracker}
+The Simple Template Tracker implementation was only slightly effective in
+managing to track even the simplest of sequences. It is clear that Simple Template
+Matching applied to every frame of a sequence does the necessary built-in
+flexibility towards even subtle changes in target appearance between frames.
 
+The Adaptive Template Tracker implementation showed some promise in solving the
+tracking problem. Where the Simple Template Tracker failed in tracking the
+Taxi in the Hamburg Taxi Sequence, The adaptive Tracker succeeded for the
+duration of the sequence. 
+The approach of updating the template with the detected region in each
+$\mathbf{f}_k$ to be used in $\mathbf{f}_{k+1}$ partly allowed the tracker to
+deal with changes in object appearance in subsequent frames. However, the
+approach did not have a means to effectively center the detected region, hence
+over long sequence the tracker would exhibit ``drift'', eventually losing the
+object to be tracked as more and more background noise was added to the model at
+each update.
 
-
-\subsection{Simple Template Matching}
-
-\subsection{Adaptive Template Matching}
-
+In addition, when faced with the Challenge of Occlusion, the adaptive tracker
+would -depending on it's similarity threshold, $\tau$- either fail to locate the
+object in the case of a larger $\tau$ and rapid occlusion between successive
+frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ or add the occlusion to the target
+model in the case of a lower $\tau$, and a slowly progressing occlusion between
+$\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
 
 \section{Colour Co-occurrence Histogram Detector}
+Still within the sphere of Detection-Based Tracking, and an Feature-Based
+Template Matching approach, the Co-occurrence Histogram Detector was pursued largely as an
+experiment to gauge, whether Template Matching Tracking can be extended to deal
+with some of the Motion Tracking Challenges. 
+Where the Simple And
+
 
 \section{Mean Shift Tracker}
 

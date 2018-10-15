@@ -1,4 +1,4 @@
-\chapter{Results}\label{chapter_results}
+\chapter{Results and Analysis}\label{chapter_results}
 
 This Chapter is concerned with the presentation of the results of a practical
 application of the algorithms implemented in
@@ -110,27 +110,65 @@ the localisation.
 This is due to the fact that the algorithm has no way of controlling the amount of
 background noise that is allowed into the template.
 
+\begin{figure}     
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cccc}
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/2.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/3.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/4.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/5.jpg}} \\
+
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/6.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/7.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/8.jpg}} &
+        \subfloat{\includegraphics[width = 1.5in]{figures/results/adaptive_template_tracker/girl/9.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/10.jpg}} &
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/11.jpg}} &
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/12.jpg}} &
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/13.jpg}} \\
+       
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/14.jpg}} &
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/15.jpg}} &
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/16.jpg}} &
+        \subfloat{\includegraphics[width = 0.3in]{figures/results/adaptive_template_tracker/girl/17.jpg}} \\   
+
+        \end{tabular}}
+    \caption{Adaptive Template Tracker vs Occlusion\label{fig:adaptive_template_occlusion}}
+\end{figure}
+
+Figure~\ref{fig:adaptive_template_occlusion} shows the performance of the
+adaptive template tracker when faced by occlusion. Depending on it's similarity
+threshold $\tau$, the Adaptive Template Tracker either fails to locate the
+object in the case of a larger $\tau$ and rapid occlusion between successive
+frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ or adds the occlusion to the
+target model in the case of a lower $\tau$, and a slowly progressing occlusion
+between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$, as is the case in
+Figure~\ref{fig:adaptive_template_occlusion}, where the frames and their
+corresponding target models (updated templates) are shown. 
+
+
 \section{Colour Co-occurrence Histogram Detector}
 This Section details the results of the CH-Detector implemented in
 Section~\ref{implementation_ch}.
 
 \subsection{Detection against Occlussion}
-As discussed in Section~\ref{theoretical_framework_ch}, the rational behind
+As discussed in Section~\ref{theoretical_framework_ch}, the rationale behind
 implementing the CH-Detector is assessing whether it could overcome the
 shortcomings of the Template Matching approaches in terms of drift and lack of
 generalisation.
 
 The Adaptive Template Tracker failed immediately when faced with the challenge
 of occlusion in the Girl sequence. We apply the CH-Detector to Occlusion on the
-same challenge within sequence. To see whether it can successfully overcome the
+same challenge within the Girl sequence. To see whether it can successfully overcome the
 challenge of occlusion.
 
-In the experiment is performed as follows, We extract the model of the girl in
+The experiment is performed as follows, We extract the model of the girl in
 $\mathbf{f}_0$ of the sequence. We then proceed to use this model to localize
 the frame in another frame, $\mathbf{f}_{138}$ was chose since it exhibits
 occlusion of the model. 
 
-The localization is performed by a two level hierarchical as described in
+The localization is performed by a two level search as described in
 Section~\ref{implementation_ch}, with parameters $n_c=8$ and $n_d=12$ which
 \cite{Change} rigorously proves to be the optimal values to minimize the False
 Alarm Probability. (see Section~\ref{theoretical_framework_ch}).
@@ -275,6 +313,7 @@ not drift.
 
 \subsubsection{Changing Orientation}
 
+
 \begin{figure}     
     \makebox[\linewidth][c]{
     \begin{tabular}{cccc}
@@ -346,16 +385,26 @@ $\mathbf{f}_{127}$ in the original sequence and is presented in Figure~\ref{fig:
     \caption{Challenge: Complete Occlusion\label{fig:mean_shift_complete_occlusion}}
 \end{figure}
 
-Figure~\ref{fig:mean_shift_complete_occlusion} shows the Mean Shift Tracker
-managing to stay relocate the Girl after a man completely obscures her, we see
-that the smaller Green Kernel is offset by man for a bit, whereby the larger
-Yellow Kernel remains relatively stable.
-The Green Kernel behaviour can be explained by the fact that it's model
-$\hat(q)$ was defined solely around the Girl's yellow top. This is sufficiently
-close for the Man's white top to cause a small drift which lasts only until the
-girl is visible again upon which the.
+In Figure~\ref{fig:mean_shift_complete_occlusion}, $\mathbf{F}_4$ to
+$\mathbf{F}_{13}$ show that the Mean Shift Tracker is able to relocate the Girl
+within after a man completely occludes her. We see that the smaller Green Kernel
+is offset by man for a bit, whereby the larger Yellow Kernel remains relatively
+stable. The Green Kernel behaviour can be explained by the fact that it's model,
+$\hat{q}$ was defined solely around the Girl's yellow top. This is sufficiently
+close for the Man's white top within the RGB colour-space to cause a small drift
+in the kernel which lasts only until the girl is visible again upon which the
+tracker is pulled back towards the girl as she is the once again the local
+maximum of our similarity measure $\rho$.
 
 \subsubsection{Scaling}
+The Challenge of Scaling is exhibited in Figure~\ref{fig:mean_shift_girl_scale}
+in which the Girl is walking away from the camera, the result being that her
+dimensions within the frame are becoming smaller.
+
+The Sequence shows that the girl is successfully tracked within until the
+completion of the sequence by both the initialised Kernels. The robustness is
+likely in part due to the distinct nature of her attire when compared to the
+rest of the scene. 
 
 \begin{figure} 
     \makebox[\linewidth][c]{
@@ -383,9 +432,10 @@ girl is visible again upon which the.
     \caption{Challenge: Scale Change\label{fig:mean_shift_girl_scale}}
 \end{figure}
 
-
 \subsection{Experiment 3: Ants}
-This image sequence is of multiple ants in motion within a Petri dish.
+This image sequence is of multiple ants in motion within a Petri dish. The Ants
+are almost identical, with some being marked by a colourful mark on the abdomen
+to likely help distinguish them in analysis.
 
 The challenges presented by this sequence are the following:
 \begin{itemize}
@@ -395,10 +445,9 @@ The challenges presented by this sequence are the following:
 
 \subsubsection{Target Speed}\label{mean_shift_target_speed}
 The relevant subsequence ranges from $\mathbf{f}_{202}$ to $\mathbf{f}_{250}$
-in the original sequence.
-In Figure~\ref{fig:mean_shift_target_speed}, $\mathbf{F}_{13}$ to $\mathbf{F}_{16}$
-highlight this issue, as can be seen by the Green Kernel failing to track the
-Ant for the due to its relatively large inter-frame displacement.
+in the original sequence. In Figure~\ref{fig:mean_shift_target_speed}, frames
+$\mathbf{F}_{13}$ to $\mathbf{F}_{16}$ highlight this issue, as can be seen by
+the Green Kernel failing to track the Ant.
 
 \begin{figure}
     \makebox[\linewidth][c]{
@@ -423,7 +472,7 @@ Ant for the due to its relatively large inter-frame displacement.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/15.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/16.jpg}} \\   
     \end{tabular}}
-    \caption{Challenge: target speed losing small kernel\label{fig:mean_shift_ant_speed}}
+    \caption{Challenge: Target Speed: Small Kernel loses Ant\label{fig:mean_shift_ant_speed}}
 \end{figure}
 
 \begin{figure}
@@ -434,7 +483,7 @@ Ant for the due to its relatively large inter-frame displacement.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/3.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/4.jpg}} \\
     \end{tabular}}
-    \caption{Challenge: target speed losing large kernel\label{fig_mean_shift_ant_speed2}}
+    \caption{Challenge: Target Speed: Large Kernel loses Ant\label{fig_mean_shift_ant_speed2}}
 \end{figure}
 
 Keeping in mind that a digital video is a sampling of an analogue scene.
@@ -485,7 +534,7 @@ used, it would mean higher redundancy between frames with smaller $\delta$
 values. An impractical solution therefore could be to try and obtain the
 same sequence again, but sampled at a higher $f_s$.
 
-This is likely unfeasible. Furthermore, one can imaging situations in which the
+This is likely unfeasible. Furthermore, one can easily imagine situations in which the
 available technology is constrained by factors such as budget, size etc. In such
 situations, we would still like to be able to track our object of interest.  A
 possible solution could be to augment the basic Mean Shift Algorithm with other
