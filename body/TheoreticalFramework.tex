@@ -120,7 +120,9 @@ searching with a larger search window, and hierarchically refining the search
 window.
 
 The Intersection between a model and candidate histogram is defined as
-$$I_{cm} = \sum_{k=0}^{n_d}\sum_{i=0}^{n_c}\sum_{j=0}^{n_c} = min[(CH_m(k,i,j),CH_c(k,i,j))]$$
+\begin{equation}\label{eqn:intersection}
+    I_{cm} = \sum_{k=0}^{n_d}\sum_{i=0}^{n_c}\sum_{j=0}^{n_c} = min[(CH_m(k,i,j),CH_c(k,i,j))]
+\end{equation}
 where:
 \begin{itemize}
     \item $k$ iterates the $n_d$ distances of the CH lattice.
@@ -143,9 +145,20 @@ $$\tau=\alpha I_{mm}$$
 
 
 \subsection{CH-Detector Algorithm}
-The general CH Search algorithm is shown in Figure~\ref{fig:design_algorithm_CH}
 
 \Figure[width=0.65\columnwidth]{Flow Chart of Co-occurrence Histogram Localisation Algorithm for $\mathbf{f}_k$}{design_algorithm_CH}
+
+The general CH Search algorithm is shown in
+Figure~\ref{fig:design_algorithm_CH}. Given the model CH $q$ and number of
+levels in the search $n$, The localisation algorithm specifies the search window
+size $w$ of dimensions scaled by $sf_n$ for a particular $n$. The Search
+Algorithm then convolves this search window with the image with a specific step
+and at each overlap computes the Intersection of the candidate and the known
+model CH's $q$.  At the end of a Search, the best match of a particular level
+$n$ is then fed back to the lower level for a more refined search, for which the
+localisation algorithm defines a refined search window. At the lowest search
+level where $n=0$, the object is located.
+
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
 As summarised in Section~\ref{literature_review_mean_shift}, the Mean Shift Tracker was

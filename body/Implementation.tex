@@ -21,12 +21,15 @@ The implementation of the CH-Detector follows directly from the algorithm
 description in Section~\ref{theoretical_framework_ch}.
 
 \subsection{Computing Model and Candidate CH's}
-The model and candidate CH's are computed by separate functions. The reason for
-this is that the 
-Computing the model CH is implemented in the \textbf{get\_model\_CH (template,nc,nd)}
-function this
+The model and candidate CH's are computed by the \textit{get\_model\_CH
+(template,nc,nd)} and \textit{get\_candidate\_CH (kmeans,template,nc,nd)}
+functions respectively.
 
-\begin{lstlisting}[language=Python, caption={Computing model CH}, captionpos=b, label={lst:pdf}]
+The model is quantized by the kmeans algorithms and returns the model which is
+then used to subsequently quantize candidates. The two function implementations
+are shown in Listings~\ref{lst:chmod} and~\ref{lst:chcand}.
+
+\begin{lstlisting}[language=Python, caption={Computing model CH}, captionpos=b, label={lst:chmod}]
 def get_model_CH(template, nc, nd):
     """computes overall CH along vertical and horizontal axes"""
     # step1: quantize rgb colourspace according to nc
@@ -42,7 +45,7 @@ def get_model_CH(template, nc, nd):
     return kmeans, np.sum((CH_v, CH_h, CH_pd, CH_nd), axis=0)
 \end{lstlisting}
 
-\begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:pdf}]
+\begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:chcand}]
 def get_candidate_CH(kmeans, template, nc, nd):
     """computes overall CH along vertical and horizontal axes"""
     # step1: quantize rgb colourspace according to nc
@@ -58,8 +61,84 @@ def get_candidate_CH(kmeans, template, nc, nd):
     return np.sum((CH_v, CH_h, CH_pd, CH_nd), axis=0)
 \end{lstlisting}
 
-
 \subsection{Computing the Similarity Measure}
+The Co-occurrence Histogram Intersection as expressed in
+Equation~\ref{eqn:intersection} is computed by the code in Listing~\ref{lst:intersection}
+
+\begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:intersection}]
+def intersection(CH_1, CH_2, nc, nd):
+    """computes the intersection between two Colour Co-occurrence Histograms""" 
+    I = 0 # intersection
+    for k in range(0, nd):
+        for i in range(0, nc):
+            for j in range(0, nc):
+                I = I + np.minimum(CH_1[k,i,j], CH_2[k,i,j])
+    return I # return the intersection of CH_1 and CH_2
+\end{lstlisting}
+
+\subsection{Co-occurrence Histogram Detection Algorithm}
+The detection algorithm as described in Figure~\ref{fig:design_algorithm_CH}
+is computed by a coarse and fine grained search of the frame of interest. 
+The implementation shown in Listings~\ref{lst:localisation} performs a two level
+search. In the coarse search, the search window has has twice the dimensions of the
+template we wish to locate and a step equal to the template dimensions. The
+coarse search returns a sub-region of the frame which becomes the frame in the
+fine grained search. 
+
+The fine grained search then operates within the best location of the coarse
+search with dimensions of the template and a step size of a quarter of the
+template dimensions for accurate localisation of the template within the
+sub-region identified within the coarse search.
+
+
+\subsubsection{Localisation Algorithm}
+The localisation implementation is show in Listing~\ref{lst:localisation}.
+
+\begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:localisation}]
+def localize(template, frame, nc, nd, alpha=0.8):
+    # obtain dimensions of frame, model and search window
+    height, width = frame.shape[0], frame.shape[1] # frame dimensions
+    model_height, model_width = template.shape[0], template.shape[1] # model dimensions
+    sw_height0, sw_width0 = 2*model_height, 2*model_width # search window dimensions
+    step_y = sw_height0//2 # y step for search window 0
+    step_x = sw_width0//2 # x step for search window 0
+    
+    # obtain model CH
+    kmeans, CH_m = CH_overall_model(template, nc, nd) 
+
+    # coarse search
+    y0, x0 = search(kmeans, frame, CH_m, sw_height0, sw_width0, step_y, step_x, nc, nd, alpha) 
+    
+    # fine search
+    refined_frame = frame[y0:y0+sw_height0, x0:x0+sw_width0] # search within best coarse result
+    sw_height1, sw_width1 = model_height, *model_width # search window dimensions
+    step_y = sw_height1//4
+    step_x = sw_width1//4
+    y1, x1 = search(kmeans, refined_frame, CH_m, sw_height1, sw_width1, step_y, step_x, nc, nd, alpha)  
+    return (x1, y1, model_width, model_height) # location of object in frame
+\end{lstlisting}
+
+\subsubsection{Search Algorithm}
+The search algorithm as defined in Figure~\ref{fig:design_algorithm_CH} is shown
+in Listing~\ref{lst:search}
+\begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:search}]
+def search(kmeans, frame, CH_m, sw_height, sw_width, step_y, step_x, nc, nd, alpha):
+    """performs course search for particular model CH in frame"""
+    height, width = frame.shape[0], frame.shape[1] # frame dimensions 
+    I_mm = CH_intersection(CH_m, CH_m, nc, nd) # compute I_mm 
+    I_best, y_best, x_best = 0, 0, 0
+    
+    for y in range(0,height-step_y-1,step_y):
+        for x in range(0,width-step_x-1,step_x):
+            candidate = frame[y:y+sw_height, x:x+sw_width] # candidate window 
+            CH_c = CH_overall_candidate(kmeans, candidate, nc, nd) # compute candidate CH
+            I_cm = CH_intersection(CH_c, CH_m, nc, nd)
+            if(I_cm > alpha*I_mm and I_cm > I_best): # check I_cm match against threshold and best match
+                I_best = I_cm # update best Intersection
+                y_best, x_best = y, x # update best coordinates            
+    return y_best, x_best # return best match
+\end{lstlisting}
+
 
 
 \section{Mean Shift Tracker}\label{implementation_mean_shift_tracker}
@@ -80,7 +159,7 @@ An implementation should allow for variations of these parameters.
 
 \subsection{Computing Target and Candidate pdfs}
 Computing a pdf for a particular region of interest according to 
-Equation~\ref{eqn:mean_shift_histogram} is performed by the \textbf{get\_pdf
+Equation~\ref{eqn:mean_shift_histogram} is performed by the \textit{get\_pdf
 (template, m)} method shown in Listing~\ref{lst:pdf}.
 
 \begin{lstlisting}[language=Python, caption={Computing pdf}, captionpos=b, label={lst:pdf}]
@@ -134,7 +213,7 @@ def bhatt_coeff(q, p):
 
 \subsection{Computing pixel weights}
 Computing the pixel weights within the region of interest is performed by the
-method \textbf{get\_weights (roi, q, p, m=8)} in Listing~\ref{lst:weights} according to Equation~\ref{eqn:mean_shift_weights}.
+method \textit{get\_weights (roi, q, p, m=8)} in Listing~\ref{lst:weights} according to Equation~\ref{eqn:mean_shift_weights}.
 
 \begin{lstlisting}[language=Python, caption={Computing Mean Shift Weights}, captionpos=b, label={lst:weights}]
 def pixel_weights(template, q, p, m=8):
@@ -156,10 +235,10 @@ def pixel_weights(template, q, p, m=8):
     return weights 
 \end{lstlisting}
 
-The implementation of listing~\ref{lst:weights} requires the following methods to
+The implementation of Listing~\ref{lst:weights} requires the following methods to
 be available. See Appendix~\ref{appendix_A} for code listings of their implementation. 
 \begin{itemize}
-    \item get\_elliptical\_mask (height, width)
+    \item \textit{get\_elliptical\_mask (height, width)}
 \end{itemize}
 
 \subsection{Computing Mean Shift Vector}

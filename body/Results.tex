@@ -467,8 +467,8 @@ We do see that the larger Yellow Kernel manages to track the Ant successfully
 from $\mathbf{F_1}$ to $\mathbf{F_7}$ before changing tracks for a better closer
 candidate as elaborated in section~\ref{mean_shift_track_overlap}.
 Figure~\ref{fig:mean_shift_ant_speed2} shows $f_{271}$ to $f_{274}$ of the original
-sequence, highlighting that even the larger Yellow Kernel can to track the if
-at sufficiently high inter-frame displacement.
+sequence, highlighting that even the larger Yellow Kernel can fail to track the
+Object for a sufficiently high inter-frame displacement.
 
 The results in Figures~\ref{mean_shift_ant_speed} tell us
 that a larger kernel larger kernel size is more robust to the effects of large
@@ -518,7 +518,7 @@ closer to $A_0$ in $\mathbf{f}_{k+1}$, which makes the mean shift iteration
 likely to pick $A_1$ as the target location in $\mathbf{f}_{k+1}$
 
 \section{Graphical User Interface}
-The implemented GUI System is shown below in Figure~\ref{fig:results_gui}
+The implemented GUI System is shown below in Figure~\ref{fig:results/gui/first_look}
 
 \Figure[width=1\columnwidth]{Image of the MOT System GUI implementation applying
 the MS-Tracker to a fish sequence}{results/gui/first_look}
@@ -527,8 +527,9 @@ the MS-Tracker to a fish sequence}{results/gui/first_look}
 The GUI allows a user to select and 
 
 \subsection{Algorithm Integration}
-The three algorithms discussed in Section~\ref{chapter_theoretical_framework}successfully integrated with the Front-end GUI. Their usage
-within the GUI is shown in the subsequence sections.
+The three algorithms discussed in Section~\ref{chapter_theoretical_framework}
+successfully integrated with the Front-end GUI. Their usage within the GUI is
+shown in the subsequence sections.
 
 \subsubsection{Template Trackers}
 
