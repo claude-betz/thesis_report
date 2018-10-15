@@ -1,6 +1,7 @@
 \chapter{Conclusion}
-This Chapter discusses the implications of the results obtained in
-Chapter~\ref{chapter_results}. 
+This Chapter discusses the Conclusions that can be drawn from the Results
+and Analyses of the Detection and Tracking approaches when applied to Image
+Sequences, as presented in Chapter~\ref{chapter_results}.
 
 \section{Template Matching Tracker}
 The Simple Template Tracker implementation was only slightly effective in
@@ -20,19 +21,31 @@ over long sequence the tracker would exhibit ``drift'', eventually losing the
 object to be tracked as more and more background noise was added to the model at
 each update.
 
-In addition, when faced with the Challenge of Occlusion, the adaptive tracker
-would -depending on it's similarity threshold, $\tau$- either fail to locate the
-object in the case of a larger $\tau$ and rapid occlusion between successive
-frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ or add the occlusion to the target
-model in the case of a lower $\tau$, and a slowly progressing occlusion between
-$\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
+In addition, when faced with the Challenge of Occlusion, depending on it's
+similarity threshold $\tau$ and the rate at which the occlusion covers the
+target between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$, the Adaptive Template
+Tracker either fails to locate the target or incorporates the occlusion into
+subsequent target models.
 
 \section{Colour Co-occurrence Histogram Detector}
 Still within the sphere of Detection-Based Tracking, and an Feature-Based
 Template Matching approach, the Co-occurrence Histogram Detector was pursued largely as an
 experiment to gauge, whether Template Matching Tracking can be extended to deal
 with some of the Motion Tracking Challenges. 
-Where the Simple And
+Picking up from where the Adaptive Template Tracker failed, the CCH Detector was
+trialed to see whether it could overcome the Challenge of Occlusion.
+
+The approach was able to detect the model of the girl obtained from
+$\mathbf{f}_0$ in a subsequent frame $\mathbf{f}_{139}$ despite the target being
+significantly occluded. 
+The method was however very sensitive to template selection, with small
+variations in template dimensions resulting in failures, and this keeping in
+mind that the target -the Girl- is a significantly distinct object from it's
+background.
+
+Furthermore, the execution time in computing the Colour Co-occurrence Histogram
+feature is a significant bottleneck in the execution time of the Detector,
+limiting it's applicability.
 
 
 \section{Mean Shift Tracker}

@@ -20,14 +20,16 @@ through instance variables.
 The implementation of the CH-Detector follows directly from the algorithm
 description in Section~\ref{theoretical_framework_ch}.
 
-\subsection{Computing Model and Candidate CH's}
-The model and candidate CH's are computed by the \textit{get\_model\_CH
+\subsection{Computing Model and Candidate CCH's}
+The model and candidate CCH's are computed by the \textit{get\_model\_CH
 (template,nc,nd)} and \textit{get\_candidate\_CH (kmeans,template,nc,nd)}
 functions respectively.
 
-The model is quantized by the kmeans algorithms and returns the model which is
-then used to subsequently quantize candidates. The two function implementations
-are shown in Listings~\ref{lst:chmod} and~\ref{lst:chcand}.
+The model's euclidean RGB colour-space is quantized by use of the kmeans
+clustering algorithm and the colour co-occurrence histogram computed using these
+quantization levels. The kmeans centroids are returned and subsequently used to
+quantize candidates when computing their CCH are shown in
+Listings~\ref{lst:chmod} and~\ref{lst:chcand}.
 
 \begin{lstlisting}[language=Python, caption={Computing model CH}, captionpos=b, label={lst:chmod}]
 def get_model_CH(template, nc, nd):
@@ -63,7 +65,8 @@ def get_candidate_CH(kmeans, template, nc, nd):
 
 \subsection{Computing the Similarity Measure}
 The Co-occurrence Histogram Intersection as expressed in
-Equation~\ref{eqn:intersection} is computed by the code in Listing~\ref{lst:intersection}
+Equation~\ref{eqn:intersection} is computed by the code in
+Listing~\ref{lst:intersection}
 
 \begin{lstlisting}[language=Python, caption={Computing candidate CH}, captionpos=b, label={lst:intersection}]
 def intersection(CH_1, CH_2, nc, nd):
@@ -89,7 +92,6 @@ The fine grained search then operates within the best location of the coarse
 search with dimensions of the template and a step size of a quarter of the
 template dimensions for accurate localisation of the template within the
 sub-region identified within the coarse search.
-
 
 \subsubsection{Localisation Algorithm}
 The localisation implementation is show in Listing~\ref{lst:localisation}.
@@ -138,7 +140,6 @@ def search(kmeans, frame, CH_m, sw_height, sw_width, step_y, step_x, nc, nd, alp
                 y_best, x_best = y, x # update best coordinates            
     return y_best, x_best # return best match
 \end{lstlisting}
-
 
 
 \section{Mean Shift Tracker}\label{implementation_mean_shift_tracker}
@@ -275,7 +276,7 @@ be available. See Appendix~\ref{appendix_A} for code listings of their implement
 
 \subsection{Performing the Mean Shift Loop}
 The Mean Shift Loop is outlined by the Algorithm in
-Figure~\ref{fig:mean_shift_tracking_algorithm}, the mean shift loop is
+Figure~\ref{fig:design_mean_shift_tracking_algorithm}, the mean shift loop is
 applied to a frame $\mathbf{f}_{k+1}$ given the model pdf of the object of
 interest $\hat{q}$ and its location $\mathbf{c_0}$ in the previous frame
 $\mathbf{f}_{k}$, to compute it's current position $\mathbf{c_1}$ in
@@ -314,7 +315,8 @@ def mean_shift_loop(frame, q, y0, x0, h, w, eps=5, m=8):
     return y1, x1
 \end{lstlisting}
 
-The implementation of the Mean Shift Loop in Listing~\ref{lst:loop} 
+The implementation of the Mean Shift Loop in Listing~\ref{lst:loop} relies on
+the following functions begin available
 \begin{itemize}
     \item get\_pdf (roi, m)
     \item get\_weights (roi, q, p)

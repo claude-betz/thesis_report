@@ -2,8 +2,12 @@
 
 This Chapter is concerned with the presentation of the results of a practical
 application of the algorithms implemented in
-Chapter~\ref{chapter_implementation} as well as and the performance of the
-overall integrated system.
+Chapter~\ref{chapter_implementation} both qualitatively and quantitatively where
+possible. It also aims to provide an analysis of the results informed by an
+understanding of the various algorithm implementations.
+We also present the results of the overall integrated MOT System, and gauge it's
+performance by relating it back to the System User Requirements that guided the
+design process.
 
 \section{Template Matching Tracker}
 This Section presents with a qualitative analysis of both the adaptive and
@@ -13,7 +17,7 @@ Section~\ref{theoretical_framework_template_matching_trackers}.
 Both trackers were applied to the famous Hamburg taxi sequence \cite{} as an initial
 test of their applicability to the Motion Tracking Problem.
 
-The Template Trackers below were run for a threshold of 0.8.
+The Template Trackers below were run for a threshold $\tau=0.8$.
 
 \subsection{Simple Template Matching}\label{results_simple_template_matching}
 The initial template used is the shown by the rectangular region around the car
@@ -47,19 +51,21 @@ samples of the 40 frame taxi sequence.
     \caption{Simple Template Tracking Hamburg Sequence}
 \end{figure}
 
-In Figure~\ref{fig:simple_template_tracking} it can be seen that the Simple Template Matching Algorithm manages to track
-the car up until frame 12 of the sequence, beyond which the rotation of the car
-drives the Sum of Square Differences similarity measure between the initial template chosen in
-$\mathbf{f}_0$ and the region of interest in $\mathbf{f}_{12}$ below the
-threshold of 0.8.
+In Figure~\ref{fig:simple_template_tracking} it can be seen that the Simple
+Template Matching Algorithm manages to track the car up until $\mathbf{F}_{6}$
+in the Figure, corresponding to $\mathbf{f}_{12}$ in the sequence, beyond which
+the rotation of the car drives the Sum of Square Differences similarity measure
+between the initial template chosen in $\mathbf{f}_0$ and the region of interest
+in $\mathbf{f}_{12}$ below the threshold.
 
-Lowering the detection threshold allows the tracker to follow the
-car for a larger amount of frames, however this is not a solution to the problem
-as the tracker becomes more susceptible to noise, and is certainly not a good
-model for robustness across different sequences.
+It is important to highlight that, while lowering the detection threshold allows
+the tracker to follow the car for a larger amount of frames, this is not a
+solution to the problem as the tracker becomes more susceptible to noise, and is
+certainly not a good model for robustness across different sequences.
 
 An idea to get around the changing template, is the implementation of an
-Adaptive Template Matching Algorithm.
+Adaptive Template Matching Algorithm, in which we update the model we are
+looking for each $\mathbf{f}_k$.
 
 \subsection{Adaptive Template Matching}\label{results_adaptive_template_matching}
 As described in Section~\ref{theoretical_framework_adaptive_tm}, the assumption
