@@ -7,7 +7,7 @@ problems. This is followed by a study of the progression of the field,
 specifically reviewing prominent “classical” pre-deep learning approaches to the
 problem.
 
-\section{Establishing Key Terms}
+\section{Key Terms}
 The field of Computer vision is riddled with similar sounding terms whose intent
 can get muddled during the discussion of concepts.  The purpose of this section
 is to establish the intent of these keywords as they are used later in this text.
@@ -15,8 +15,6 @@ is to establish the intent of these keywords as they are used later in this text
 Detailed below are definitions of important terms within the field of computer
 vision, some of which are used rather loosely within the literature or are
 despite seeming interchangeable may refer to different concepts. 
-
-Feature Detection:
 
 Image Segmentation: This is the process of partitioning an image into multiple
 sets of pixels with the goal of making the image easier to analyse, it typically
@@ -60,54 +58,82 @@ NOTE:\@
 tracking data to another object for example in animation. Or as it is used in the
 case of this paper Video/Object Tracking.
 
-\section{Brief History of Computer Vision and Motion Tracking}
-*insert anecdote*
-
-The problem of isolating moving objects of interest from a scene can
-be categorised under the branch of Computer Vision known as Motion
-Estimation/Tracking.
-
 \section{A General Approach to Motion Tracking}\label{literature_review_general_approach}
-The approaches to Motion Tracking are broadly two-fold:
+The problem of isolating moving objects of interest from a scene can
+be categorised under the branch of Computer Vision known as motion
+tracking.
+
+The approaches to motion tracking can be classified broadly in two ways:
 \begin{itemize}
-    \item Tracking by Detection:
-        Assuming that there is only one object of interest in each frame of
-        video, and that there exists a reliable detector for the object of
-        interest. The tracking problem can be reduced to applying the detector
-        to each frame of video and outputting it's response~\cite{Forsyth2012}.
+    \item \textbf{Detection}: Assume that there is only one object
+        of interest in each frame, $\mathbf{f}_k$ of an image sequence, and that
+        there exists a reliable detector for the object of interest, that can
+        return it's location within a particular $\mathbf{f}_k$. In this case, the
+        tracking problem can be reduced to applying the detector to each
+        subsequent $\mathbf{f}_k$ of the image sequence
+        $\mathbf{f}_k,\ldots,\mathbf{k+n}$ and connecting each of it's it's
+        responses to form a track~\cite{Forsyth2012}.
 
-        Certain situations lend themselves well to this approach, for example;
-        One could imagine that an overhead camera in a game of billiards could
-        easily track the position of the 8-ball by searching each video frame
-        for the colour black, as this colour differs significantly from the
-        green felt, and the colour of the other balls.
-        
-        However, many practical applications cannot assume reliable detection or
-        single objects of interest. Referring back to the above example,
-        difficulty may arise if a player is wearing a long sleeve black shirt as
-        the detector would interpret this as the ball, such a scenario may
-        require more sophistication in the design of the detector.
+        Certain situations lend themselves well to this approach. One could
+        imagine that an overhead camera in a game of billiards could easily track the
+        position of the 8-ball by searching each video frame for the colour black, as
+        this colour differs significantly from the green felt, and the colour of the
+        other balls. However, many practical applications cannot assume reliable
+        detection or single objects of interest.  Referring back to the above example,
+        difficulty may arise if a player is wearing a long sleeved black shirt as the
+        detector would interpret this as the ball, such a scenario may require more
+        sophistication in the design of the detector.
 
-    \item Tracking Translation by Matching:
-        Matching is based on the tendency for an object's appearance to be
-        temporally similar and exhibit coherence in motion between successive
-        frames.
-        Given a model of an objects motion, as well a domain within a particular
-        frame in which the object of interest is located. The motion model can
-        be used to search for the domain of interest within a subsequent frame~\cite{Forsyth2012}.
-\end{itemize}   
+    \item \textbf{Tracking}: Tracking is based on the tendency for an object's
+        appearance to be temporally similar and exhibit coherence in motion
+        between successive frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ in an
+        image sequence. Given a model of an object, as well a domain within
+        $\mathbf{f}_k$ in which the object of interest is located. The motion
+        model can be used to search for the model in the domain of interest
+        within $\mathbf{f}_{k+1}$.  This is approach differs from tracking by
+        detection, as it leverages dynamic inter frame information from
+        $\mathbf{f}_k$ to locate the object within $\mathbf{f}_{k+1}$.
+\end{itemize}
 
-The above approaches to the overall problem highlight two key subtasks:
-    \begin{itemize}
-        \item Object Detection: This is concerned with identifying whether an
-            object, or multiple object's of interest is/are present within a
-            given scenario.
-        \item Object Tracking: This is concerned with successively following an
-            identified objects of interest in one frame in subsequent frames in
-            of a video or image sequence.  
-    \end{itemize}
+It should be noted that Object Detection in the context of image sequences can
+take on two forms. Assuming an initial algorithm generates regions of interest
+within $\mathbf{f}_k$. For each region of interest, we can evaluate whether an
+object of interest is present by feature extraction and comparison to a known
+model, by way of a similarity measure or applying a trained classifier to the
+feature vector. Note that this first approach makes no use of the available
+temporal information between adjacent frames within the image sequence. 
+
+The second form of Object Detection leverages temporal difference
+between adjacent frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ within an image
+sequence to detect objects. This can also be referred to as Motion Detection.  
+Regardless of the variant, detection is a key initial step to any motion
+tracking algorithm.
+
+\subsection{Why object tracking?}
+Given that object detection can be used to track an object by way of repeated
+detection, why is there emphasis on the concept object tracking?
+There are inherent limitations to detection based motion tracking. With
+traditional approaches detection tends to be computationally expensive. 
+
+
+\section{Object Modelling}
+Object Modelling refers to the process of defining an internal representation of
+an Object of Interest subsequent tracking.
+
+Porikli and Yilmaz~\cite{Porikli2012} highlight three different layers in the
+definition of a particular Object model. These layers are Representation,
+Descriptor, and Low-Level Features.
+
+\subsection{Representation}
+
+\subsection{Descriptor}
+
+\subsection{Low-Level Features}
+
+
+
 The relevant literature details numerous approaches to each of the above
-subtasks of the overall Motion Tracking Task. Before elaborating on these
+subtasks of the overall motion tracking problem. Before elaborating on these
 approaches, it is necessary to have an understanding of challenges faced in
 the practical implementations of these subtasks.
 
@@ -122,12 +148,11 @@ Table~\ref{tbl:computer_vision_challenges}. Experts of image sequences
 from the VOT2017~\cite{VOT_TPAMI} datasets are used to illustrate the various
 challenges.
 
-\begin{longtable}{c  p{3cm}  p{4cm}}
+\begin{longtable}{p{5cm}  p{8cm}}
     \hline
-    \textbf{Illustration} & \textbf{Challenge} & \textbf{Description} \\ 
+    \textbf{Challenge} & \textbf{Description} \\ 
     \hline\hline
-    \raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth,height=40mm]{figures/logo.pdf}}
-    &
+    
     1. Occlusion
     & 
     Objects of interest may only be partially visible in a
@@ -135,25 +160,19 @@ challenges.
     track an object despite this.
     \\ \bottomrule
     
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
-    &
     2. Illumination
     &
     Algorithm performance can be significantly degraded by changes
     in lighting, if their implementation does not take this into
     account.
     \\ \bottomrule
-
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
-    &
+    
     3. Ego Motion
     &
     If image sequences are not recorded by a stationary observer,
     the camera motion has to be accounted for by the algorithm.
     \\ \bottomrule
     
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
-    &
     4. Deformation
     &
     between frame's. For example, observing a bird flying. In this
@@ -161,16 +180,12 @@ challenges.
     the object of interest.
     \\ \bottomrule
 
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}} 
-    &
     5. Orientation
     &
     Objects look different according to their orientation relative
     to the camera.
     \\ \bottomrule
 
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}}
-    &
     6. Scale
     &
     An object of interest may change it's scale within an image
@@ -178,8 +193,6 @@ challenges.
     the observer.
     \\ \bottomrule
 
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}} 
-    &
     7. Speed 
     &
     Many algorithms operates on the assumption of small
@@ -188,8 +201,7 @@ challenges.
     affect the performance of algorithms that are not designed to
     deal with this.
     \\ \bottomrule
-    &
-    %\raisebox{-\totalheight}{\includegraphics[width=0.3\textwidth, height=40mm]{images/myLboro.png}} 
+  
     8. Track Overlap
     &
     This is a situation in which two objects in motion cross paths, it can lead
@@ -199,6 +211,10 @@ challenges.
 
     \caption{Table illustrating Computer Vision Challenges}
 \end{longtable}\label{tbl:computer_vision_challenges}
+
+
+
+
 
 \section{Object Detection}
 Object detection generally refers to the identification of objects within
