@@ -686,6 +686,15 @@ INPUT ./figures/results/mean_shift_tracker/ants/speed2/4.jpg
 INPUT figures/results/gui/first_look.png
 INPUT ./figures/results/gui/first_look.png
 INPUT ./figures/results/gui/first_look.png
+INPUT figures/results/gui/CHD_1.png
+INPUT ./figures/results/gui/CHD_1.png
+INPUT ./figures/results/gui/CHD_1.png
+INPUT figures/results/gui/CHD_2.png
+INPUT ./figures/results/gui/CHD_2.png
+INPUT ./figures/results/gui/CHD_2.png
+INPUT figures/results/gui/CHD_3.png
+INPUT ./figures/results/gui/CHD_3.png
+INPUT ./figures/results/gui/CHD_3.png
 INPUT body/Conclusion.tex
 INPUT body/Conclusion.tex
 INPUT main.bbl

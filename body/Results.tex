@@ -180,10 +180,10 @@ Section~\ref{implementation_ch}, with parameters $n_c=8$ and $n_d=12$ which
 Alarm Probability. (see Section~\ref{theoretical_framework_ch}).
 
 Figure~\ref{fig:ch_partial_occlusion} details the results, the green bounding
-box is the outcome of the initial coarse grained search of $\mathbf{f}_{139}$.
+box is the outcome of the initial coarse grained search of $\mathbf{f}_{138}$.
 The result of the fine grained search within the green box region is highlighted
 by the yellow bounding box. 
-The CH-Detector effectively detects the girl within the $\mathbf{f}_{139}$ in
+The CH-Detector effectively detects the girl within the $\mathbf{f}_{138}$ in
 spite of significant occlusion on by the man obscuring the girl. 
 
 \begin{figure}     
@@ -586,15 +586,22 @@ The three algorithms discussed in Section~\ref{chapter_theoretical_framework}
 successfully integrated with the Front-end GUI. Their usage within the GUI is
 shown in the subsequence sections.
 
-\subsubsection{Template Trackers}
+\begin{figure}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{ccc}
+        \subfloat{\includegraphics[width = 2.2in]{figures/results/gui/CHD_1.png}} &
+        \subfloat{\includegraphics[width = 2.2in]{figures/results/gui/CHD_2.png}} &
+        \subfloat{\includegraphics[width = 2.2in]{figures/results/gui/CHD_3.png}} \\
+    \end{tabular}}
+    \caption{Algorithm User Flow\label{fig:gui_CHD}}
+\end{figure}
 
-\subsubsection{Co-occurrence histogram Detector}
+Figure~\ref{fig:gui_CHD} outlines the user flow for performing initialising the
+Co-occurrence histogram detection on a sequence.
 
-\subsubsection{Mean Shift Tracker}
 
 \subsection{Parameter Selection}
 In addition to implementing the algorithms, the parameters for the individual
 algorithms can be varied by by the user.
 
 
-\subsection{}

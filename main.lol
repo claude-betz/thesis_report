@@ -8,3 +8,7 @@
 \contentsline {lstlisting}{\numberline {6.8}Computing Mean Shift Weights}{39}{lstlisting.6.8}
 \contentsline {lstlisting}{\numberline {6.9}Computing Mean Shift Vector}{40}{lstlisting.6.9}
 \contentsline {lstlisting}{\numberline {6.10}Mean Shift Loop}{41}{lstlisting.6.10}
+\contentsline {lstlisting}{\numberline {B.1}Additional functions for Co-occurrence Histogram Detection}{68}{lstlisting.B.1}
+\contentsline {lstlisting}{\numberline {B.2}Additional functions for Mean Shift Tracker Impementation}{70}{lstlisting.B.2}
+\contentsline {lstlisting}{\numberline {B.3}QLabel Mouse Event Code}{71}{lstlisting.B.3}
+\contentsline {lstlisting}{\numberline {B.4}GUI Impementation Code}{71}{lstlisting.B.4}

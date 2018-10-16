@@ -1,5 +1,5 @@
 \chapter{Conclusion}
-This Chapter discusses the Conclusions that can be drawn from the Results
+This Chapter discusses the Conclusions drawn from the Results
 and Analyses of the Detection and Tracking approaches when applied to Image
 Sequences, as presented in Chapter~\ref{chapter_results}.
 
@@ -28,8 +28,8 @@ Tracker either fails to locate the target or incorporates the occlusion into
 subsequent target models.
 
 \section{Colour Co-occurrence Histogram Detector}
-Still within the sphere of Detection-Based Tracking, and an Feature-Based
-Template Matching approach, the Co-occurrence Histogram Detector was pursued largely as an
+Still within the sphere of Detection-Based Tracking and Template Matching, a
+Feature-based Co-occurrence Histogram Detector was implemented largely as an
 experiment to gauge, whether Template Matching Tracking can be extended to deal
 with some of the Motion Tracking Challenges. 
 Picking up from where the Adaptive Template Tracker failed, the CCH Detector was
@@ -41,14 +41,27 @@ significantly occluded.
 The method was however very sensitive to template selection, with small
 variations in template dimensions resulting in failures, and this keeping in
 mind that the target -the Girl- is a significantly distinct object from it's
-background.
+background. 
 
 Furthermore, the execution time in computing the Colour Co-occurrence Histogram
 feature is a significant bottleneck in the execution time of the Detector,
-limiting it's applicability.
+limiting it's applicability. 
 
+It has potential to be used as an initial detector. Based of a database of
+learned shapes, several matches can be made within the initial frame,
+$\mathbf{f}_0$ of a particular sequence, once a match is made, it can be linked
+with the fast and robust Mean Shift Tracker to track the objects motions for
+subsequent frames in the sequence. 
 
 \section{Mean Shift Tracker}
+In terms of performance in relation to the Motion Tracking Problem and to the
+Challenges in achieving effective tracking, the Mean Shift Tracker was by far
+the most successful, of the trialled Kernel-Based Tracking implementations.
+
+Its performance was tested against a variety of sequences, exhibiting various
+of the outlined Challenges to Motion Tracking.
 
 \section{Graphical User Interface}
+
+
 
