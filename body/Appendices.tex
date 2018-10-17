@@ -13,6 +13,8 @@ clusters and minimized within them.
 
 \section{Co-occurrence Histograms Support functions}\label{supportCH}
 
+This code listing shows the extra functions necessary for the operation of the
+co-occurrence histogram detector.
 \begin{lstlisting}[language=Python, caption={Additional functions for Co-occurrence Histogram Detection}, captionpos=b, label={lst:supportCH}]
 def RGB_euclidean_distance(pixel):
     """computes euclidean distance between two 2D vectors"""
@@ -130,8 +132,12 @@ def epanechnikov_kernel(template):
     C = 1/np.sum(kernel)
     return kernel,C
 \end{lstlisting}
+
 \newpage
 \section{GUI Code}
+This listing shows the imageView class which subclasses the QLabel class to
+add the functionality for selecting regions of interest as input to the
+detection and tracking algorithms.
 \begin{lstlisting}[language=Python, caption={QLabel Mouse Event Code}, captionpos=b, label={lst:gui}]
 """
     Claude Betz (BTZCLA001)
@@ -176,6 +182,9 @@ class imageView(QLabel):
         self.triggered.emit()
 \end{lstlisting}
 
+This code listing shows the implementation of the overall system from the controller
+widgets to the actions that they perform and the callable slots they connect to.
+It also includes the back-end classes. 
 
 \begin{lstlisting}[language=Python, caption={GUI Impementation Code}, captionpos=b, label={lst:gui}]
 """

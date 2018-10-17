@@ -8,7 +8,7 @@
 \contentsline {lstlisting}{\numberline {6.8}Function computing kernel Weights}{42}{lstlisting.6.8}
 \contentsline {lstlisting}{\numberline {6.9}Function computing the mean shift vector}{42}{lstlisting.6.9}
 \contentsline {lstlisting}{\numberline {6.10}Mean Shift Loop}{43}{lstlisting.6.10}
-\contentsline {lstlisting}{\numberline {B.1}Additional functions for Co-occurrence Histogram Detection}{70}{lstlisting.B.1}
-\contentsline {lstlisting}{\numberline {B.2}Additional functions for Mean Shift Tracker Impementation}{72}{lstlisting.B.2}
-\contentsline {lstlisting}{\numberline {B.3}QLabel Mouse Event Code}{73}{lstlisting.B.3}
-\contentsline {lstlisting}{\numberline {B.4}GUI Impementation Code}{73}{lstlisting.B.4}
+\contentsline {lstlisting}{\numberline {B.1}Additional functions for Co-occurrence Histogram Detection}{71}{lstlisting.B.1}
+\contentsline {lstlisting}{\numberline {B.2}Additional functions for Mean Shift Tracker Impementation}{73}{lstlisting.B.2}
+\contentsline {lstlisting}{\numberline {B.3}QLabel Mouse Event Code}{74}{lstlisting.B.3}
+\contentsline {lstlisting}{\numberline {B.4}GUI Impementation Code}{75}{lstlisting.B.4}
