@@ -216,12 +216,12 @@ Tracking also allows for a variety approaches that address a lot of the
 challenges to the tracking problem outlined in
 Section~\ref{literature_review_challenges}.
 
-Figure~\ref{literature_review_motion_detection_taxonomy} outlines some
+Figure~\ref{fig:literaturereview_taxonomy_motion_detection} outlines some
 approaches to object detection that a motion tracker implementation might take.
 
 \Figure[width=0.7\columnwidth]{Taxonomy of Motion Detection Approaches}{literaturereview_taxonomy_motion_detection}
 
-*Explain Diagram
+*Explain Diagram*
 
 \section{Object Modelling}\label{literature_review_object_modelling}
 Object modelling refers to the process of defining an internal model of
@@ -267,7 +267,7 @@ facilitates a quantitative assessment of how similar a particular candidate
 descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
 Some common descriptors are
 
-\subsubsection{templates}
+\subsubsection{Templates}
 Templates are extractions of the pixels in the region of interest of the
 underlying frame. They are usually extracted according to a particular
 parametric shape, but can also be defined for more complex model representations.
@@ -297,7 +297,7 @@ Texture measures the variation in intensity of a region within a frame. It can
 be interpreted as how smooth or rough the surface of the region is.
 For example rough surfaces could be characterised by large variations in pixel
 values over short distances corresponding to bumps in an object, or low
-variation corresponding to a smooth object with a uniform surface\cite{Porikli2012}
+variation corresponding to a smooth object with a uniform surface~\cite{Porikli2012}
 
 \subsubsection{Optical flow}
 Optical flow is the most general approach to motion estimation. It involves
@@ -356,7 +356,8 @@ the last known location of an object~\cite{Comaniciu2003}. This procedure is
 extensively presented in Section~\ref{theoretical_framework_mean_shift_tracker}.
 
 \subsection{Silhouette tracking}
-
+Silhouette tracking are employed when tracking of objects with complex
+non-parametric shapes is required.
 
 \section{GUI Design}
 

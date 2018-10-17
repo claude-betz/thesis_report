@@ -1,17 +1,17 @@
 \chapter{Conclusion}
-This Chapter discusses the Conclusions drawn from the Results
-and Analyses of the Detection and Tracking approaches when applied to Image
-Sequences, as presented in Chapter~\ref{chapter_results}.
+This chapter discusses the conclusions drawn from the results
+and analyses of the detection and tracking approaches when applied to image
+sequences, as presented in Chapter~\ref{chapter_results}.
 
 \section{Template Matching Tracker}
-The Simple Template Tracker implementation was only slightly effective in
-managing to track even the simplest of sequences. It is clear that Simple Template
+The simple template tracker implementation was only slightly effective in
+managing to track even the simplest of sequences. It is clear that simple template
 Matching applied to every frame of a sequence does the necessary built-in
 flexibility towards even subtle changes in target appearance between frames.
 
-The Adaptive Template Tracker implementation showed some promise in solving the
-tracking problem. Where the Simple Template Tracker failed in tracking the
-Taxi in the Hamburg Taxi Sequence, The adaptive Tracker succeeded for the
+The adaptive template tracker implementation showed some promise in solving the
+tracking problem. Where the simple template tracker failed in tracking the
+taxi in the Hamburg taxi sequence, The adaptive tracker succeeded for the
 duration of the sequence. 
 The approach of updating the template with the detected region in each
 $\mathbf{f}_k$ to be used in $\mathbf{f}_{k+1}$ partly allowed the tracker to
@@ -21,45 +21,45 @@ over long sequence the tracker would exhibit ``drift'', eventually losing the
 object to be tracked as more and more background noise was added to the model at
 each update.
 
-In addition, when faced with the Challenge of Occlusion, depending on it's
+In addition, when faced with the challenge of occlusion, depending on it's
 similarity threshold $\tau$ and the rate at which the occlusion covers the
-target between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$, the Adaptive Template
-Tracker either fails to locate the target or incorporates the occlusion into
+target between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$, the adaptive template
+tracker either fails to locate the target or incorporates the occlusion into
 subsequent target models.
 
 \section{Colour Co-occurrence Histogram Detector}
-Still within the sphere of Detection-Based Tracking and Template Matching, a
-Feature-based Co-occurrence Histogram Detector was implemented largely as an
-experiment to gauge, whether Template Matching Tracking can be extended to deal
-with some of the Motion Tracking Challenges. 
-Picking up from where the Adaptive Template Tracker failed, the CCH Detector was
-trialed to see whether it could overcome the Challenge of Occlusion.
+Still within the sphere of detection-based tracking and template matching, a
+feature-based Co-occurrence histogram detector was implemented largely as an
+experiment to gauge, whether template matching-based tracking can be extended to deal
+with some of the motion tracking challenges. 
+Picking up from where the Adaptive Template Tracker failed, the CCH-detector was
+trialled to see whether it could overcome the challenge of occlusion.
 
 The approach was able to detect the model of the girl obtained from
 $\mathbf{f}_0$ in a subsequent frame $\mathbf{f}_{139}$ despite the target being
 significantly occluded. 
 The method was however very sensitive to template selection, with small
 variations in template dimensions resulting in failures, and this keeping in
-mind that the target -the Girl- is a significantly distinct object from it's
+mind that the target -the girl- is a significantly distinct object from it's
 background. 
 
-Furthermore, the execution time in computing the Colour Co-occurrence Histogram
-feature is a significant bottleneck in the execution time of the Detector,
+Furthermore, the execution time in computing the colour co-occurrence histogram
+feature is a significant bottleneck in the execution time of the detector,
 limiting it's applicability. 
 
 It has potential to be used as an initial detector. Based of a database of
 learned shapes, several matches can be made within the initial frame,
 $\mathbf{f}_0$ of a particular sequence, once a match is made, it can be linked
-with the fast and robust Mean Shift Tracker to track the objects motions for
+with the fast and robust mean shift tracker to track the objects motions for
 subsequent frames in the sequence. 
 
 \section{Mean Shift Tracker}
-In terms of performance in relation to the Motion Tracking Problem and to the
-Challenges in achieving effective tracking, the Mean Shift Tracker was by far
-the most successful, of the trialled Kernel-Based Tracking implementations.
+In terms of performance in relation to the motion tracking problem and to the
+challenges in achieving effective tracking, the mean shift tracker was by far
+the most successful, of the trialled kernel-based tracking implementations.
 
 Its performance was tested against a variety of sequences, exhibiting various
-of the outlined Challenges to Motion Tracking.
+of the outlined challenges to motion tracking.
 
 \section{Graphical User Interface}
 
