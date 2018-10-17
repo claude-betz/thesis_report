@@ -221,7 +221,7 @@ approaches to object detection that a motion tracker implementation might take.
 
 *Explain Diagram
 
-\section{Object Modelling}
+\section{Object Modelling}\label{literature_review_object_modelling}
 Object modelling refers to the process of defining an internal model of
 an identified object of interest subsequent tracking. object modelling can be
 broken down into several layers, these being:
@@ -266,6 +266,9 @@ descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
 Some common descriptors are
 
 \subsubsection{Templates}
+Templates are extractions of the pixels in the region of interest of the
+underlying frame. They are usually extracted according to a particular
+parametric shape, but can also be defined for more complex model representations.
 
 \subsubsection{Density Estimates}
 Density estimates as model descriptors can be Parametric or Non-Parametric. They
@@ -282,42 +285,75 @@ variety of features to encode into the model robustness across multiple
 scenarios. The most common visual low-level features are.
 
 \subsubsection{colour}
+In digital images, colours can be represented in one of several colour spaces, the
+most common representation is within the RGB (red, green, blue) colour space. In
+the RGB colour space, each pixel is represented by integer in the range
+$[0,256)$ for each channel in the colour space. e.g black = $\{0,0,0\}$.
 
 \subsubsection{texture}
+Texture measures the variation in intensity of a region within a frame. It can
+be interpreted as how smooth or rough the surface of the region is.
+For example rough surfaces could be characterised by large variations in pixel
+values over short distances corresponding to bumps in an object, or low
+variation corresponding to a smooth object with a uniform surface\cite{Porikli2012}
 
 \subsubsection{optical flow}
-
+Optical flow is the most general approach to motion estimation. It involves
+computing an independent estimate of the motion at each pixel location for each
+frame in a sequence.
+The result of this is a dense field of optical flow vectors for each frame in
+the relevant sequence. Each pixel's vector is characterised by an orientation.
+It is easy to imagine that clusters of flow vectors of similar magnitude and
+direction could correspond to moving objects between two
+frames\cite{Szeliski2010}.
 
 \section{Motion Tracking}
-Moving objects in a video have a state. A state can be directly observable such as a
-particular object's colour features, or position in a frame. A state can also be a function
-of observable states such as the object's velocity.
+Once an object has been detected in an initial frame, $\mathbf{f}_k$ based on the selected
+target model, motion tracking is concerned with locating object in subsequent
+frames $\mathbf{f}_{k+1}$ to $\mathbf{f}_{k+n}$ within the image sequence. 
 
-In Object Tracking, the state we are interested in is the position of an object
-of interest in successive frames of video. We may use states or derivatives of
-them to reliably determine this \cite{Forsyth2012}.
-
-The literature states several approaches to the motion tracking problem. The can
-conveniently be expressed in the following taxonomy, Figure~\ref{fig:motion_tracking_taxonomy},
-adapted from Prajapati~\cite{Prajapati2015}.
+The literature states several tracking methods. These can
+conveniently be expressed in the following taxonomy outlined in
+Figure~\ref{fig:literaturereview_taxonomy_motion_tracking}, that was adapted
+from similar presentations in~\cite{Prajapati2015, Patel2013}. The various
+approaches are described in terms of the layers to object modelling described in
+Section~\ref{literature_review_object_modelling}.
 
 \Figure[width=0.7\columnwidth]{Taxonomy of Motion Tracking Approaches}{literaturereview_taxonomy_motion_tracking}
 
-*Explain Higher Level*
+\subsection{Point tracking}
 
-\subsection{Simple Template Matching}
-Template Matching is a pattern recognition technique in which prestored patterns
+
+\subsection{Kernel tracking}
+Kernel based tracking is usually performed by defining a kernel around an object
+of interest. A kernel is usually a parametric model representation such as an
+ellipse or square, that encompasses the target object. 
+Variations between different kernel tracking methods lie in the chosen representations,
+descriptors and their underlying low-level features~\cite{Prajapati2015}
+
+\subsubsection{Simple template matching}
+Template Matching is a pattern recognition technique in which stored patterns 
 are identified within an image. It can be performed at various levels ranging
-from a pixel-level to higher level comparisons of average intensity
-etc\cite{Brunelli}.
+from a pixel-level to higher level comparisons of average intensity.
 
-operation that aims to determine
-what elements of a given image match a specified template of the element of
-interest.
-Formally we have a source image, $I$ in which we would like to obtain matches to
-an element of interest defined by a template image $T$.
+It is an operation that aims to determine what elements of a given image match a
+specified template of the element of interest. Formally we have a source image,
+$I$ in which we would like to obtain matches to an element of interest defined
+by a template image $T$~\cite{Brunelli}. 
+Given a target template defined in $\mathbf{f}_k$, we can track an object by 
+template matching in $\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}$.
 
-\subsubsection{Mean-Shift}\label{literature_review_mean_shift}
+\subsubsection{Mean shift tracking}\label{literature_review_mean_shift}
+The mean-shift tracking algorithm provides an efficient tracking approach for
+target objects modelled by with density estimate descriptors such a colour or
+texture histograms. 
+Given the location of a detected object in $\mathbf{f}_k$, mean-shift tracking
+locates an object in $\{\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}\}$ by way of a
+non parametric gradient ascent procedure of a smooth similarity function around
+the last known location of an object~\cite{Comaniciu2003}. This procedure is
+extensively presented in Section~\ref{theoretical_framework_mean_shift_tracker}.
+
+\subsection{Silhouette tracking}
 
 
 \section{GUI Design}
