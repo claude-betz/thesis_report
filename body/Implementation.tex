@@ -17,7 +17,7 @@ class functions do not always explicitly passed between functions but rather
 through instance variables. 
 
 \section{Template Matching Tracker}\label{implementation_tm}
-This section details the implementation of the two variants of template tracker
+This Section details the implementation of the two variants of template tracker
 described in Section~\ref{theoretical_framework_tm}.
 
 \subsection{Simple template matching tracker}
@@ -129,7 +129,7 @@ def localize(template, frame, nc, nd, alpha=0.8):
     return (x1, y1, model_width, model_height) # location of object in frame
 \end{lstlisting}
 
-\subsubsection{Search Algorithm}
+\subsubsection{Search algorithm}
 The search algorithm as defined in Figure~\ref{fig:design_algorithm_CH} is shown
 in Listing~\ref{lst:search}
 \begin{lstlisting}[language=Python, caption={CCH detection search algorithm}, captionpos=b, label={lst:search}]
@@ -282,7 +282,7 @@ be available. See Appendix~\ref{appendix_A} for code listings of their implement
     \item get\_elliptical\_mask (roi)
 \end{itemize}
 
-\subsection{Performing the Mean Shift Loop}
+\subsection{Performing the mean shift loop}
 The Mean Shift Loop is outlined by the Algorithm in
 Figure~\ref{fig:design_mean_shift_tracking_algorithm}, the mean shift loop is
 applied to a frame $\mathbf{f}_{k+1}$ given the model pdf of the object of
@@ -351,19 +351,8 @@ signals and slots mechanism. An event generates a signal, and this signal is
 connected to a slot which can be any callable function block describing what
 action the model should take~\cite{Summerfield}.
 
-In line with the general model-view-controller architecture, the GUI consists
-of:
-\begin{itemize}
-    \item \textbf{A model}: this is the application object responsible for the
-        dynamic behaviour of the GUI through the event loop.
-    \item \textbf{Views}: these are elements from which users are presented
-        information from the application. 
-    \item \textbf{Controllers}: these are elements with which users interact with
-        the application. They emit signals.
-\end{itemize}
-
 \subsection{Layout}
-The GUI window layout is done hierarchically in a simple layout. We have A top
+The GUI window layout is done hierarchically in a simple layout. We have a top
 level central view that takes on a two element horizontal layout, The left half
 holds the view for the displaying the frame, and the right half is further split
 vertically with the top half holding the view for the model of interest and the
@@ -372,10 +361,15 @@ The results of the implementation can be seen in Section~\ref{chapter_results},
 Figure~\ref{fig:results/gui/first_look}.
 
 \subsection{Controllers}
-The controllers of the system are within the. The contollercomprise of the file menu, toolbar,
-        buttons, and the views that a user can use to interact with the system.
+The MT systems' controllers comprise options within the file menu, toolbar,
+navigation buttons, that a user can use to interact with the system. Each of
+these controllers emit signals that are connected to a slot callback function,
+specifying the action to be taken.
+
+
+
 \subsection{Views}
 The GUI application has two views, one to display the sequence, and one to
-display the model being used.  
+display the model being used. The frame 
 
 
