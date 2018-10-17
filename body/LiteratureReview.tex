@@ -16,41 +16,41 @@ Detailed below are definitions of important terms within the field of computer
 vision, some of which are used rather loosely within the literature or are
 despite seeming interchangeable may refer to different concepts. 
 
-Image Segmentation: This is the process of partitioning an image into multiple
+\textbf{Image Segmentation}: This is the process of partitioning an image into multiple
 sets of pixels with the goal of making the image easier to analyse, it typically
 involves finding boundary lines of objects. 
 
-Motion Segmentation: Motion Segmentation refers to the labelling of pixels that
+\textbf{Motion Segmentation}: Motion Segmentation refers to the labelling of pixels that
 are associated with each independently moving 3D object in sequence of images
 that can feature multiple motions.~\cite{Tekalp2014}
 
-Object Recognition: This a method by which Given an image, the objects within
+\textbf{Object Recognition}: This a method by which Given an image, the objects within
 said image are detected and classified as one of a set of predefined Object
 Category i.e.\ ``What Object (s) are in this frame?''
 
-Object Detection: Object Detection can be seen as targeted recognition, it deals
+\textbf{Object Detection}: Object Detection can be seen as targeted recognition, it deals
 with finding instances of objects within a given image or video frame, this
 technique usually makes use of extracted features and learning algorithms to
 recognize instances of an object category.  I.e. “Where is this particular
 object in this frame?”
 
-Object Classification: This is a broader treatments than Detection, where a
+\textbf{Object Classification}: This is a broader treatments than Detection, where a
 system is not only able to identify objects within images but can differentiate
 between and label different classes of objects within the image. 
 
-Optical Flow: refers to the pattern of apparent motion of objects, surfaces and
+\textbf{Optical Flow}: refers to the pattern of apparent motion of objects, surfaces and
 edges in a visual scene caused by the relative motion between an observer and a
 scene. Optic flow fields can be used to structure or segment a scene~\cite{Forsyth2012}.
 
-Optical Flow Segmentation: Refers to the grouping together of optical flow
+\textbf{Optical Flow Segmentation}: Refers to the grouping together of optical flow
 vectors that are associated with the same 3-D motion or structure. This problem
 is identical to motion segmentation provided a dense optical flow field~\cite{Tekalp2014}.
 
-Object Tracking: Object tracking also known as Video Tracking refers to the use
+\textbf{Object Tracking}: Object tracking also known as Video Tracking refers to the use
 of sensor measurements to determine the location, path and characteristics of
 objects of interest~\cite{Challa2011}.
  
-Motion Estimation: A fundamental problem in video processing that is concerned
+\textbf{Motion Estimation}: A fundamental problem in video processing that is concerned
 with determining motion vectors that describe the transformation of one 2D
 image to another over time~\cite{Tekalp2014}.
 
@@ -68,11 +68,11 @@ The approaches to motion tracking can be classified broadly in two ways:
     \item \textbf{Detection}: Assume that there is only one object
         of interest in each frame, $\mathbf{f}_k$ of an image sequence, and that
         there exists a reliable detector for the object of interest, that can
-        return it's location within a particular $\mathbf{f}_k$. In this case, the
+        return it's location within a particular frame of interest. In this case, the
         tracking problem can be reduced to applying the detector to each
         subsequent $\mathbf{f}_k$ of the image sequence
-        $\mathbf{f}_k,\ldots,\mathbf{k+n}$ and connecting each of it's it's
-        responses to form a track~\cite{Forsyth2012}.
+        $\mathbf{f}_k,\ldots,\mathbf{f}_{k+n}$ and connecting each of the
+        $k$ detector responses to form a track~\cite{Forsyth2012}.
 
         Certain situations lend themselves well to this approach. One could
         imagine that an overhead camera in a game of billiards could easily track the
@@ -95,7 +95,11 @@ The approaches to motion tracking can be classified broadly in two ways:
         $\mathbf{f}_k$ to locate the object within $\mathbf{f}_{k+1}$.
 \end{itemize}
 
-It should be noted that Object Detection in the context of image sequences can
+\subsection{Why object tracking?}
+Given that object detection can be used to track an object by way of repeated
+detection, why the emphasis emphasis on the concept object tracking?
+
+Object Detection in the context of image sequences can
 take on two forms. Assuming an initial algorithm generates regions of interest
 within $\mathbf{f}_k$. For each region of interest, we can evaluate whether an
 object of interest is present by feature extraction and comparison to a known
@@ -109,26 +113,71 @@ sequence to detect objects. This can also be referred to as Motion Detection.
 Regardless of the variant, detection is a key initial step to any motion
 tracking algorithm.
 
-\subsection{Why object tracking?}
-Given that object detection can be used to track an object by way of repeated
-detection, why is there emphasis on the concept object tracking?
 There are inherent limitations to detection based motion tracking. With
-traditional approaches detection tends to be computationally expensive. 
-
+traditional approaches detection tends to be computationally expensive.
 
 \section{Object Modelling}
 Object Modelling refers to the process of defining an internal representation of
 an Object of Interest subsequent tracking.
 
 Porikli and Yilmaz~\cite{Porikli2012} highlight three different layers in the
-definition of a particular Object model. These layers are Representation,
-Descriptor, and Low-Level Features.
+definition of a particular Object model. These layers are 
+\begin{itemize}
+    \item Model Representation,
+    \item Model Descriptor 
+    \item Model Low-Level Features.
+\end{itemize}
 
-\subsection{Representation}
+\subsection{Model Representation}
+The representation of an object model refers to the parametric or non-parametric
+spacial definition of the object within a particular frame. Notable examples of
+representations include
 
-\subsection{Descriptor}
+\subsubsection{Point and region}
+This is an example of a parameterised representation. In a point and region
+representation, an object is defined by a centroid and a predefined shape such
+as a rectangle or an ellipse.
 
-\subsection{Low-Level Features}
+\subsubsection{Silhouette representation}
+This is a more complex non-parameterised representation. Here, the object of
+interest is defined by it's silhouette-the shape inscribed by it's outline.
+
+There are yet more complex model representations, some of which further segment
+the object of interest into smaller subregions such as with part-based
+representations, for example splitting up an animal object into it's constituent
+limbs. The choice of representation is dependent on the problem to which motion
+tracking is to be applied~\cite{Porikli2012}.
+
+\subsection{Model Descriptor}
+Model descriptors are derived mathematically from the region of interest defined
+by the chosen model representation. An effective descriptor is one which allows
+for good discrimination between different objects or regions they
+describe. Discrimination is characterised by a similarity measure that
+facilitates a quantitative assessment of how similar a particular candidate
+descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
+Some common descriptors are
+
+\subsubsection{Template}
+
+\subsubsection{Density Estimates}
+Density estimates as model descriptors can be Parametric or Non-Parametric. They
+estimate the probability density function based on an underlying low-level
+feature within the relevant model representation.
+Common low-level features used include; colour-space values, spacial and
+temporal intra- and inter-frame derivatives within a given colour-space etc.
+
+\subsection{Model Low-Level Features}
+Feature selection is a very relevant step in the development of computer vision
+applications. The extent to how discriminative a particular feature is is
+largely dependent on the scenarios. Hence many solutions employ a
+variety of features to encode into the model robustness across multiple
+scenarios. The most common visual low-level features are.
+
+\subsubsection{colour}
+
+\subsubsection{texture}
+
+\subsubsection{optical flow}
 
 
 
