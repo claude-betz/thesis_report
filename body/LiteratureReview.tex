@@ -2,15 +2,15 @@
 This Literature Review is structured as follows: It begins by establishing key
 definitions necessary for navigating the literature.
 
-The Review then broadly details the general approach to solving of Motion Tracking
-problems. This is followed by a study of the progression of the field,
-specifically reviewing prominent “classical” pre-deep learning approaches to the
-problem.
+The review outlines a general framework to solving the motion tracking
+problem in terms of two approaches of Detection and Tracking. It then details
+the subtasks relevant to these approaches.
 
 \section{Key Terms}
-The field of Computer vision is riddled with similar sounding terms whose intent
-can get muddled during the discussion of concepts.  The purpose of this section
-is to establish the intent of these keywords as they are used later in this text.
+The field of Computer Vision is riddled with similar sounding terms whose intent
+can easily get muddled during the discussion of concepts. The purpose of this section
+is to establish the intent of these keywords as they are used later in this
+review.
 
 Detailed below are definitions of important terms within the field of computer
 vision, some of which are used rather loosely within the literature or are
@@ -58,20 +58,20 @@ NOTE:\@
 tracking data to another object for example in animation. Or as it is used in the
 case of this paper Video/Object Tracking.
 
-\section{A General Approach to Motion Tracking}\label{literature_review_general_approach}
+\section{Approaches to Motion Tracking}\label{literature_review_general_approach}
 The problem of isolating moving objects of interest from a scene can
 be categorised under the branch of Computer Vision known as motion
 tracking.
 
-The approaches to motion tracking can be classified broadly in two ways:
+The approaches to tracking objects of interest can be classified broadly in two ways:
 \begin{itemize}
-    \item \textbf{Detection}: Assume that there is only one object
+    \item \textbf{Object Detection}: Assume that there is only one object
         of interest in each frame, $\mathbf{f}_k$ of an image sequence, and that
         there exists a reliable detector for the object of interest, that can
         return it's location within a particular frame of interest. In this case, the
         tracking problem can be reduced to applying the detector to each
         subsequent $\mathbf{f}_k$ of the image sequence
-        $\mathbf{f}_k,\ldots,\mathbf{f}_{k+n}$ and connecting each of the
+        $\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}$ and connecting each of the
         $k$ detector responses to form a track~\cite{Forsyth2012}.
 
         Certain situations lend themselves well to this approach. One could
@@ -84,7 +84,7 @@ The approaches to motion tracking can be classified broadly in two ways:
         detector would interpret this as the ball, such a scenario may require more
         sophistication in the design of the detector.
 
-    \item \textbf{Tracking}: Tracking is based on the tendency for an object's
+    \item \textbf{Motion Tracking}: Tracking is based on the tendency for an object's
         appearance to be temporally similar and exhibit coherence in motion
         between successive frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ in an
         image sequence. Given a model of an object, as well a domain within
@@ -95,107 +95,15 @@ The approaches to motion tracking can be classified broadly in two ways:
         $\mathbf{f}_k$ to locate the object within $\mathbf{f}_{k+1}$.
 \end{itemize}
 
-\subsection{Why object tracking?}
-Given that object detection can be used to track an object by way of repeated
-detection, why the emphasis emphasis on the concept object tracking?
-
-Object Detection in the context of image sequences can
-take on two forms. Assuming an initial algorithm generates regions of interest
-within $\mathbf{f}_k$. For each region of interest, we can evaluate whether an
-object of interest is present by feature extraction and comparison to a known
-model, by way of a similarity measure or applying a trained classifier to the
-feature vector. Note that this first approach makes no use of the available
-temporal information between adjacent frames within the image sequence. 
-
-The second form of Object Detection leverages temporal difference
-between adjacent frames, $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ within an image
-sequence to detect objects. This can also be referred to as Motion Detection.  
-Regardless of the variant, detection is a key initial step to any motion
-tracking algorithm.
-
-There are inherent limitations to detection based motion tracking. With
-traditional approaches detection tends to be computationally expensive.
-
-\section{Object Modelling}
-Object Modelling refers to the process of defining an internal representation of
-an Object of Interest subsequent tracking.
-
-Porikli and Yilmaz~\cite{Porikli2012} highlight three different layers in the
-definition of a particular Object model. These layers are 
-\begin{itemize}
-    \item Model Representation,
-    \item Model Descriptor 
-    \item Model Low-Level Features.
-\end{itemize}
-
-\subsection{Model Representation}
-The representation of an object model refers to the parametric or non-parametric
-spacial definition of the object within a particular frame. Notable examples of
-representations include
-
-\subsubsection{Point and region}
-This is an example of a parameterised representation. In a point and region
-representation, an object is defined by a centroid and a predefined shape such
-as a rectangle or an ellipse.
-
-\subsubsection{Silhouette representation}
-This is a more complex non-parameterised representation. Here, the object of
-interest is defined by it's silhouette-the shape inscribed by it's outline.
-
-There are yet more complex model representations, some of which further segment
-the object of interest into smaller subregions such as with part-based
-representations, for example splitting up an animal object into it's constituent
-limbs. The choice of representation is dependent on the problem to which motion
-tracking is to be applied~\cite{Porikli2012}.
-
-\subsection{Model Descriptor}
-Model descriptors are derived mathematically from the region of interest defined
-by the chosen model representation. An effective descriptor is one which allows
-for good discrimination between different objects or regions they
-describe. Discrimination is characterised by a similarity measure that
-facilitates a quantitative assessment of how similar a particular candidate
-descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
-Some common descriptors are
-
-\subsubsection{Template}
-
-\subsubsection{Density Estimates}
-Density estimates as model descriptors can be Parametric or Non-Parametric. They
-estimate the probability density function based on an underlying low-level
-feature within the relevant model representation.
-Common low-level features used include; colour-space values, spacial and
-temporal intra- and inter-frame derivatives within a given colour-space etc.
-
-\subsection{Model Low-Level Features}
-Feature selection is a very relevant step in the development of computer vision
-applications. The extent to how discriminative a particular feature is is
-largely dependent on the scenarios. Hence many solutions employ a
-variety of features to encode into the model robustness across multiple
-scenarios. The most common visual low-level features are.
-
-\subsubsection{colour}
-
-\subsubsection{texture}
-
-\subsubsection{optical flow}
-
-
-
-The relevant literature details numerous approaches to each of the above
-subtasks of the overall motion tracking problem. Before elaborating on these
-approaches, it is necessary to have an understanding of challenges faced in
-the practical implementations of these subtasks.
-
-\section{Challenges faced by Computer Vision}\label{literature_review_challenges}
-Addressed here are several challenges faced when developing Computer
-Vision Algorithms to solve the tasks of Object Detection and Motion Tracking. 
+\section{Challenges to Motion Tracking}\label{literature_review_challenges}
+Addressed here are several challenges faced when developing computer
+vision algorithms to solve the tasks of object detection and motion tracking. 
 These ideas will be necessary in assessing which approaches to focus on within
 this study, in line with the objectives outlined in Section~\ref{introduction_objectives}.
 
 The challenges are conveniently expressed in
-Table~\ref{tbl:computer_vision_challenges}. Experts of image sequences 
-from the VOT2017~\cite{VOT_TPAMI} datasets are used to illustrate the various
-challenges.
+Table~\ref{tbl:computer_vision_challenges}. Illustrations of these challenges
+are presented in Chapter~\ref{chapter_results} of this report.
 
 \begin{longtable}{p{5cm}  p{8cm}}
     \hline
@@ -261,26 +169,126 @@ challenges.
     \caption{Table illustrating Computer Vision Challenges}
 \end{longtable}\label{tbl:computer_vision_challenges}
 
+\section{General Framework of Motion Tracking}
+Porikli and Yilmaz~\cite{Porikli2012} defines a sufficiently general but
+comprehensive video analytic framework that outlines the fundamentals of video
+analytics based on detection and tracking. 
 
+The framework consists of three stages
+\begin{itemize}
+    \item \textbf{Detection}:
+    \item \textbf{Modelling}: 
+    \item \textbf{Tracking}:
+\end{itemize}
 
+There are various approaches to each stage that are subsequently addressed.
 
+\section{Object Detection}\label{literature_review_object_detection}
+Object Detection is the initial step to any motion tracking algorithm. It can
+either be change-based or classification-based, it is important to distinguish
+between these two.
 
-\section{Object Detection}
-Object detection generally refers to the identification of objects within
-an image. It is thereby a segmentation of the image into foreground
-and background with foreground containing the object (s) of interest for subsequent
-operations.
+In classification-based object detection, no temporal information is directly
+used. Assuming an initial algorithm generate regions of interest within a frame, this
+could very well be regions identified by a change detector, edge detector or a
+simple sliding window. A representative set of features is extracted for each
+region of interest. For each region of interest, comparison to a known model
+feature using a similarity measure can determine the likelihood of an object of
+interest being present. 
+This could be by comparison to a set of template models, or more generally the
+output of a trained classifier.
 
-In the context of motion tracking, the problem of object detection is a key
-step. It becomes narrowed down to the more specific task of motion segmentation.
-The literature details several approaches to this task, summarised in 
-Figure~\ref{literature_review_motion_detection_taxonomy} below.
+Change-based object detection leverages temporal differences between adjacent frames
+$\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ within an image sequence to detect
+changes. 
+
+\subsection{Why motion tracking?}
+Given that object detection can be used to track an object by way of repeated
+detection, why the emphasis on the concept motion tracking?
+
+Object and there are inherent limitations to tracking based purely on
+detection based motion tracking as detection tends to be computationally
+expensive. Classification-based detection is also limited to objects who's
+models are known a priori~\cite{Forsyth2012}.
+Tracking also allows for a variety approaches that address a lot of the
+challenges to the tracking problem outlined in
+Section~\ref{literature_review_challenges}.
+
+Figure~\ref{literature_review_motion_detection_taxonomy} outlines some
+approaches to object detection that a motion tracker implementation might take.
 
 \Figure[width=0.7\columnwidth]{Taxonomy of Motion Detection Approaches}{literaturereview_taxonomy_motion_detection}
 
 *Explain Diagram
 
-\section{Object Tracking}
+\section{Object Modelling}
+Object modelling refers to the process of defining an internal model of
+an identified object of interest subsequent tracking. object modelling can be
+broken down into several layers, these being:
+
+\begin{itemize}
+    \item \textbf{Model Representation}: spacial region occupied by object within a
+        frame.
+    \item \textbf{Model Descriptor}: Mathematical definition of an object within
+        a frame. A descriptor is derived from an object's underlying low-level information over the spacial
+        region it occupies defined by the object's representation.
+    \item \textbf{Model Low-Level Features}: characteristics inherent to the
+        observable pixels in a frame.
+\end{itemize}
+
+\subsection{Model Representation}
+The representation of an object model refers to the parametric or non-parametric
+spacial definition of the object within a particular frame. Notable examples of
+representations include
+
+\subsubsection{Point and region}
+This is an example of a parameterised representation. In a point and region
+representation, an object is defined by a centroid and a predefined shape such
+as a rectangle or an ellipse.
+
+\subsubsection{Silhouette representation}
+This is a more complex non-parameterised representation. Here, the object of
+interest is defined by it's silhouette-the shape inscribed by it's outline.
+
+There are yet more complex model representations, some of which further segment
+the object of interest into smaller subregions such as with part-based
+representations, for example splitting up an animal object into it's constituent
+limbs. The choice of representation is dependent on the problem to which motion
+tracking is to be applied~\cite{Porikli2012}.
+
+\subsection{Model Descriptor}
+Model descriptors are derived mathematically from the region of interest defined
+by the chosen model representation. An effective descriptor is one which allows
+for good discrimination between different objects or regions they
+describe. Discrimination is characterised by a similarity measure that
+facilitates a quantitative assessment of how similar a particular candidate
+descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
+Some common descriptors are
+
+\subsubsection{Templates}
+
+\subsubsection{Density Estimates}
+Density estimates as model descriptors can be Parametric or Non-Parametric. They
+estimate the probability density function based on an underlying low-level
+feature within the relevant model representation.
+Common low-level features used include; colour-space values, spacial and
+temporal intra- and inter-frame derivatives within a given colour-space etc.
+
+\subsection{Model Low-Level Features}
+Feature selection is a very relevant step in the development of computer vision
+applications. The extent to how discriminative a particular feature is is
+largely dependent on the scenarios. Hence many solutions employ a
+variety of features to encode into the model robustness across multiple
+scenarios. The most common visual low-level features are.
+
+\subsubsection{colour}
+
+\subsubsection{texture}
+
+\subsubsection{optical flow}
+
+
+\section{Motion Tracking}
 Moving objects in a video have a state. A state can be directly observable such as a
 particular object's colour features, or position in a frame. A state can also be a function
 of observable states such as the object's velocity.
@@ -297,8 +305,13 @@ adapted from Prajapati~\cite{Prajapati2015}.
 
 *Explain Higher Level*
 
-\subsubsection{Simple Template Matching}
-Template Matching is a high-level Machine Vision operation that aims to determine
+\subsection{Simple Template Matching}
+Template Matching is a pattern recognition technique in which prestored patterns
+are identified within an image. It can be performed at various levels ranging
+from a pixel-level to higher level comparisons of average intensity
+etc\cite{Brunelli}.
+
+operation that aims to determine
 what elements of a given image match a specified template of the element of
 interest.
 Formally we have a source image, $I$ in which we would like to obtain matches to
@@ -308,13 +321,6 @@ an element of interest defined by a template image $T$.
 
 
 \section{GUI Design}
-
-\section{Software}
-
-\subsection{Relevant Languages}
-
-\subsection{Relevant Libraries}
-
 
 
 
