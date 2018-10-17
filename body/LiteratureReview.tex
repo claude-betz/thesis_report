@@ -171,17 +171,19 @@ are presented in Chapter~\ref{chapter_results} of this report.
 
 \section{General Framework of Motion Tracking}
 Porikli and Yilmaz~\cite{Porikli2012} defines a sufficiently general but
-comprehensive video analytic framework that outlines the fundamentals of video
-analytics based on detection and tracking. 
+comprehensive framework that detailing the fundamentals of video
+analysis based on detection and tracking. 
 
 The framework consists of three stages
 \begin{itemize}
-    \item \textbf{Detection}:
-    \item \textbf{Modelling}: 
-    \item \textbf{Tracking}:
+    \item \textbf{Detection}: Identification and localisation of objects to
+        track in an initial frame.
+    \item \textbf{Modelling}: Representation of detected objects.
+    \item \textbf{Tracking}: Tracking in subsequent frames based on the chosen
+        model.
 \end{itemize}
 
-There are various approaches to each stage that are subsequently addressed.
+The stages and the various approaches to each stage are subsequently addressed.
 
 \section{Object Detection}\label{literature_review_object_detection}
 Object Detection is the initial step to any motion tracking algorithm. It can
@@ -227,7 +229,7 @@ an identified object of interest subsequent tracking. object modelling can be
 broken down into several layers, these being:
 
 \begin{itemize}
-    \item \textbf{Model Representation}: spacial region occupied by object within a
+    \item \textbf{Model Representation}: The spacial region occupied by object within a
         frame.
     \item \textbf{Model Descriptor}: Mathematical definition of an object within
         a frame. A descriptor is derived from an object's underlying low-level information over the spacial
@@ -236,7 +238,7 @@ broken down into several layers, these being:
         observable pixels in a frame.
 \end{itemize}
 
-\subsection{Model Representation}
+\subsection{Model representation}
 The representation of an object model refers to the parametric or non-parametric
 spacial definition of the object within a particular frame. Notable examples of
 representations include
@@ -256,7 +258,7 @@ representations, for example splitting up an animal object into it's constituent
 limbs. The choice of representation is dependent on the problem to which motion
 tracking is to be applied~\cite{Porikli2012}.
 
-\subsection{Model Descriptor}
+\subsection{Model descriptor}
 Model descriptors are derived mathematically from the region of interest defined
 by the chosen model representation. An effective descriptor is one which allows
 for good discrimination between different objects or regions they
@@ -265,39 +267,39 @@ facilitates a quantitative assessment of how similar a particular candidate
 descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
 Some common descriptors are
 
-\subsubsection{Templates}
+\subsubsection{templates}
 Templates are extractions of the pixels in the region of interest of the
 underlying frame. They are usually extracted according to a particular
 parametric shape, but can also be defined for more complex model representations.
 
-\subsubsection{Density Estimates}
+\subsubsection{Density estimates}
 Density estimates as model descriptors can be Parametric or Non-Parametric. They
 estimate the probability density function based on an underlying low-level
 feature within the relevant model representation.
 Common low-level features used include; colour-space values, spacial and
 temporal intra- and inter-frame derivatives within a given colour-space etc.
 
-\subsection{Model Low-Level Features}
+\subsection{Model low-level features}
 Feature selection is a very relevant step in the development of computer vision
 applications. The extent to how discriminative a particular feature is is
 largely dependent on the scenarios. Hence many solutions employ a
 variety of features to encode into the model robustness across multiple
 scenarios. The most common visual low-level features are.
 
-\subsubsection{colour}
+\subsubsection{Colour}
 In digital images, colours can be represented in one of several colour spaces, the
 most common representation is within the RGB (red, green, blue) colour space. In
 the RGB colour space, each pixel is represented by integer in the range
 $[0,256)$ for each channel in the colour space. e.g black = $\{0,0,0\}$.
 
-\subsubsection{texture}
+\subsubsection{Texture}
 Texture measures the variation in intensity of a region within a frame. It can
 be interpreted as how smooth or rough the surface of the region is.
 For example rough surfaces could be characterised by large variations in pixel
 values over short distances corresponding to bumps in an object, or low
 variation corresponding to a smooth object with a uniform surface\cite{Porikli2012}
 
-\subsubsection{optical flow}
+\subsubsection{Optical flow}
 Optical flow is the most general approach to motion estimation. It involves
 computing an independent estimate of the motion at each pixel location for each
 frame in a sequence.
