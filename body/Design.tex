@@ -32,7 +32,7 @@ image sequence, algorithm etc.
 An in depth treatment of the front- and back-end follows. The MT system is
 developed in the python3 programming language. 
 
-\subsection{Back-end design}\label{design_back_end}
+\section{Back-End Design}\label{design_back_end}
 The focus of the back-end design will be in the implementation of the various
 approaches to object detection and motion tracking developed in
 Chapter~\ref{chapter_theoretical_framework}.
@@ -71,7 +71,7 @@ algorithm.
 
 The MS-Tracker class has the \textit{numPy} library as it's sole dependency.
 
-\subsection{Front-end design}
+\section{Front-End Design}
 The front-end is the graphical user interface (GUI) that users of the MT
 system interact with. 
 It interfaces with the underlying functionality encapsulated in the back-end API to
@@ -96,14 +96,28 @@ Section~\ref{introduction_user_requirements}.
 
 \Figure[width=0.8\columnwidth]{Graphical user interface mock-up}{design_gui_mockup} 
 
-\subsection{Integration}
+\subsection{GUI programming}
+
+In line with the general model-view-controller architecture, the GUI consists
+of:
+\begin{itemize}
+    \item \textbf{A model}: this is the application object responsible for the
+        dynamic behaviour of the GUI through the event loop.
+    \item \textbf{Views}: these are elements from which users are presented
+        information from the application. 
+    \item \textbf{Controllers}: these are elements with which users interact with
+        the application. They emit signals.
+\end{itemize}
+
+
+\section{Integration}
 The development of the front- and back-end will occur in isolation during the
 early stages of the design. This is due to the face that the subject matter of
 the two sub-modules is largely unrelated. To ensure that this occurs smoothly,
 it is necessary to have a clear understanding of exactly how the two subsystems
 interact, essentially what API end-points they must avail each other.
 
-Figure\ref{fig:design_uml} details that the different detector and tracker
+Figure~\ref{fig:design_uml} details that the different detector and tracker
 implementations will be combined into a library, which is imported into the GUI
 application.
 The GUI simply instantiates detector or tracker objects and interacts with them
@@ -114,7 +128,7 @@ independent of the back-end. This decoupling of the I/O is desirable as in the
 scenario of the back-end functions being employed by an alternative application,
 it would would have the liberty of defining it's own I/O behaviour. 
 
-\subsection{Development environment and tech-stack}
+\section{Development Environment and Tech-Stack}
 This section details underlying tech-stack of the Motion Tracking System. The
 purpose of this section is to outline the various software tools used in
 designing the MT System.

@@ -404,10 +404,16 @@ def readSequence(self, seq_dir):
 Listing~\ref{lst:select} details three snippets that define the creation of a
 sequence select controller (snippet 1). It then shows how the this controller
 added to the GUI menu bar and tool bar
-defined, including it's connection to it's slot (snippet 2). The slot- which
+defined, including it's connection to it's slot (snippet 2). The slot
+\textit{openSequence ()} slot 
 specifies the GUI response a user selection of the ``Select Sequence'' menu
-option is shown in snippet 3.
-Other controllers in the GUI follow a similar implementation pattern.
+option. It uses a QFileDialog to allow a user visual selection of a image
+sequence folder in a specific directory. A call to the \textit{readSequence ()}
+function then reads in a list of all the full paths to the images on the
+specified directory, and displays the first image in the sequence to a user.
+
+Other controllers in the GUI follow a similar implementation pattern, starting
+with definition, addition to the GUI and connection to a callable slot.
 
 \subsection{Views}
 The GUI application has two views, a frame view to display the current image in the
