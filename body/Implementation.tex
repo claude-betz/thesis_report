@@ -196,7 +196,7 @@ def get_pdf(template,m=8):
 \end{lstlisting}
 
 This above method is dependent on the implementation of the following support
-methods. See Appendix~\ref{appendix_A} for code listings of their implementation.
+methods. See Appendix~\ref{supportMS} for code listings of their implementation.
 \begin{itemize}
     \item get\_elliptical\_mask (height, width)
     \item get\_euclidean\_distance (x1, x2):
@@ -206,12 +206,12 @@ methods. See Appendix~\ref{appendix_A} for code listings of their implementation
 \end{itemize}
 
 \subsection{Computing the Bhattacharyyaa coefficient}
-Computing the Bhattacharyyaa coefficient between two pdfs is implemented in
+Computing the Bhattacharyyaa coefficient between two PDFs is implemented in
 Listing~\ref{lst:BC} according to Equation~\ref{eqn:bhattacharyya}. 
 
 \begin{lstlisting}[language=Python, caption={Function computing the Bhattacharyya coefficient}, captionpos=b, label={lst:BC}]
 def bhatt_coeff(q, p):
-    """compute the bhattacharyya coefficient between two 2D pdfs """
+    """compute the bhattacharyya coefficient between two 2D PDFs """
     height, width = q.shape[0], q.shape[1]
     batt = 0
     for y in range(0,height):
@@ -357,8 +357,8 @@ level central view that takes on a two element horizontal layout, The left half
 holds the view for the displaying the frame, and the right half is further split
 vertically with the top half holding the view for the model of interest and the
 bottom half containing the navigation buttons.
-The results of the implementation can be seen in Section~\ref{chapter_results},
-Figure~\ref{fig:results/gui/first_look}.
+The results of the implementation can be seen in
+Figure~\ref{fig:results/gui/first_look} of the Results Chapter.
 
 \subsection{Controllers}
 The MT systems' controllers comprise options within the file menu, toolbar,
