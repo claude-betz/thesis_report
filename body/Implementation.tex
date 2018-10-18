@@ -363,13 +363,100 @@ Figure~\ref{fig:results/gui/first_look}.
 \subsection{Controllers}
 The MT systems' controllers comprise options within the file menu, toolbar,
 navigation buttons, that a user can use to interact with the system. Each of
-these controllers emit signals that are connected to a slot callback function,
-specifying the action to be taken.
+these controllers emit signals that are connected to a callable function within
+the application (slot), specifying the action to be taken.
+An example of this implementation mechanism is in the File I/O sequence
+selection functionality. 
+The sequenceSelectAction is a controller that can be added to the GUI ``File'' menu
+bar and tool bar. Its implementation is detailed in Listing~\ref{lst:select}. 
 
+\begin{lstlisting}[language=Python, caption={Code listing detailing sequence selection controller and connection to slot}, captionpos=b, label={lst:select}]
+# snippet 1: create controller file select 
+sequenceSelectAction = QAction(fileIcon,'Select Sequence', self) # Exit Action Object
+sequenceSelectAction.setShortcut('Ctrl+O') # bind shortcut "Ctrl+O" open file
+sequenceSelectAction.setStatusTip('Open Sequence') # status bar exit message
+sequenceSelectAction.triggered.connect(self.openSequence) # connect QtGui quit() method 
 
+# snippet 2: add sequence select action to file menu and tool bar
+fileMenu.addAction(sequenceSelectAction) # Add sequenceSelectAction to fileMenu 
+toolBar.addAction(sequenceSaveAction) # Add Seqeuence Save Object to Tool Bar
+    
+# snippet 3: callable slot for file select
+@pyqtSlot()
+def openSequence(self):
+    """function to point to a folder with a desired sequence"""
+    self.seq_dir = QFileDialog.getExistingDirectory(self,'Open File') # store path to sequence
+    self.readSequence(self.seq_dir) # read in file names in sequence into self.paths
+
+def readSequence(self, seq_dir):
+    """read in sequence"""
+    for path in sorted(os.listdir(seq_dir)):
+        full_path = os.path.join(seq_dir, path)
+        if os.path.isfile(full_path):
+            self.seq_paths.append(full_path)
+    
+    self.seq_length = len(self.seq_paths) # update sequence length
+    self.cur_index = 0 # reset image index
+    self.cur_path = self.seq_paths[self.cur_index] # set cur image to first image in self.seq_paths
+    self.loadImage() # load in first image
+\end{lstlisting}
+
+Listing~\ref{lst:select} details three snippets that define the creation of a
+sequence select controller (snippet 1). It then shows how the this controller
+added to the GUI menu bar and tool bar
+defined, including it's connection to it's slot (snippet 2). The slot- which
+specifies the GUI response a user selection of the ``Select Sequence'' menu
+option is shown in snippet 3.
+Other controllers in the GUI follow a similar implementation pattern.
 
 \subsection{Views}
-The GUI application has two views, one to display the sequence, and one to
-display the model being used. The frame 
+The GUI application has two views, a frame view to display the current image in the
+sequence, and a smaller tracking view to display the detected or tracked object
+within a particular frame.  
+The tracking view is simply a QLabel which is a widget we can display images to.
+The frame view requires extended functionality allows for user selection of
+regions of interest as the initial detection step of the implemented detection
+and tracking algorithms, thus making it a view and controller.
+
+\subsubsection{User object detection functionality}
+Listing~\ref{lst:image_view} details the implementation of this
+functionality. The imageView class that subclasses the QLabel class is created.
+This allows for overriding of the mouse click events to begin drawing a
+rectangle upon a mouse click event, and stop drawing with a mouse release event.
+This behaviour is facilitated by the QRubberband class. We emit the results as
+a signal containing the origin of the top left corner $(x,y)$ of the rectangle, and it's
+the width and height, $(w, h)$. This is the initial detection step of our
+implemented kernel-based trackers.
+
+\begin{lstlisting}[language=Python, caption={Code for User selection of regions/objects of interest}, captionpos=b, label={lst:image_view}]
+class imageView(QLabel):
+    """image view subclasses QLabel to render and add mouse events"""
+    currentQRect = 0
+    triggered = pyqtSignal() # to signal sent on mouse release
+    def __init__(self):
+        super(imageView, self).__init__()
+        self.pixmap = QPixmap() # to store image
+        self.cropLabel = QLabel() # user selected crop
+
+    # Mouse Events
+    def mousePressEvent(self, eventQMouseEvent):
+        self.originQPoint = eventQMouseEvent.pos() # obtain origin of mouse click
+        self.currentQRubberBand = QRubberBand(QRubberBand.Rectangle, self) # rubberband selection
+        self.currentQRubberBand.setGeometry(QRect(self.originQPoint, QSize())) # 
+        self.currentQRubberBand.show()
+
+    def mouseMoveEvent(self, eventQMouseEvent):
+        self.currentQRubberBand.setGeometry(QRect(self.originQPoint, eventQMouseEvent.pos()).normalized())
+
+    def mouseReleaseEvent(self, eventQMouseEvent):
+        QRect = self.currentQRubberBand.geometry() 
+        self.currentQRect = (QRect.y(), QRect.x(), QRect.height(),
+        QRect.width()) # Qrect refines coordinates of selection in original image
+        self.currentQRubberBand.deleteLater() 
+        cropPixmap = self.pixmap.copy(QRect) # copy only selection from current frame
+        self.cropLabel.setPixmap(cropPixmap) # set the pixmap of tracking view
+        self.triggered.emit() # emit signal that selection complete
+\end{lstlisting}
+
 
 
