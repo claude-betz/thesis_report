@@ -20,17 +20,37 @@ of the system. The back-end consists of the algorithms enabling the tracking of
 objects of interest within the relevant image sequence.
 
 The overall system design is summarised by the block diagram in
-Figure~\ref{fig:motion_tracking_subtasks}.  
+Figure~\ref{fig:design_system_overview}. It highlights the communication between the
+two MT subsystems at a general level. The system is controlled via a front-end user
+friendly GUI which allows for convenient selection of parameters such as
+image sequence, algorithm etc. These are communicated to the back-end
+algorithms that compute the result and relay it back to the front-end for display to
+the system user.
 
 \Figure[width=0.8\columnwidth]{Block diagram of system design}{design_system_overview}
 
-Figure~\ref{fig:design_system_overview} highlights the communication between the two MOT
-subsystems, in a general use case. The system is controlled via a user
-friendly GUI which allows for convenient selection of parameters such as
-image sequence, algorithm etc.
+Before detailed development of the front- and back-end subsystems can progress, it is necessary to
+have a clear understanding of what tools are to used for either implementation to
+ensure a smooth integration phase.
 
-An in depth treatment of the front- and back-end follows. The MT system is
-developed in the python3 programming language. 
+\section{Development Environment and Tech-Stack}
+This Section details underlying tech-stack of the MT System. The
+purpose of this section is to outline the various software tools to be used in
+designing the MT System with the objective of facilitating smooth system integration and
+portability. 
+
+\subsection{Programming language}
+The python 
+
+\subsection{Relevant libraries}
+The relevant libraries chosen for the development of the MT system are as
+follows.
+
+
+
+
+Based on these tools, an in depth treatment of the front- and back-end subsystem
+design follows. 
 
 \section{Back-End Design}\label{design_back_end}
 The focus of the back-end design will be in the implementation of the various
@@ -39,6 +59,7 @@ Chapter~\ref{chapter_theoretical_framework}.
 Emphasis is placed on minimal reliance on libraries for functional
 implementations.
 
+\subsection{Object oriented approach}
 The back-end structure will follow the object oriented programming paradigm with
 the intention to leverage the concepts of inheritance and polymorphism. The
 rationale behind this is to be able to maintain a clean and easily extendible
@@ -53,6 +74,7 @@ this functionality will interface with the front end to create the MT system.
 
 \Figure[width=1.2\columnwidth, angle=90, scale=1.2]{UML diagram outlining the MT system class structure}{design_uml} 
 
+\subsection{Software dependencies}
 The software dependencies within the back-end consist of the following python3
 libraries:
 \begin{itemize}
@@ -77,8 +99,11 @@ system interact with.
 It interfaces with the underlying functionality encapsulated in the back-end API to
 satisfy the system user requirements. 
 
+\subsection{GUI requirements}
 The tasks that the front end must achieve relate directly to the user
-requirements. The basic GUI application should afford a user the following functions.
+requirements outlined in Section~\ref{introduction_user_requirements}. The basic
+GUI application should afford a user the following functions.  
+
 \begin{itemize}
     \item A user should be able to load a desired image sequence
     \item A user should be able play, pause and iterate the image sequence 
@@ -88,16 +113,17 @@ requirements. The basic GUI application should afford a user the following funct
         relevant algorithm are stored.
 \end{itemize}
 
-In line with these requirements, Figure~\ref{fig:design_gui_mockup} details a
-simple mock-up of a possible GUI for the proposed MOT System. When integrated
-with the system back-end, the GUI will afford a user functionality in
-line with the system user requirements in outlined in
-Section~\ref{introduction_user_requirements}.
+Figure~\ref{fig:design_gui_mockup} details a simple mock-up of a possible GUI
+for the proposed MT system. The proposed layout is simple, it proposes menus for
+file and algorithm selection, two views to display tracking results to the user
+and several buttons that allow a user to navigate a particular sequence
+When integrated with the system back-end, the GUI functionality will directly
+satisfy the defined system user requirements.
 
 \Figure[width=0.8\columnwidth]{Graphical user interface mock-up}{design_gui_mockup} 
 
-\subsection{GUI programming}
 
+\subsection{GUI programming}
 In line with the general model-view-controller architecture, the GUI consists
 of:
 \begin{itemize}
@@ -127,11 +153,6 @@ In this way, the front-end GUI can implement the input and output (I/O) function
 independent of the back-end. This decoupling of the I/O is desirable as in the
 scenario of the back-end functions being employed by an alternative application,
 it would would have the liberty of defining it's own I/O behaviour. 
-
-\section{Development Environment and Tech-Stack}
-This Section details underlying tech-stack of the Motion Tracking System. The
-purpose of this section is to outline the various software tools used in
-designing the MT System and possibly allow for reproducibility.
 
 
 
