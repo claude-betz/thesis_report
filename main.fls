@@ -356,6 +356,9 @@ INPUT ./figures/results/adaptive_template_tracker/taxi_sequence/15.jpg
 INPUT figures/results/adaptive_template_tracker/taxi_sequence/16.jpg
 INPUT ./figures/results/adaptive_template_tracker/taxi_sequence/16.jpg
 INPUT ./figures/results/adaptive_template_tracker/taxi_sequence/16.jpg
+INPUT figures/results/adaptive_template_tracker/metric.png
+INPUT ./figures/results/adaptive_template_tracker/metric.png
+INPUT ./figures/results/adaptive_template_tracker/metric.png
 INPUT figures/results/adaptive_template_tracker/girl/2.jpg
 INPUT ./figures/results/adaptive_template_tracker/girl/2.jpg
 INPUT ./figures/results/adaptive_template_tracker/girl/2.jpg
@@ -429,6 +432,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT figures/results/mean_shift_tracker/results_m_bc.png
 INPUT ./figures/results/mean_shift_tracker/results_m_bc.png
 INPUT ./figures/results/mean_shift_tracker/results_m_bc.png
+INPUT figures/results/mean_shift_tracker/fish3/metric.png
+INPUT ./figures/results/mean_shift_tracker/fish3/metric.png
+INPUT ./figures/results/mean_shift_tracker/fish3/metric.png
 INPUT figures/results/mean_shift_tracker/fish3/occlusion/1.jpg
 INPUT ./figures/results/mean_shift_tracker/fish3/occlusion/1.jpg
 INPUT ./figures/results/mean_shift_tracker/fish3/occlusion/1.jpg
@@ -525,6 +531,9 @@ INPUT ./figures/results/mean_shift_tracker/fish3/orientation/15.jpg
 INPUT figures/results/mean_shift_tracker/fish3/orientation/16.jpg
 INPUT ./figures/results/mean_shift_tracker/fish3/orientation/16.jpg
 INPUT ./figures/results/mean_shift_tracker/fish3/orientation/16.jpg
+INPUT figures/results/mean_shift_tracker/girl/metric.png
+INPUT ./figures/results/mean_shift_tracker/girl/metric.png
+INPUT ./figures/results/mean_shift_tracker/girl/metric.png
 INPUT figures/results/mean_shift_tracker/girl/occlusion/1.jpg
 INPUT ./figures/results/mean_shift_tracker/girl/occlusion/1.jpg
 INPUT ./figures/results/mean_shift_tracker/girl/occlusion/1.jpg
