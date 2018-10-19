@@ -5,8 +5,7 @@ described in Chapter~\ref{chapter_introduction}.
 
 Conclusions from the front-end and back-end development, implementations and
 results are presented, followed by insights from the overall integrated system.
-Finally Section~\ref{conclusion_future} details possible future improvements and
-extensions to the project.
+Finally possible future improvements and extensions to the project are addressed.
 
 \section{Template Matching Trackers}
 The simple template tracker implementation was only slightly effective in
@@ -56,21 +55,103 @@ It has potential to be used as an initial detector. Based of a database of
 learned shapes, several matches can be made within the initial frame,
 $\mathbf{f}_0$ of a particular sequence, once a match is made, it can be linked
 with the fast and robust mean shift tracker to track the objects motions for
-subsequent frames in the sequence. 
+subsequent frames in the sequence. The main appeal is that machine learning and
+deep learning based methods take large amounts of data to be trained, a
+refined algorithm with faster execution time and less sensitivity to tuning
+parameters could have applicability in fast deployment systems, based off
+multi-view templates of a desired object to detect.
 
 \section{Mean Shift Tracker}
 In terms of performance in relation to the motion tracking problem and to the
 challenges in achieving effective tracking, the mean shift tracker was by far
-the most successful, of the trialled kernel-based tracking implementations.
+the most successful of the trialled kernel-based tracking implementations.
 
-Its performance was tested against a variety of sequences, exhibiting various
-of the outlined challenges to motion tracking.
+This allowed for more comprehensive performance tests against a variety of
+sequences, exhibiting various of the outlined challenges to motion tracking.
+
+Throughout the experiments, the mean shift tracker showed good robustness to
+challenges such as occlusion, changes in scale, camera ego motion, and  
+
 
 \section{Graphical User Interface}
+The GUI system implemented in the Qt framework was overall very responsive. The
+main delays in the system execution were introduced from the waiting for
+feedback from the back-end functions.
+
+The final GUI implementation satisfied the initial user requirements defined in
+Section~\ref{introduction_user_requirements}. As detailed in
+Section~\ref{results_gui}, the GUI allowed for user selection of sequences of
+interest. A user could navigate the sequences and apply one of the implemented
+back-end detectors or trackers after selecting an object of interest in the
+initial a frame, $\mathbf{f}_k$.
 
 
 \section{Future Work}\label{future}
-\subsection{Template matching tracker}
-\subsection{Colour co-occurrence histogram detector}
+This Section outlines the possible improvements and areas
+of future work, for different subsystems of the MT system, based on the
+conclusions drawn.
+
+\subsection{Template matching tracker and colour co-occurrence histogram
+detector}
+The adaptive template matching trackers showed potential in tracking templates for
+short sequences, it's lack of generalisation however made it incapable of
+application to more complex sequences. 
+The CCH-detector was an experiment at defining a deformable template
+and it showed promise in detection despite occlusion, given that a major
+drawback was the execution time of the searches, possible future work could be
+done in speeding up of the CCH-detector using parallelisation. The computation
+of the CCH descriptor is easily an embarrassingly parallel problem as the
+work-load can be split across either of the descriptors dimensions, be it
+quantisation bins or quantisation distances. 
+There is still likely a limit to the effectiveness of this as the configuration
+was relatively sensitive to changes to the $n_c$ and $n_d$ parameters which is
+undesirable in a real world application.
+
 \subsection{Mean shift tracker}
+Mean shift tracker are still an active field of research. The mean shift tracker
+was the most successful of the kernel-based tracker implementations, and
+accordingly has the most room for extension.
+
+The means shift tracker (MST) implementation, has static kernel dimensions. A clear first
+step to optimisation would be to add dynamic dimensioning for the kernel region
+as the scale of the object of interest changes.
+
+The MST is not limited to descriptors based on colour low-level
+features. It was shown in the ant sequence of Section~\ref{results_speed}. That
+the mean shift tracker had difficulty when operating on objects that were
+similar within the RGB colour-space, one possible refinement could be to augment
+the tracker with Bayesian algorithms.
+
+As detailed in Section~\ref{literature_review_point}, Bayesian estimation
+algorithms compute the posterior density of a parameter of interest. In tracking
+this parameter could be our object position or velocity in $\mathbf{f}_k$. 
+When faced with challenges such as complete occlusion or target overlap with
+similar objects, the MST performed poorly peaking in the error metric or failing
+to keep track of the object entirely.
+
+The sequence
+
+To deal with these two issues, the MST could be implemented with Bayesian
+filters approximations such as the Kalman filter. This would incorporate predictability 
+to the system based on past states. These predictions would prove valuable in the
+case of complete occlusion where the mean shift algorithm has no means of
+inferring the object position. It would also likely help with the case of
+track overlap as the it could be setup to take into account direction and
+velocity of motion to eliminate the overlapping object as possible target in
+spite of similar appearances in the selected feature space.
+
+
 \subsection{GUI}
+In terms of the GUI there is room for improvement, the user flow sequences
+require a more thorough testing, this would be in the form of branch testing where
+each possible sequence of user actions is tested to ensure it does not fail.
+
+Rather than scale the frame and template views to be the same size as the image,
+this should be abstracted away so that the image is scaled to whatever size the
+frame and template views in the image are currently. This requires the
+implementation of a coordinate transform for the user selected regions of
+interest. The transform would convert the dimensions from the scaled frame to
+to the original pixel dimensions that the back-end subsystem operates on.
+
+
+
