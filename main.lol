@@ -10,7 +10,7 @@
 \contentsline {lstlisting}{\numberline {6.10}Mean Shift Loop}{46}{lstlisting.6.10}
 \contentsline {lstlisting}{\numberline {6.11}Code listing detailing sequence selection controller and connection to slot}{48}{lstlisting.6.11}
 \contentsline {lstlisting}{\numberline {6.12}Code for User selection of regions/objects of interest}{50}{lstlisting.6.12}
-\contentsline {lstlisting}{\numberline {B.1}Additional functions for Co-occurrence Histogram Detection}{81}{lstlisting.B.1}
-\contentsline {lstlisting}{\numberline {B.2}Additional functions for Mean Shift Tracker Impementation}{83}{lstlisting.B.2}
-\contentsline {lstlisting}{\numberline {B.3}QLabel Mouse Event Code}{84}{lstlisting.B.3}
-\contentsline {lstlisting}{\numberline {B.4}GUI Impementation Code}{85}{lstlisting.B.4}
+\contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{80}{lstlisting.A.1}
+\contentsline {lstlisting}{\numberline {A.2}Additional functions for Mean Shift Tracker Impementation}{82}{lstlisting.A.2}
+\contentsline {lstlisting}{\numberline {A.3}QLabel Mouse Event Code}{83}{lstlisting.A.3}
+\contentsline {lstlisting}{\numberline {A.4}GUI Impementation Code}{84}{lstlisting.A.4}

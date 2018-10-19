@@ -1,5 +1,4 @@
 \chapter{Implementation}\label{chapter_implementation}
-
 This Chapter details the implementation of the relevant software modules of the
 overall MT System. The work is firmly grounded within the Theoretical Framework
 established in Chapter~\ref{chapter_theoretical_framework} and the system design
@@ -13,12 +12,17 @@ Chapter~\ref{chapter_theoretical_framework} can better be appreciated.
 
 The only differences between the class-based implementations according to the
 UML Diagram in Figure~\ref{fig:design_uml} and those presented here, is that the
-class functions do not always explicitly passed between functions but rather
-through instance variables. 
+class functions are not procedurally implemented. The procedural implementation
+was presented here to enhance clarity and reproducibility. The class based
+implementations can be seen in Appendix~\ref{appendix_implementations}.
 
 \section{Template Matching Tracker}\label{implementation_tm}
 This Section details the implementation of the two variants of template tracker
-described in Section~\ref{theoretical_framework_tm}.
+described in Section~\ref{theoretical_framework_tm}. The template trackers were
+implemented using the highly optimized $\text{openCV}_{TM}$ template matching
+functions, as preliminary naive implementations would did meet the speed requirements to
+tracking and research into optimization was deemed beyond the scope of this
+study.
 
 \subsection{Simple template matching tracker}
 

@@ -88,8 +88,9 @@ initial a frame, $\mathbf{f}_k$.
 
 \section{Future Work}\label{future}
 This Section outlines the possible improvements and areas
-of future work, for different subsystems of the MT system, based on the
-conclusions drawn.
+of future work for different subsystems of the MT system. Suggestions are based
+on the conclusions drawn and knowledge obtained from the initial survey of the
+literature in Section~\ref{chapter_literature_review}.
 
 \subsection{Template matching tracker and colour co-occurrence histogram
 detector}
@@ -108,50 +109,63 @@ was relatively sensitive to changes to the $n_c$ and $n_d$ parameters which is
 undesirable in a real world application.
 
 \subsection{Mean shift tracker}
-Mean shift tracker are still an active field of research. The mean shift tracker
-was the most successful of the kernel-based tracker implementations, and
+Mean shift tracking remains an active field of research. The mean shift tracker
+(MST) was the most successful of the trialled kernel-based tracker implementations, and
 accordingly has the most room for extension.
 
-The means shift tracker (MST) implementation, has static kernel dimensions. A clear first
+The (MST) implementation, has static kernel dimensions. A clear first
 step to optimisation would be to add dynamic dimensioning for the kernel region
-as the scale of the object of interest changes.
+as the scale of the object of interest changes, this would mean that less
+background noise is incorporated when computing candidate PDFs for calculating
+the mean shift vector.
 
-The MST is not limited to descriptors based on colour low-level
-features. It was shown in the ant sequence of Section~\ref{results_speed}. That
-the mean shift tracker had difficulty when operating on objects that were
-similar within the RGB colour-space, one possible refinement could be to augment
-the tracker with Bayesian algorithms.
+The MST is not limited to descriptors based on colour low-level features.
+Section~\ref{results_speed} showed that the MST had difficulty when operating on
+object and backgrounds that were similar within the RGB colour-space. A solution
+to this could be to use different of a combination of different low-level
+features. For example, despite an object and background being similar in colour,
+they may vary in texture. Humans often spot camouflaged animals due sometimes
+slight changes in texture. 
+Defining the PDF of the MST based on texture features or a combination of RGB
+and texture could allow sufficient discriminative power within the feature space
+for the algorithm differentiate a blue fish against a blue backdrop.
 
-As detailed in Section~\ref{literature_review_point}, Bayesian estimation
-algorithms compute the posterior density of a parameter of interest. In tracking
-this parameter could be our object position or velocity in $\mathbf{f}_k$. 
 When faced with challenges such as complete occlusion or target overlap with
 similar objects, the MST performed poorly peaking in the error metric or failing
-to keep track of the object entirely.
-
-The sequence
-
-To deal with these two issues, the MST could be implemented with Bayesian
-filters approximations such as the Kalman filter. This would incorporate predictability 
-to the system based on past states. These predictions would prove valuable in the
-case of complete occlusion where the mean shift algorithm has no means of
-inferring the object position. It would also likely help with the case of
-track overlap as the it could be setup to take into account direction and
-velocity of motion to eliminate the overlapping object as possible target in
-spite of similar appearances in the selected feature space.
+to keep track of the object entirely. A possible refinement could be to augment
+the tracker with Bayesian algorithms. As detailed in
+Section~\ref{literature_review_point}, Bayesian estimation algorithms compute
+the posterior density of a parameter/state of interest. In the tracking
+problem, this parameter/state could be our object position, velocity or both in
+$\mathbf{f}_k$. 
+Augmenting the mean shift algorithm with the addition of state estimation  would
+incorporate predictability to the system based on past states. These predictions
+would prove valuable in the case of complete occlusion where the mean shift
+algorithm has no means of inferring the object position. It would also likely
+help with the case of track overlap as the it could be setup to take into
+account direction and velocity of motion to eliminate the overlapping object as
+possible target in spite of similar appearances in the selected
+feature space.
+There are several well researched approximations to the ideal Bayesian filter
+under different constraints such as Kalman Filters, Point Mass filters, Particle
+Filters etc.~\cite{Challa2011}.  
 
 
 \subsection{GUI}
-In terms of the GUI there is room for improvement, the user flow sequences
+In terms of the GUI there is a lot room for improvement. The user flow sequences
 require a more thorough testing, this would be in the form of branch testing where
-each possible sequence of user actions is tested to ensure it does not fail.
+each possible sequence of user actions is tested to ensure it does not fail in
+certain control sequences, as only the main user flow sequences were tested, as
+presented in Section~\ref{results_gui}.
 
-Rather than scale the frame and template views to be the same size as the image,
-this should be abstracted away so that the image is scaled to whatever size the
-frame and template views in the image are currently. This requires the
-implementation of a coordinate transform for the user selected regions of
-interest. The transform would convert the dimensions from the scaled frame to
-to the original pixel dimensions that the back-end subsystem operates on.
+In terms of rendering the selected sequences to the two frame and template views
+of the GUI, the frames and templates to be displayed should scale to the current
+view size rather than dynamically changing the window size. This limits the
+application to lower resolution videos as the window could scale beyond the
+particular screen dimensions.
+Correction of this would require the implementation of a coordinate transform
+to convert the dimensions from the scaled frame to to the original pixel
+dimensions for the user selected kernels that the back-end subsystem operates on.
 
 
 
