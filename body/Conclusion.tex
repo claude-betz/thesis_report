@@ -52,14 +52,15 @@ feature is a significant bottleneck in the execution time of the detector,
 limiting it's applicability. 
 
 It has potential to be used as an initial detector. Based of a database of
-learned shapes, several matches can be made within the initial frame,
+learned shapes, an initial match can be made within the initial frame,
 $\mathbf{f}_0$ of a particular sequence, once a match is made, it can be linked
 with the fast and robust mean shift tracker to track the objects motions for
-subsequent frames in the sequence. The main appeal is that machine learning and
-deep learning based methods take large amounts of data to be trained, a
-refined algorithm with faster execution time and less sensitivity to tuning
-parameters could have applicability in fast deployment systems, based off
-multi-view templates of a desired object to detect.
+subsequent frames in the sequence. 
+The main appeal of this approach is that machine learning and deep learning
+based methods take large amounts of data to be trained, a refined algorithm with
+faster execution time and less sensitivity to tuning parameters could have
+applicability in fast deployment systems, based off multi-view templates of a
+desired object to detect.
 
 \section{Mean Shift Tracker}
 In terms of performance in relation to the motion tracking problem and to the
