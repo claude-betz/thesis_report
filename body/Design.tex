@@ -40,14 +40,31 @@ designing the MT System with the objective of facilitating smooth system integra
 portability. 
 
 \subsection{Programming language}
-The python 
+The Python3.6 programming language is used for the front- and
+back-end implementation.
+
+Python virtual environments is used in order to guarantee portability of the
+final product. It creates isolated installation libraries that ensure there are
+no version clashes by the changes to the global python packages during the
+project development life cycle.
+
+The installations of the various packages and libraries were handled by the pip3
+Python3 package manager.
 
 \subsection{Relevant libraries}
-The relevant libraries chosen for the development of the MT system are as
-follows.
-
-
-
+The relevant Python3 libraries chosen for the development of the MT system are
+outlined below. The Implementation Chapter presents their use in detail.
+\begin{itemize}
+    \item \textbf{NumPy}: The NumPy library is used for it's high performance
+        multidimensional array object and the efficient operations it provides.
+    \item \textbf{PyQt5}: This is the chosen library for the GUI system, it
+        provides high-level APIs for GUI development.     
+    \item \textbf{OpenCV}: This is a computer vision library aimed at
+        real-time computer vision, it is used for it's highly optimised template
+        matching function, and to read in images sequences in the front-end GUI
+    \item \textbf{scikit-learn}: This is a machine learning library that is
+        used for it's implementation of the kmeans clustering algorithm.
+\end{itemize}
 
 Based on these tools, an in depth treatment of the front- and back-end subsystem
 design follows. 
@@ -75,23 +92,19 @@ this functionality will interface with the front end to create the MT system.
 \Figure[width=1.2\columnwidth, angle=90, scale=1.2]{UML diagram outlining the MT system class structure}{design_uml} 
 
 \subsection{Software dependencies}
-The software dependencies within the back-end consist of the following python3
-libraries:
-\begin{itemize}
-    \item \textit{numPy}
-    \item \textit{openCV}
-    \item \textit{scikit-learn}
-\end{itemize}
+This subsection describes the software dependencies within the back-end
+subsystem.
 
-The simple and adaptive template matching variants in the TM-tracker class variants are the only
-back-end class with a dependency on the \textit{openCV} library which it makes use of for it's
-highly optimised implementation of the template matching algorithm.
+The simple and adaptive template matching variants in the TM-tracker class
+variants are the only back-end class with a dependency on the \textbf{OpenCV}
+library which it makes use of for it's highly optimised implementation of the
+template matching algorithm.
 
-The CH-Detector class' main dependency is the \textit{numPy} library, it makes
-use of the \textit{scikit-learn} library for it's implementation kmeans clustering
+The CH-Detector class' main dependency is the \textbf{NumPy} library, it makes
+use of the \textbf{scikit-learn} library for it's implementation kmeans clustering
 algorithm.
 
-The MS-Tracker class has the \textit{numPy} library as it's sole dependency.
+The MS-Tracker class has the \textbf{NumPy} library as it's sole dependency.
 
 \section{Front-End Design}
 The front-end is the graphical user interface (GUI) that users of the MT
@@ -122,7 +135,6 @@ satisfy the defined system user requirements.
 
 \Figure[width=0.8\columnwidth]{Graphical user interface mock-up}{design_gui_mockup} 
 
-
 \subsection{GUI programming}
 In line with the general model-view-controller architecture, the GUI consists
 of:
@@ -135,6 +147,18 @@ of:
         the application. They emit signals.
 \end{itemize}
 
+\subsection{Software dependencies}
+This subsection outlines the software dependencies of the front-end subsystem.
+The main front-end dependency is the \textbf{PyQt5} Python3 library for the
+rendering of the GUI and all it's constituent elements.
+
+The \textbf{OpenCV} library is used by the GUI for the input of image sequences,
+and output of processed image sequences to particular directories.
+
+While the front-end is developed in isolation, the back-end subsystem can be
+seen as a dependency to the GUI in the integration phase, as detector and
+tracker modules are imported from it and become instance variables of the GUI
+class object.
 
 \section{Integration}
 The development of the front- and back-end will occur in isolation during the
@@ -153,6 +177,5 @@ In this way, the front-end GUI can implement the input and output (I/O) function
 independent of the back-end. This decoupling of the I/O is desirable as in the
 scenario of the back-end functions being employed by an alternative application,
 it would would have the liberty of defining it's own I/O behaviour. 
-
 
 

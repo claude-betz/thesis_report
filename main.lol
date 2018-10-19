@@ -10,7 +10,8 @@
 \contentsline {lstlisting}{\numberline {6.10}Mean shift loop}{48}{lstlisting.6.10}
 \contentsline {lstlisting}{\numberline {6.11}Code listing detailing sequence selection controller and connection to slot}{50}{lstlisting.6.11}
 \contentsline {lstlisting}{\numberline {6.12}Code for User selection of regions/objects of interest}{52}{lstlisting.6.12}
-\contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{82}{lstlisting.A.1}
-\contentsline {lstlisting}{\numberline {A.2}Additional functions for Mean Shift Tracker Impementation}{84}{lstlisting.A.2}
-\contentsline {lstlisting}{\numberline {A.3}QLabel Mouse Event Code}{85}{lstlisting.A.3}
-\contentsline {lstlisting}{\numberline {A.4}GUI Impementation Code}{86}{lstlisting.A.4}
+\contentsline {lstlisting}{\numberline {6.13}Mean shift tracker integration in GUI}{52}{lstlisting.6.13}
+\contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{83}{lstlisting.A.1}
+\contentsline {lstlisting}{\numberline {A.2}Additional functions for Mean Shift Tracker Impementation}{85}{lstlisting.A.2}
+\contentsline {lstlisting}{\numberline {A.3}QLabel Mouse Event Code}{86}{lstlisting.A.3}
+\contentsline {lstlisting}{\numberline {A.4}GUI Impementation Code}{87}{lstlisting.A.4}

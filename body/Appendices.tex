@@ -2,7 +2,7 @@
 
 \chapter{Implementation}\label{appendix_implementation}
 
-\section{Co-occurrence Histograms Support functions}\label{supportCH}
+\section{Co-occurrence Histograms Support functions}\label{appendix_supportCH}
 This code listing shows the extra functions necessary for the operation of the
 co-occurrence histogram detector.
 \begin{lstlisting}[language=Python, caption={Additional functions for Co-occurrence Histogram Detection}, captionpos=b, label={lst:supportCH}]
@@ -80,7 +80,7 @@ def CH_neg_diagonal(q_labels2d, nc, nd):
 
 \end{lstlisting}
 
-\section{Mean Shift Tracker Support functions}\label{supportMS}
+\section{Mean Shift Tracker Support functions}\label{appendix_supportMS}
 This Section provides the implementations of the support functions needed to
 implement the function modules outlined in Chapter~\ref{chapter_implementation}
 that correspond to the steps in the Mean Shift Algorithm outlined in
@@ -124,7 +124,7 @@ def epanechnikov_kernel(template):
 \end{lstlisting}
 
 \newpage
-\section{GUI Code}
+\section{GUI Code}\label{appendix_gui}
 This listing shows the imageView class which subclasses the QLabel class to
 add the functionality for selecting regions of interest as input to the
 detection and tracking algorithms.

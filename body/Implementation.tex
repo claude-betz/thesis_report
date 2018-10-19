@@ -14,19 +14,19 @@ The only differences between the class-based implementations according to the
 UML Diagram in Figure~\ref{fig:design_uml} and those presented here, is that the
 class functions are not procedurally implemented. The procedural implementation
 was presented here to enhance clarity and reproducibility. The class based
-implementations can be seen in Appendix~\ref{appendix_implementations}.
+implementations can be seen in Appendix~\ref{appendix_implementation}.
 
 \section{Template Matching Tracker}\label{implementation_tm}
 This Section details the implementation of the two variants of template tracker
 described in Section~\ref{theoretical_framework_tm}. The template trackers were
-implemented using the highly optimized $\text{openCV}_{TM}$ template matching
+implemented using the highly optimized \textbf{OpenCV} template matching
 functions, as preliminary naive implementations would did meet the speed requirements to
 tracking and research into optimization was deemed beyond the scope of this
 study.
 
-\subsection{Simple template matching tracker}
+\subsection{Simple template tracker}
 
-\subsection{Adaptive template matching tracker}
+\subsection{Adaptive template tracker}
 
 
 \section{Colour Co-occurrence Histogram Detector}\label{implementation_ch}
@@ -34,8 +34,8 @@ The implementation of the CH-Detector follows directly from the algorithm
 description in Section~\ref{theoretical_framework_ch}.
 
 \subsection{Computing model and candidate CCHs}
-The model and candidate CCH's are computed by the \textit{get\_model\_CH
-(template,nc,nd)} and \textit{get\_candidate\_CH (kmeans,template,nc,nd)}
+The model and candidate CCH's are computed by the \lstinline{get_model_CH (template,nc,nd)} 
+and \lstinline{get_candidate_CH (kmeans,template,nc,nd)}
 functions respectively.
 
 The model's euclidean RGB colour-space is quantized by use of the kmeans
@@ -155,15 +155,15 @@ def search(kmeans, frame, CH_m, sw_height, sw_width, step_y, step_x, nc, nd, alp
 \end{lstlisting}
 
 \section{Mean shift tracker}\label{implementation_mean_shift_tracker}
-The implementation of the mean shift tracker follows directly from the algorithm
+The implementation of the mean shift tracker (MST) follows directly from the algorithm
 description in Section~\ref{theoretical_framework_mean_shift_algorithm}.
 
 This Section begins by laying out some preliminaries choices for the algorithm
 implementation, then details the implementation of the various functions and
-their overall integration into a working mean shift tracker. The  
+their overall integration into a working MST\@. 
 
 \subsection{Algorithm parameters}
-The mean shift tracker has three parameters that can affect it's performance.
+The MST has three parameters that can affect it's performance.
 The maximum allowable mean shift step size (in pixels), $\epsilon$. The number
 of bins used in computing our target and candidate PDFs $\hat{q}$ and
 $\hat{p}$, and finally the size of the kernel initialised around the target
@@ -172,8 +172,8 @@ An implementation should allow for variations of these parameters.
 
 \subsection{Computing target and candidate PDFs}
 Computing a PDF for a particular region of interest according to 
-Equation~\ref{eqn:mean_shift_histogram} is performed by the \textit{get\_pdf
-(template, m)} method shown in Listing~\ref{lst:pdf}.
+Equation~\ref{eqn:mean_shift_histogram} is performed by the \lstinline{get_pdf (template, m)} 
+method shown in Listing~\ref{lst:pdf}.
 
 \begin{lstlisting}[language=Python, caption={Function computing the PDF}, captionpos=b, label={lst:pdf}]
 def get_pdf(template,m=8):
@@ -200,13 +200,13 @@ def get_pdf(template,m=8):
 \end{lstlisting}
 
 This above method is dependent on the implementation of the following support
-methods. See Appendix~\ref{supportMS} for code listings of their implementation.
+methods. See Appendix~\ref{appendix_supportMS} for code listings of their implementation.
 \begin{itemize}
-    \item get\_elliptical\_mask (height, width)
-    \item get\_euclidean\_distance (x1, x2):
-    \item get\_epanechnikov\_weight (x):
-    \item get\_epanechnikov\_kernel (roi):
-    \item get\_pdf (roi, m):
+    \item \lstinline{get_elliptical_mask (height, width)}
+    \item \lstinline{get_euclidean_distance (x1, x2)}
+    \item \lstinline{get_epanechnikov_weight (x)}
+    \item \lstinline{get_epanechnikov_kernel (roi)}
+    \item \lstinline{get_pdf (roi, m)}
 \end{itemize}
 
 \subsection{Computing the Bhattacharyyaa coefficient}
@@ -226,7 +226,7 @@ def bhatt_coeff(q, p):
 
 \subsection{Computing the pixel weights}
 Computing the pixel weights within the region of interest is performed by the
-method \textit{get\_weights (roi, q, p, m=8)} in Listing~\ref{lst:weights} according to Equation~\ref{eqn:mean_shift_weights}.
+method \lstinline{get_weights (roi, q, p, m)} in Listing~\ref{lst:weights} according to Equation~\ref{eqn:mean_shift_weights}.
 
 \begin{lstlisting}[language=Python, caption={Function computing kernel Weights}, captionpos=b, label={lst:weights}]
 def pixel_weights(template, q, p, m=8):
@@ -249,9 +249,9 @@ def pixel_weights(template, q, p, m=8):
 \end{lstlisting}
 
 The implementation of Listing~\ref{lst:weights} requires the following methods to
-be available. See Appendix~\ref{appendix_A} for code listings of their implementation. 
+be available. See Appendix~\ref{appendix_supportMS} for code listings of their implementation. 
 \begin{itemize}
-    \item \textit{get\_elliptical\_mask (height, width)}
+    \item \lstinline{get_elliptical_mask (height, width)}
 \end{itemize}
 
 \subsection{Computing the mean shift vector}
@@ -281,9 +281,9 @@ def mean_shift(template, weights):
 \end{lstlisting}
 
 The implementation of Listing~\ref{lst:vector} requires the following methods to
-be available. See Appendix~\ref{appendix_A} for code listings of their implementation. 
+be available. See Appendix~\ref{appendix_supportMS} for code listings of their implementation. 
 \begin{itemize}
-    \item get\_elliptical\_mask (roi)
+    \item \lstinline{get_elliptical_mask (roi)}
 \end{itemize}
 
 \subsection{Performing the mean shift loop}
@@ -329,7 +329,7 @@ def mean_shift_loop(frame, q, y0, x0, h, w, eps=5, m=8):
 
 The implementation of the mean shift loop in Listing~\ref{lst:loop} relies on
 the following functions being available. The implementations of these functions
-are detailed in Appendix~\ref{appendix_B}.
+are detailed in Appendix~\ref{appendix_supportMS}.
 \begin{itemize}
     \item get\_pdf (roi, m)
     \item get\_weights (roi, q, p)
@@ -341,16 +341,17 @@ are detailed in Appendix~\ref{appendix_B}.
 \section{Graphical user interface}
 This Section deals with implementation of the GUI which interfaces with the
 back-end classes to satisfy the system user requirements.  The GUI was
-implemented by use of the pyQt5 python3 library and it's layout follows the
-closely that of the mock-up design in Figure~\ref{fig:design_gui_mockup}
+implemented by use of the \textbf{PyQt5} and \textbf{Python3} library. It's
+layout follows closely that of the mock-up design in
+Figure~\ref{fig:design_gui_mockup}
 
 \subsection{GUI programming in the Qt framework}
-Every implementation of a GUI application requires a QApplication object. This
+Every implementation of a GUI application requires a \lstinline{QApplication} object. This
 object provides access to global variables such as the application directory and
 screen size. It also provides an event loop. In this event loop, the application
 processes in response to signals generated by GUI events such as button
 presses or other events.
-To handle the generation and response to events the pyQt framework provides the
+To handle the generation and response to events the \textbf{PyQt} framework provides the
 signals and slots mechanism. An event generates a signal, and this signal is
 connected to a slot which can be any callable function block describing what
 action the model should take~\cite{Summerfield}.
@@ -371,7 +372,7 @@ these controllers emit signals that are connected to a callable function within
 the application (slot), specifying the action to be taken.
 An example of this implementation mechanism is in the file I/O sequence
 selection functionality. 
-The sequenceSelectAction is a controller that can be added to the GUI ``File'' menu
+The \lstinline{sequenceSelectAction} is a controller that can be added to the GUI ``File'' menu
 bar and tool bar. Its implementation is detailed in Listing~\ref{lst:select}. 
 
 \begin{lstlisting}[language=Python, caption={Code listing detailing sequence selection controller and connection to slot}, captionpos=b, label={lst:select}]
@@ -409,10 +410,10 @@ Listing~\ref{lst:select} details three snippets that define the creation of a
 sequence select controller (snippet 1). It then shows how the this controller
 added to the GUI menu bar and tool bar
 defined, including it's connection to it's slot (snippet 2). The slot
-\textit{openSequence ()} slot 
+\lstinline{openSequence ()} slot 
 specifies the GUI response a user selection of the ``Select Sequence'' menu
-option. It uses a QFileDialog to allow a user visual selection of a image
-sequence folder in a specific directory. A call to the \textit{readSequence ()}
+option. It uses a \lstinline{QFileDialog} to allow a user visual selection of a image
+sequence folder in a specific directory. A call to the \lstinline{readSequence ()}
 function then reads in a list of all the full paths to the images on the
 specified directory, and displays the first image in the sequence to a user.
 
@@ -423,17 +424,17 @@ with definition, addition to the GUI and connection to a callable slot.
 The GUI application has two views, a frame view to display the current image in the
 sequence, and a smaller tracking view to display the detected or tracked object
 within a particular frame.  
-The tracking view is simply a QLabel which is a widget we can display images to.
+The tracking view is simply a \lstinline{QLabel} which is a widget we can display images to.
 The frame view requires extended functionality allows for user selection of
 regions of interest as the initial detection step of the implemented detection
 and tracking algorithms, thus making it a view and controller.
 
 \subsubsection{User object detection functionality}
 Listing~\ref{lst:image_view} details the implementation of this
-functionality. The imageView class that subclasses the QLabel class is created.
+functionality. The \lstinline{imageView} class that subclasses the \lstinline{QLabel} class is created.
 This allows for overriding of the mouse click events to begin drawing a
 rectangle upon a mouse click event, and stop drawing with a mouse release event.
-This behaviour is facilitated by the QRubberband class. We emit the results as
+This behaviour is facilitated by the \lstinline{QRubberband} class. We emit the results as
 a signal containing the origin of the top left corner $(x,y)$ of the rectangle, and it's
 the width and height, $(w, h)$. This is the initial detection step of our
 implemented kernel-based trackers.
@@ -470,4 +471,58 @@ class imageView(QLabel):
 
 \section{Integration}
 This Section highlights the points of integration between the front- and
-back-end implementations.
+back-end implementations. It presents the integration of the MST tracker into
+the front-end GUI\@. The integration of the other back-end trackers and detectors
+follows a similar pattern.
+
+\begin{lstlisting}[language=Python, caption={Mean shift tracker integration in
+GUI}, captionpos=b, label={lst:integration}]
+
+# step1: import relevant back-end class
+from back_end.trackerMS import trackerMS # mean shift tracker
+
+# step2: controller signal to callable slot
+
+
+# step3: mean shift tracker slot
+@pyqtSlot()
+def meanShiftTracking(self):
+    self.statusBar().showMessage('Status: Tracking (Mean Shift)')
+    QMessageBox.about(self, "Mean Shift Tracking", "Select Object to Track")
+    self.imageLabel.triggered.connect(self.meanShiftSelection)
+
+def meanShiftSelection(self):
+    self.meanShiftTrackingInit()
+    self.MST_timer = QTimer() # timer for frame rate
+    self.MST_timer.timeout.connect(self.meanShiftTrackingLoop) # connect timeouts to fetching next image
+    self.MST_timer.start(int(self.mst_delay * 1000)) # set timer countdown rate
+
+def meanShiftTrackingInit(self):
+    """initialise meanShiftTracking"""
+    self.alg_running = True # tell system and Algorithm is running
+    print(self.imageLabel.currentQRect)
+    self.MST.setup(self.cur_img, self.imageLabel.currentQRect) # setup mean shift tracker with coords
+    self.y0 = self.imageLabel.currentQRect[0]
+    self.x0 = self.imageLabel.currentQRect[1]
+    self.h = self.imageLabel.currentQRect[2]
+    self.w = self.imageLabel.currentQRect[3]
+    self.nextImage() # load frame 1
+
+def meanShiftTrackingLoop(self):
+    """implement loop"""   
+    if(self.cur_index<self.seq_length-1):
+        coords = self.MST.track(self.cur_img) # track    
+        print("coords: ", coords)
+        self.y0 = coords[0]
+        self.x0 = coords[1]
+        self.nextImage() # load image    
+    else:
+        self.MST_timer.stop() # terminate algorithm
+        self.algorithm_reset() # cleanup and reset
+\end{lstlisting}
+
+The code in Listing~\ref{lst:integration} details three steps necessary in the
+integration of the MST with the front-end GUI\@. The significant point is that
+calls to the deeper
+
+
