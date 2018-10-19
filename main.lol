@@ -7,7 +7,7 @@
 \contentsline {lstlisting}{\numberline {6.7}Function computing the Bhattacharyya coefficient}{46}{lstlisting.6.7}
 \contentsline {lstlisting}{\numberline {6.8}Function computing kernel Weights}{47}{lstlisting.6.8}
 \contentsline {lstlisting}{\numberline {6.9}Function computing the mean shift vector}{47}{lstlisting.6.9}
-\contentsline {lstlisting}{\numberline {6.10}Mean Shift Loop}{48}{lstlisting.6.10}
+\contentsline {lstlisting}{\numberline {6.10}Mean shift loop}{48}{lstlisting.6.10}
 \contentsline {lstlisting}{\numberline {6.11}Code listing detailing sequence selection controller and connection to slot}{50}{lstlisting.6.11}
 \contentsline {lstlisting}{\numberline {6.12}Code for User selection of regions/objects of interest}{52}{lstlisting.6.12}
 \contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{82}{lstlisting.A.1}

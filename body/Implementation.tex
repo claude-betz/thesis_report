@@ -287,14 +287,14 @@ be available. See Appendix~\ref{appendix_A} for code listings of their implement
 \end{itemize}
 
 \subsection{Performing the mean shift loop}
-The Mean Shift Loop is outlined by the Algorithm in
+The mean shift loop is outlined by the Algorithm in
 Figure~\ref{fig:design_mean_shift_tracking_algorithm}, the mean shift loop is
 applied to a frame $\mathbf{f}_{k+1}$ given the model pdf of the object of
 interest $\hat{q}$ and its location $\mathbf{c_0}$ in the previous frame
 $\mathbf{f}_{k}$, to compute it's current position $\mathbf{c_1}$ in
 $\mathbf{f}_{k+1}$
 
-\begin{lstlisting}[language=Python, caption={Mean Shift Loop}, captionpos=b, label={lst:loop}]
+\begin{lstlisting}[language=Python, caption={Mean shift loop}, captionpos=b, label={lst:loop}]
 def mean_shift_loop(frame, q, y0, x0, h, w, eps=5, m=8):
     """perform mean shift to get new location"""
     t1 = frame[y0:y0+h,x0:x0+w] # candidate template
@@ -369,7 +369,7 @@ The MT systems' controllers comprise options within the file menu, toolbar,
 navigation buttons, that a user can use to interact with the system. Each of
 these controllers emit signals that are connected to a callable function within
 the application (slot), specifying the action to be taken.
-An example of this implementation mechanism is in the File I/O sequence
+An example of this implementation mechanism is in the file I/O sequence
 selection functionality. 
 The sequenceSelectAction is a controller that can be added to the GUI ``File'' menu
 bar and tool bar. Its implementation is detailed in Listing~\ref{lst:select}. 
@@ -467,7 +467,6 @@ class imageView(QLabel):
         self.cropLabel.setPixmap(cropPixmap) # set the pixmap of tracking view
         self.triggered.emit() # emit signal that selection complete
 \end{lstlisting}
-
 
 \section{Integration}
 This Section highlights the points of integration between the front- and

@@ -62,7 +62,7 @@ faster execution time and less sensitivity to tuning parameters could have
 applicability in fast deployment systems, based off multi-view templates of a
 desired object to detect.
 
-\section{Mean Shift Tracker}
+\section{Mean shift tracker}
 In terms of performance in relation to the motion tracking problem and to the
 challenges in achieving effective tracking, the mean shift tracker was by far
 the most successful of the trialled kernel-based tracking implementations.
@@ -74,7 +74,7 @@ Throughout the experiments, the mean shift tracker showed good robustness to
 challenges such as occlusion, changes in scale, camera ego motion, and  
 
 
-\section{Graphical User Interface}
+\section{Graphical user interface}
 The GUI system implemented in the Qt framework was overall very responsive. The
 main delays in the system execution were introduced from the waiting for
 feedback from the back-end functions.
@@ -87,7 +87,7 @@ back-end detectors or trackers after selecting an object of interest in the
 initial a frame, $\mathbf{f}_k$.
 
 
-\section{Future Work}\label{future}
+\section{Future work}\label{future}
 This Section outlines the possible improvements and areas
 of future work for different subsystems of the MT system. Suggestions are based
 on the conclusions drawn and knowledge obtained from the initial survey of the
@@ -148,11 +148,10 @@ account direction and velocity of motion to eliminate the overlapping object as
 possible target in spite of similar appearances in the selected
 feature space.
 There are several well researched approximations to the ideal Bayesian filter
-under different constraints such as Kalman Filters, Point Mass filters, Particle
-Filters etc.~\cite{Challa2011}.  
+under different constraints such as Kalman Filters, Point mass filters, Particle
+filters etc.~\cite{Challa2011}.  
 
-
-\subsection{GUI}
+\subsection{Graphical User Interface}
 In terms of the GUI there is a lot room for improvement. The user flow sequences
 require a more thorough testing, this would be in the form of branch testing where
 each possible sequence of user actions is tested to ensure it does not fail in
@@ -167,6 +166,4 @@ particular screen dimensions.
 Correction of this would require the implementation of a coordinate transform
 to convert the dimensions from the scaled frame to to the original pixel
 dimensions for the user selected kernels that the back-end subsystem operates on.
-
-
 
