@@ -429,15 +429,17 @@ The frame view requires extended functionality allows for user selection of
 regions of interest as the initial detection step of the implemented detection
 and tracking algorithms, thus making it a view and controller.
 
-\subsubsection{User object detection functionality}
-Listing~\ref{lst:image_view} details the implementation of this
-functionality. The \lstinline{imageView} class that subclasses the \lstinline{QLabel} class is created.
-This allows for overriding of the mouse click events to begin drawing a
-rectangle upon a mouse click event, and stop drawing with a mouse release event.
-This behaviour is facilitated by the \lstinline{QRubberband} class. We emit the results as
-a signal containing the origin of the top left corner $(x,y)$ of the rectangle, and it's
-the width and height, $(w, h)$. This is the initial detection step of our
-implemented kernel-based trackers.
+\subsubsection{User object selection functionality}
+To allow user selection of regions of interest, the \lstinline{imageView} class
+that subclasses the \lstinline{QLabel} class is created.
+Listing~\ref{lst:image_view} details the implementation of the user object
+selection functionality.This allows for overriding of the mouse click events to
+begin drawing a rectangle upon a mouse click event, and stop drawing with a
+mouse release event.  This behaviour is facilitated by the
+\lstinline{QRubberband} class. We emit the results as a signal containing the
+origin of the top left corner $(x,y)$ of the rectangle, and it's the width and
+height, $(w, h)$. This is the initial detection step of our implemented
+kernel-based trackers.
 
 \begin{lstlisting}[language=Python, caption={Code for User selection of regions/objects of interest}, captionpos=b, label={lst:image_view}]
 class imageView(QLabel):
@@ -475,14 +477,45 @@ back-end implementations. It presents the integration of the MST tracker into
 the front-end GUI\@. The integration of the other back-end trackers and detectors
 follows a similar pattern.
 
+The integration of front- and back-end subsystems should allow for effective
+user interaction with the MT System in a variety of ways (user flows). 
+
+The sequence diagram in Figure~\ref{fig:implementation_sequence_diagram} presents
+one such user flow from perspective of a user trying to load and image sequence,
+navigate it and initialise a mean shift tracker (MST) on an object in a particular
+frame of interest. The sequence diagram details three communicating entities,
+the User, the GUI and the MST tracker.
+
+The user selects an image sequence of interest, navigating said
+sequence and selecting the mean shift algorithm to be performed on the frame of
+interest.
+Following the algorithm choice, the user is queried for region of interest by
+the GUI\@. Once the user selection has been made, the GUI initialises the MST
+tracker with the template of the selected model in $\mathbf{f}_0$.
+
+It then makes synchronous calls to the MST for coordinates of the object of
+interest in $\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}$, these calls are returned
+asynchronously by the MST according to the complexity of the particular loop
+which varies.
+
+\Figure[width=1\columnwidth]{Sequence diagram of sample user flow}{implementation_sequence_diagram} 
+
+
+
+
 \begin{lstlisting}[language=Python, caption={Mean shift tracker integration in
 GUI}, captionpos=b, label={lst:integration}]
 
-# step1: import relevant back-end class
+# step1: import relevant back-end class and initialise it
 from back_end.trackerMS import trackerMS # mean shift tracker
+self.MST = trackerMS() # initialise MST object
 
 # step2: controller signal to callable slot
-
+# Mean Shift
+meanShiftTrackingAction = QAction(trackIcon,'Mean Shift Tracker', self)
+meanShiftTrackingAction.setShortcut('Ctrl+4')
+meanShiftTrackingAction.setStatusTip('Apply Mean Shift Tracking Algorithm')
+meanShiftTrackingAction.triggered.connect(self.meanShiftTracking) # connect to slot
 
 # step3: mean shift tracker slot
 @pyqtSlot()
@@ -494,7 +527,7 @@ def meanShiftTracking(self):
 def meanShiftSelection(self):
     self.meanShiftTrackingInit()
     self.MST_timer = QTimer() # timer for frame rate
-    self.MST_timer.timeout.connect(self.meanShiftTrackingLoop) # connect timeouts to fetching next image
+    self.MST_timer.timeout.connect(self.meanShiftTrackingLoop) # connect timeouts MSloop
     self.MST_timer.start(int(self.mst_delay * 1000)) # set timer countdown rate
 
 def meanShiftTrackingInit(self):
@@ -522,7 +555,24 @@ def meanShiftTrackingLoop(self):
 \end{lstlisting}
 
 The code in Listing~\ref{lst:integration} details three steps necessary in the
-integration of the MST with the front-end GUI\@. The significant point is that
-calls to the deeper
+integration of the MST with the front-end GUI\@. The
+\lstinline{meanShiftTracking (self)} slot is triggered by selection of the Mean
+Shift Tracker from the Algorithm menu. This function set the
+\lstinline{meanShiftSelection (self)} function to be triggered by the 
+\lstinline{triggered} signal emitted at the end of mouse
+release event in the customised \lstinline{imageView} class. 
 
+The \lstinline{meanShiftSelection (self)} callback then initialised the tracker with
+the selection at captured at the end of the user mouse click. Furthermore, it
+sets up a timer that periodically triggers the
+\lstinline{meanShiftTrackingLoop (self)}, which is called for each
+$\mathbf{f}_k$ in the particular sequence, in which is updates the displayed
+bounding box for each tracker response.
 
+The integration of the other back-end algorithms into the GUI follow a similar
+process.
+This Chapter has presented the implementation details of the front- and back-end
+subsystems of the MT System, as well as the steps taken for the integration of
+the back-end functionality into the front-end.
+Chapter~\ref{chapter_results} will present the performance of the individual
+implementations and the overall integrated system.
