@@ -1,9 +1,14 @@
 \chapter{Conclusion}
-This chapter discusses the conclusions drawn from the results
-and analyses of the detection and tracking approaches when applied to image
-sequences, as presented in Chapter~\ref{chapter_results}.
+This Chapter aims to tie together the work of the preceding Chapters
+by contextualising the progression of the project with the initial objectives 
+described in Chapter~\ref{chapter_introduction}.
 
-\section{Template Matching Tracker}
+Conclusions from the front-end and back-end development, implementations and
+results are presented, followed by insights from the overall integrated system.
+Finally Section~\ref{conclusion_future} details possible future improvements and
+extensions to the project.
+
+\section{Template Matching Trackers}
 The simple template tracker implementation was only slightly effective in
 managing to track even the simplest of sequences. It is clear that simple template
 Matching applied to every frame of a sequence does the necessary built-in
@@ -29,10 +34,10 @@ subsequent target models.
 
 \section{Colour Co-occurrence Histogram Detector}
 Still within the sphere of detection-based tracking and template matching, a
-feature-based Co-occurrence histogram detector was implemented largely as an
+feature-based co-occurrence histogram detector was implemented largely as an
 experiment to gauge, whether template matching-based tracking can be extended to deal
 with some of the motion tracking challenges. 
-Picking up from where the Adaptive Template Tracker failed, the CCH-detector was
+Picking up from where the adaptive template tracker failed, the CCH-detector was
 trialled to see whether it could overcome the challenge of occlusion.
 
 The approach was able to detect the model of the girl obtained from
@@ -64,8 +69,7 @@ of the outlined challenges to motion tracking.
 \section{Graphical User Interface}
 
 
-
-\section{Future Work}
+\section{Future Work}\label{future}
 \subsection{Template matching tracker}
 \subsection{Colour co-occurrence histogram detector}
 \subsection{Mean shift tracker}

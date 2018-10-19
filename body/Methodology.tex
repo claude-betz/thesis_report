@@ -4,24 +4,17 @@ of the objectives of this study, originally detailed in Section~\ref{introductio
 This chapter also outlines the Process Models underlying the development
 approach to the successful completion of the defined Phases.
 
-\section{Project Phases and Process Models}
+\section{Project Phases and Process Models }
 An overview of the Project Phases as well as and Process Models is presented in
 Figure~\ref{fig:methodology_phases_and_process_models} below:
-\Figure[width=1\columnwidth, angle=90, scale=1.3]{Block diagram of project phases}{methodology_phases_and_process_models}
+\Figure[width=1\columnwidth, angle=90, scale=1.3]{Block diagram of project phases and process methodologies}{methodology_phases_and_process_models}
 
 \subsection{Project phases}
-The Project Phases are outlined below:
-\begin{enumerate}
-    \item Research and Literature Review
-    \item Planning and Preliminary Design
-    \item Development and Prototyping 
-    \item Experimentation and Testing
-    \item Data Collection and Analysis
-    \item System Integration and Integration Testing
-    \item Conclusions and Future Plans
-\end{enumerate}
+The various project phases involved in the development of the MT system are
+outlined below. They correspond to those detailed in
+Figure~\ref{fig:methodology_phases_and_process_models}.
 
-\subsubsection{Research and literature review}
+\subsubsection{Phase 1: Research and literature review}
 This phase serves as an surveying of the broad field of Motion Tracking to
 determine what the various established approaches to the Motion Tracking are.
 The outcome of this phase is a refined scope in terms of what approaches will be
@@ -32,7 +25,7 @@ surveys the field. Chapter~\ref{chapter_theoretical_framework} then breaks down
 the approaches of interest in sufficient detail to allow for a ground up Design
 and Implementation.
 
-\subsubsection{Planning and preliminary design}
+\subsubsection{Phase 2: Planning and preliminary design}
 This phase involves a translation of the relevant literature and theoretical
 foundation from Phase 1 into a feasible design for the MOT System. The scope of
 this project requires a delineation between the Front- and Back-end
@@ -42,48 +35,48 @@ Chapter~\ref{chapter_design}.
 It is important to note that while Phase 1 and 2 are largely linear. The Nature
 of Phases 3 to 5 is iterative, and make up the bulk of this project. Hence we
 make the use of the Spiral Process Methodology, to ensure that at each iteration
-we have a working MOT System prototype.  
+we have a working MT System prototype.  
 
-\subsubsection{Development and prototyping}
+\subsubsection{Phase 3: Development and prototyping}
 This phase involves the implementation of the planned system functionality in a
 modular fashion. Given the theoretically driven approach of this project. There
 is a high correlation between the theory outlined in
 Chapter~\ref{chapter_theoretical_framework} and outcomes of this phase which are
 presented in Chapter~\ref{chapter_implementation}.
 
-\subsubsection{Experimentation and testing}
+\subsubsection{Phase 4: Experimentation and testing}
 This phase follows involves a verification of the implementations on a
 functional level, as well as experimentation that can be used to assess the
 performance of the prototype in meeting the overall user requirements. The
 outcomes of this phase feed into phase 4. 
 
-\subsubsection{Data collection and analysis}
+\subsubsection{Phase 5: Data collection and analysis}
 This phase is still within the iterations of the Spiral Model, it involves
 analysis of the outcomes of phase 4. The insights of this feed into the 
-subsequent iterations of the spiral model which iteratively refine the MOT
-System. 
-During later iterations, the Data Collected and Analysed in the Results
+subsequent iterations of the spiral model which iteratively refine the MT
+system. 
+During later iterations, the data collected and analysed in the results
+presented in 
 Chapter~\ref{chapter_results}, the main criteria for this being a satisfactory achievement
 of the defined user requirements.
 
-\subsubsection{System integration and integration testing}
-This phase is concerned with the integration of Front- and Back-end modules that
+\subsubsection{Phase 6: System integration and integration testing}
+This phase is concerned with the integration of front- and back-end subsystems that
 are sufficiently developed. 
 
-\subsubsection{Conclusions and future plans}
-This phase formalised the implications of the data collected in the various
-iterations of prototyping. Tying the results back to Objectives and User
-Requirements of the undertaking.
+\subsubsection{Phase 7: Conclusions and future plans}
+This phase formalises the implications of the data collected in the various
+iterations of prototyping. Tying the results back to objectives and user
+requirements of the project.
 It addressed possible improvements that are beyond the initial project scope
 and not achievable within the project time-frame.
 
 
-
-\subsection{Hierarchy of process models}
+\section{Hierarchy of process models}
 Outlined below are the various process models employed in ensuring the
 successful completion of the MOT System within the allocated time.
 
-\subsubsection{V-model}
+\subsection{V-diagram}
 Due to the scale of the undertaking, different process models were employed to
 address different aspects of the project.
 
@@ -95,16 +88,64 @@ this study is the V-model. This choice is tied to a number of reasons:
     \item Suited to projects with well defined user requirements.
 \end{itemize}
 
-*cite design textbook*
+Figure~\ref{methodology_v_diagram} details the V-Diagram process model. It
+details the various levels of specification down to the implementation and
+highlights the stages of testing and integration of the MT system.
 
-\subsubsection{Spiral model}
-The design task which spans Phases; 4,5 and 6 in Figure~\ref{fig:phases_and_process_models}, is: 
+\Figure[width=1\columnwidth, angle=90, scale=1.5]{V-Diagram process model}{methodology_v_diagram}
+
+
+\subsection{Spiral model}
+The design task which spans phases; 4,5 and 6 as shown in Figure~\ref{fig:phases_and_process_models}, is: 
 \begin{itemize}
     \item Complex in nature
     \item Has a set of clearly defined requirements. 
 \end{itemize}
 
-\Figure[width=1\columnwidth, angle=90, scale=1.5]{V-Diagram Process Model}{methodology_v_diagram}
+It is for this reason that the spiral model is the chosen process model to
+oversee these tasks. The focus on iterative design and prototyping allows for
+convergence on a solution that can continuously be refined over the span of the
+project.
+
+\section{Data collection testing and analysis}\label{methodology_testing}
+Chapter~\ref{chapter_design} details the design of the MT system in terms of
+front- and back- end subsystems, this design is implemented in
+Chapter~\ref{chapter_implementation}. This Section aims to outline the data
+collection and analysis methods that will be used when assessing the
+performance of the subsystems.
+
+\subsection{Back-end data}
+The implemented back-end, comprising of a set of trackers will be run on a
+standardised data set provided by the Visual Object Tracking 2017 Challenge
+(VOT2017)~\cite{VOT2017}. This data set comprises of an extensive set of image
+sequences exhibiting a number of the challenges to motion tracking outlined in
+Section~\ref{literature_review_challenges}. 
+
+Analysis of these sequences will be both quantitative and qualitative, the two
+approaches are subsequently elaborated on.
+
+\subsubsection{Quantitative testing and analysis}
+The VOT2017 challenge provides annotated ground truth values for the image
+sequences, these are the true bounding boxes of a target object in a particular
+frame. These ground truths are what will be used to quantitatively benchmark
+tracker performance, in terms of distance between the tracker localization and
+the true location of the object of interest in a particular frame. This simple
+metric is termed the ``tracker error''.
+
+\subsubsection{Qualitative testing and analysis}
+Despite a quantitative analysis, there are still insights to be drawn from a
+qualitative inspection of the various sequences, from which results can be tied
+back to the implementation choices such as low-level feature selection etc.
+
+\subsection{Front-end}
+The testing of the front-end will be performed by performance of various input
+sequences to the graphical user interface (GUI). The analysis will be in assessing the
+performance of the GUI in relation to the initial user requirements of the MT
+system as specified in Section~\ref{introduction_user_requirements}.
+
+
+
+
 
 
 

@@ -3,13 +3,13 @@
 This Chapter is concerned with the presentation results obtained from a practical
 application of the algorithms implemented in
 Chapter~\ref{chapter_implementation} on various image sequences. 
-The image sequences are mainly taken from the VOT2017 challenge dataset
-\cite{VOT_TPAMI}, and the famous Hamburg taxi sequence is also used as an
+The image sequences are mainly taken from the Visual Object Tracking 2017
+Challenge (VOT2017)~\cite{VOT_TPAMI}, and the famous Hamburg taxi sequence is also used as an
 initial experiment for the template matching trackers.
 
-The analysis of the algorithms is both quantitative and qualitative. The
+The analysis of the algorithms is both quantitative and qualitative as defined
+in Section~\ref{methodology_testing}. The
 quantitative analysis is based on the tracker performance per the centroid error metric
-defined in Section~\ref{methodology_data_analysis}. 
 The qualitative analysis is based on both the metric and experts of bounding
 boxes, it aims to provide an insight into the results based on the data informed by
 an understanding of the various algorithm implementations. 
@@ -315,14 +315,14 @@ The relevant subsequence exhibiting partial occlusion ranges from
 $\mathbf{f}_{178}$ to $\mathbf{f}_{240}$ of the original sequence. 
 
 This interval is represented by the orange domain of the graph in
-Figure~\ref{fig:results/mean_shift_tracker/metric.png}. From the graph it can be
-seen that the mean shift tracker actually performs better under occlusion the in
+Figure~\ref{fig:results/mean_shift_tracker/fish3/metric.png}. From the graph it can be
+seen that the mean shift tracker actually performs better under occlusion than in
 some other sub sequences that exhibit motion, the average error between the
 tracker centroid and the ground truth centroids in this region is around 5
 pixels, part of which could also be attributed to different initialisations for
 the fish tracker and the regions defining the ground truths.
 
-In Figure~\ref{fig:mean_shift_partial_occusion} Our target, the yellow fish
+In Figure~\ref{fig:mean_shift_partial_occlusion} Our target, the yellow fish
 remains stationary from $\mathbf{F_{1}}$ to $\mathbf{F_{16}}$. Both kernels are
 unaffected by the second gray fish, occupying the same pixel space as our
 target. 
@@ -483,11 +483,18 @@ smaller.
 The scaling challenge occurs within the green domain of the graph in
 Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png}.
 Ego motion is present through out the scene as the camera follows the girl. 
+While the MST tracker error fluctuates significantly between lows of close to 0
+and highs of around 40 pixels, this seems to have to effect on the long-term
+accuracy of the tracker over this sequence as it performs better on average that
+the overall sequence tracking error of 11 pixels.
 
 Figure~\ref{fig:mean_shift_girl_scale} shows that the girl is successfully tracked within until the
 completion of the sequence by both the initialised kernels. The robustness is
 likely in part due to the distinct nature of her attire when compared to the
-rest of the scene. 
+rest of the scene. It should be noted that the smaller kernel seems to perform
+better than the larger kernel, this cannot however be quantified by the metric
+because ground values would be misleading if compared to an initialisation that
+doesn't is not whole target object.
 
 \begin{figure} 
     \makebox[\linewidth][c]{
@@ -515,7 +522,7 @@ rest of the scene.
     \caption{Challenge: scale change\label{fig:mean_shift_girl_scale}}
 \end{figure}
 
-\subsection{Experiment 3: Ants}
+\subsection{Experiment 3: ants}
 This image sequence is of multiple ants in motion within a Petri dish. The Ants
 are almost identical, with some being marked by a colourful mark on the abdomen
 to likely help distinguish them in analysis.
@@ -555,7 +562,7 @@ the Green Kernel failing to track the Ant.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/15.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/16.jpg}} \\   
     \end{tabular}}
-    \caption{Challenge: Target Speed: Small Kernel loses Ant\label{fig:mean_shift_ant_speed}}
+    \caption{Challenge: target speed: small kernel loses ant\label{fig:mean_shift_ant_speed}}
 \end{figure}
 
 \begin{figure}
@@ -566,7 +573,7 @@ the Green Kernel failing to track the Ant.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/3.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/4.jpg}} \\
     \end{tabular}}
-    \caption{Challenge: Target Speed: Large Kernel loses Ant\label{fig_mean_shift_ant_speed2}}
+    \caption{Challenge: target speed: large kernel loses ant\label{fig_mean_shift_ant_speed2}}
 \end{figure}
 
 Keeping in mind that a digital video is a sampling of an analogue scene.
@@ -579,14 +586,14 @@ This is an adequate formulation because, depending on the sampling frequency $f_
 a particular sequence, a fast object such as a car sampled at a high $f_s$ can
 have a smaller $\delta$ than a relatively slow snail sampled at a lower $f_s$. 
 
-As the $\delta$ of an Object between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
-increases in magnitude, less of the Object lies within the dimensions
-$(h_x,h_y)$ of the Kernel that we initialise at it's last known pixel location
+As the $\delta$ of an object between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
+increases in magnitude, less of the object lies within the dimensions
+$(h_x,h_y)$ of the kernel that we initialise at it's last known pixel location
 $\mathbf{c_0}$ in $\mathbf{f}_k$. In terms of the mean shift tracking algorithm this simply
 results in a larger mean shift vector, $\vec{m}$.
 
-As shown in Experiment~\ref{results_varying_epsilon}, The Mean Shift Tracker's
-parameter $\epsilon$ - which limits the allowed magnitude of $\vec{m}$ between
+As shown in the experiment in Section~\ref{results_varying_epsilon}, The MST
+parameter, $\epsilon$ - which limits the allowed magnitude of $\vec{m}$ between
 $\mathbf{f}_{k}$ and $\mathbf{f}_{k+1}$ - can increase the tracker's tolerance
 to challenges such as Object speed and occlusion, at the
 cost of increased track ``jitter''. 

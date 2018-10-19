@@ -1,4 +1,10 @@
 \chapter{Introduction}\label{chapter_introduction}
+This Chapter provides a background to the project and motivation for project.
+It outlines the main objectives of study, highlighting the scope and limitations
+of the undertaking before settling on a set of user requirements for the final
+product.
+This chapter also provides a brief overview of all the chapters meant to help a
+reader navigate the content of this thesis.
 
 \section{Background to Study}
 Motion draws the attention of an observer. A moving object in the field of
@@ -8,12 +14,12 @@ technology necessitate the same level of sophistication in terms of
 reliability, speed, resistance to ``noise'' and the ability to generalize that
 humans or other animals exhibit in performing this task.
 
-Motion Tracking is a very application specific endeavour. For example, An
+Motion tracking is a very application specific endeavour. For example, An
 algorithm that reliably tracks the motion of pedestrian in a city scene may fall
 short at detecting the motion of an animal in the woods. Even after evaluation
 the trade-offs between various approach, this problem still requires
 considerable fine tuning of model parameters assumptions before arrival at a
-reliable solution to a problem.  For example, the introduction of occlusion to a
+reliable solution to a problem. For example, the introduction of occlusion to a
 scene, or changes in illumination of a scene can all drastically affect model
 performance should it not intrinsically account for this.
 
@@ -23,7 +29,7 @@ Section~\ref{introduction_problem} elaborates on the nature of the investigation
 while the Section~\ref{introduction_purpose} qualifies the investigation.
 
 \subsection{Problem statement}\label{introduction_problem}
-The general problem investigated in this study is that of Motion Tracking- The
+The general problem investigated in this study is that of motion tracking- The
 localisation of a known object within a frame $\mathbf{f}_k$ in subsequent
 frames of a given video or image sequence.  
 
@@ -31,7 +37,9 @@ The idea is to gain an understanding of solutions that address this problem and
 select a subset of these to be trialed. We will assess the strengths and
 weaknesses of the solutions when applied to a variety of situations.
 
-From the Literature Review in Chapter~\ref{chapter_literature_review}
+From the insights during the Literature Review in Chapter~\ref{chapter_literature_review}, the
+research question becomes to what extent are kernel based motion tracking
+methods effective in solving the motion tracking problem?
 
 \subsection{Purpose of study}\label{introduction_purpose}
 The purpose of this study is to gain traction in the field in Computer Vision,
@@ -39,30 +47,32 @@ specifically by exploring the task of Motion Tracking. The approach taken is a
 bottom up approach in which emphasis is placed on firm theoretical
 understanding, which is then translated into a product.
 
-The outcome of this endeavour is the development of a ``Moving Object Tracker''
-(MOT) System that enables a user to analyse video sequences in which they would like
-to track a particular Object in Motion, and isolate it's motion.
+The outcome of this endeavour is the development of a Motion Tracker
+(MT) System that enables a user to analyse video sequences in which they would like
+to track a particular object in motion, and isolate it's motion. The application
+loosely draws inspiration from sports analysis segments where presented would often like
+to highlight the motion of a player within a particular game.
 
 \section{Scope and Limitations}\label{introduction_scope}
 The scope of this Thesis includes: 
 \begin{itemize}
     \item A review of literature relevant to the problem, and usage of
         said literature in the development of the Motion Tracking System.
-    \item The application of relevant Project Management methodologies in the
+    \item The application of relevant project management methodologies in the
         achievement of the overall system objective.
-    \item Hierarchical design of the Motion Tracking System at various levels.
+    \item Hierarchical design of the motion tracking system at various levels.
         In line with user requirements and technical specifications.
-    \item The development of the System in line with good software development
+    \item The development of the system in line with good software development
         practices according to the specified design.
     \item Testing of functionality at a unit and system level
-    \item Benchmarking of Motion Tracking System performance both at a
+    \item Benchmarking of motion tracking system performance both at a
         functional and user level.
     \item Treatment of results, conclusions and recommendations.
 \end{itemize}
 This Thesis is a 12-week undertaking.
 
 \section{User Requirements}\label{introduction_user_requirements}
-The base user requirements of the proposed MOT System are elaborated upon by the
+The base user requirements of the proposed MT System are elaborated upon by the
 following points:
 \begin{itemize}
     \item The GUI application should have a menu that allows for a system
@@ -73,14 +83,15 @@ following points:
     \item The system should reliably output a bounding box around the user
         specified point or object of interest in subsequent frames of the
         sequence. 
-    \item At termination of the sequence, snapshots of the bounding box
-        surrounding the relevant point of interest or object should be stored in
+    \item The system should be allow for storage of the processed sequence to
         a user selected directory.
 \end{itemize}
 
 \section{Outline of thesis}
-The Main Sections of this Thesis are presented below  In line with the objectives and scope
-of this study, Chapter~\ref{chapter_literature_review} provides a review of the
+The main sections of this thesis are presented below  In line with the objectives and scope
+of this study, 
+
+Chapter~\ref{chapter_literature_review} provides a review of the
 relevant literature. We first identify the general sub-tasks of the overall
 Motion Tracking problem. Solutions to these sub-tasks are then surveyed and
 assessed in line with the objectives, purpose and user requirements. 
