@@ -154,7 +154,7 @@ def search(kmeans, frame, CH_m, sw_height, sw_width, step_y, step_x, nc, nd, alp
     return y_best, x_best # return best match
 \end{lstlisting}
 
-\section{Mean shift tracker}\label{implementation_mean_shift_tracker}
+\section{Mean Shift Tracker}\label{implementation_mean_shift_tracker}
 The implementation of the mean shift tracker (MST) follows directly from the algorithm
 description in Section~\ref{theoretical_framework_mean_shift_algorithm}.
 
@@ -287,7 +287,7 @@ be available. See Appendix~\ref{appendix_supportMS} for code listings of their i
 \end{itemize}
 
 \subsection{Performing the mean shift loop}
-The mean shift loop is outlined by the Algorithm in
+The mean shift loop is outlined by the algorithm in
 Figure~\ref{fig:design_mean_shift_tracking_algorithm}, the mean shift loop is
 applied to a frame $\mathbf{f}_{k+1}$ given the model pdf of the object of
 interest $\hat{q}$ and its location $\mathbf{c_0}$ in the previous frame
@@ -338,7 +338,7 @@ are detailed in Appendix~\ref{appendix_supportMS}.
     \item get\_BC (q, p)
 \end{itemize}
 
-\section{Graphical user interface}
+\section{Graphical User Interface}
 This Section deals with implementation of the GUI which interfaces with the
 back-end classes to satisfy the system user requirements.  The GUI was
 implemented by use of the \textbf{PyQt5} and \textbf{Python3} library. It's
@@ -499,7 +499,6 @@ asynchronously by the MST according to the complexity of the particular loop
 which varies.
 
 \Figure[width=1\columnwidth]{Sequence diagram of sample user flow}{implementation_sequence_diagram} 
-
 
 
 

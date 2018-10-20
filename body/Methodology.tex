@@ -74,9 +74,11 @@ requirements of the project.
 It addressed possible improvements that are beyond the initial project scope
 and not achievable within the project time-frame.
 
-\section{Hierarchy of process models}
+\section{Hierarchy of Process Models}
 Outlined below are the various process models employed in ensuring the
-successful completion of the MT system within the allocated time.
+successful completion of the MT System within the allocated time. The phases
+each process model corresponds to is clearly illustrated in
+Figure~\ref{fig:methodology_phases_and_process_models}. 
 
 \subsection{V-model}
 Due to the scale of the undertaking, different process models were employed to
@@ -90,25 +92,28 @@ this study is the V-model. This choice is tied to a number of reasons:
     \item Suited to projects with well defined user requirements.
 \end{itemize}
 
-The relevant V-diagram is detailed in Figure~\ref{methodology_v_diagram}. It
+The relevant V-diagram is detailed in Figure~\ref{fig:methodology_v_diagram}. It
 details the various levels of specification down to the implementation and
 highlights the stages of testing and integration of the MT system.
 
 \Figure[width=1\columnwidth, angle=90, scale=1.5]{V-Diagram process model}{methodology_v_diagram}
 
 \subsection{Spiral model}
-The design task which spans phases; 4,5 and 6 as shown in Figure~\ref{fig:phases_and_process_models}, is: 
+The design task which spans phases; 4,5 and 6 as shown in
+Figure~\ref{fig:methodology_phases_and_process_models} has the following
+characteristic: 
 \begin{itemize}
-    \item Complex in nature
-    \item Has a set of clearly defined requirements. 
+    \item It is complex in nature
+    \item It has a set of clearly defined requirements. 
 \end{itemize}
 
-It is for this reason that the spiral model is the chosen process model to
+It is for these reasons that the spiral model is the chosen process model to
 oversee these tasks. The focus on iterative design and prototyping allows for
 convergence on a solution that can continuously be refined over the span of the
-project.
+project. Furthermore, it guarantees that the final report can be progressively
+constructed alongside the development based on the outcomes of each iteration.
 
-\section{Data collection testing and analysis}\label{methodology_testing}
+\section{Data Collection Testing and Analysis}\label{methodology_testing}
 Chapter~\ref{chapter_design} details the design of the MT system in terms of
 front- and back- end subsystems, this design is implemented in
 Chapter~\ref{chapter_implementation}. This Section aims to outline the data
@@ -126,12 +131,17 @@ Analysis of these sequences will be both quantitative and qualitative, the two
 approaches are subsequently elaborated on.
 
 \subsubsection{Quantitative testing and analysis}
-The VOT2017 Challenge provides annotated ground truth values for the image
-sequences, these are the true bounding boxes of a target object in a particular
-frame. These ground truths are what will be used to quantitatively benchmark
-tracker performance, in terms of distance between the tracker localization and
-the true location of the object of interest in a particular frame. This simple
-metric is termed the ``tracker error''.
+The VOT2017 Challenge is a comprehensive motion tracking benchmarking framework,
+among an advanced set of test metrics, it provides annotated ground truth values for the
+image sequences, these are in the for of true bounding boxes of a target object in a
+particular frame. 
+
+Due to the relative simplicity of the implemented trackers when compared to the
+state of the art, this thesis opts for a simple metric to quantitatively
+benchmark tracker performance. This simple metric is termed the ``tracker error''.
+The tracker error is defined as the distance between the centroid of tracker
+localization and the true centroid derived from the ground truth bounding boxes
+for a particular frame in the image sequence.
 
 \subsubsection{Qualitative testing and analysis}
 Despite a quantitative analysis, there are still insights to be drawn from a
@@ -142,6 +152,6 @@ back to the implementation choices such as low-level feature selection etc.
 The testing of the front-end will be performed by performance of various input
 sequences to the graphical user interface (GUI). The analysis will be in assessing the
 performance of the GUI in relation to the initial user requirements of the MT
-system as specified in Section~\ref{introduction_user_requirements}.
+System as specified in Section~\ref{introduction_user_requirements}.
 
 
