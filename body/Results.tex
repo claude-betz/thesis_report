@@ -249,7 +249,7 @@ sequence that exhibits one or more of the challenges to motion tracking outlined
 in Section~\ref{literature_review_challenges}. 
  
 \subsection{Effect of step size, $\epsilon$}\label{results_eps}
-The effect of step size, $\epsilon$ is quantified easily, but it can be reasoned
+The effect of step size, $\epsilon$ is not quantified easily, but it can be reasoned
 about. In Listing~\ref{lst:loop}, the step size is the initial check for
 termination of a single mean shift iteration (locating an object). As mentioned
 before, the $\epsilon$ value corresponds to how large our mean shift is allowed
@@ -272,7 +272,7 @@ The effect of varying $m$ on histogram generation is shown in
 Figure~\ref{fig:results_m_pdf}. There is not significant trend shown between the
 bin count and the execution time of the get\_pdf() function. This makes sense
 because we still iterate over all the pixels to allocate each of them to a
-particular bin. The access time of the bins in the underlying numpy array is not
+particular bin. The access time of the bins in the underlying \textbf{NumPy} array is not
 a significant bottle neck for array sizes (bin counts) ranging 1 to 256.
 
 The effect of varying $m$ on the calculation of the Bhattacharyya coefficient is
@@ -418,22 +418,24 @@ The relevant challenges presented in this scene are:
     \item Ego motion  
 \end{itemize}
 
+Ego motion is present through out the scene as the camera follows the girl, the
+effect of this on the tracker performance is hard to quantify. The results and
+analysis of the challenges of complete occlusion and scaling are subsequently
+presented.
+
 The graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png} shows the
-performance of the MST according to the average error metric outlined in
-Section~\ref{methodology_data_analysis}. 
-The motion tracking challenges present within the sequence are highlighted
-between vertical bars.
+performance of the MST throughout the girl sequence according to the average error metric outlined in
+Section~\ref{methodology_data_analysis}.  
 
 \Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in girl sequence}{results/mean_shift_tracker/girl/metric.png}
 
 \subsubsection{Complete occlusion}
-The relevant subsequence exhibiting occlusion ranges from $\mathbf{f}_{97}$ to
-$\mathbf{f}_{127}$ in the original sequence. 
-
-The interval exhibiting the complete occlusion / track overlap challenge occurs in
-the orange domain of the graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png}
-
-presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
+The relevant subsequence exhibiting complete occlusion ranges from $\mathbf{f}_{97}$ to
+$\mathbf{f}_{127}$ in the original sequence. This range corresponds to 
+the orange domain of the graph in
+Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png}. 
+A set of equally spaced visual results for the subsequence exhibiting complete occlusion
+is presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
 
 \begin{figure}    
     \makebox[\linewidth][c]{
@@ -463,38 +465,47 @@ presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
     \caption{Challenge: complete occlusion\label{fig:mean_shift_complete_occlusion}}
 \end{figure}
 
-In Figure~\ref{fig:mean_shift_complete_occlusion}, $\mathbf{F}_4$ to
-$\mathbf{F}_{13}$ show that the Mean Shift Tracker is able to relocate the Girl
-within after a man completely occludes her. We see that the smaller Green Kernel
-is offset by man for a bit, whereby the larger Yellow Kernel remains relatively
-stable. The Green Kernel behaviour can be explained by the fact that it's model,
-$\hat{q}$ was defined solely around the Girl's yellow top. This is sufficiently
-close for the Man's white top within the RGB colour-space to cause a small drift
-in the kernel which lasts only until the girl is visible again upon which the
-tracker is pulled back towards the girl as she is the once again the local
-maximum of our similarity measure $\rho$.
+From the graph in Figure~\ref{fig:results/results/mean_shift_tracker/girl/metric.png}, it is
+apparent by the large spike in tracker error that the MST deals poorly with the
+challenge of complete occlusion.  This is expected as the implementation of the
+MST is based on visual low-level features of the RGB colour space. It does
+however relocate the girl relatively fast after the occlusion ends, but it this
+would not necessarily be the can in the case of longer occlusion periods that
+could allow the tracker to drift too far to relocate the target model. 
+
+Figure~\ref{fig:mean_shift_complete_occlusion} provides a visual insight into
+what is going on. Snapshots $\mathbf{F}_4$ to $\mathbf{F}_{13}$ show that the
+MST is able to relocate the girl within after a man completely occludes her. We
+see that the smaller green kernel is offset by man for a bit, whereby the larger
+yellow kernel remains relatively stable. The green kernel behaviour can be
+explained by the fact that it's model, $\hat{q}$ was defined solely around the
+Girl's yellow top. This is sufficiently close for the man's white top within the
+RGB colour-space to cause a small drift in the kernel which lasts only until the
+girl is visible again upon which the tracker is pulled back towards the girl as
+she is the once again the local maximum of our similarity measure $\rho$.
 
 \subsubsection{Scaling}
-The Challenge of Scaling is exhibited from $\mathbf{f}_{427}$ to
+The challenge of scaling is exhibited from $\mathbf{f}_{427}$ to
 $\mathbf{f}_{997}$ in the original sequence, where the girl is walking away from
 the camera, the result being that her dimensions within the frame are becoming
 smaller.
 
 The scaling challenge occurs within the green domain of the graph in
-Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png}.
-Ego motion is present through out the scene as the camera follows the girl. 
+Figure~\ref{fig:results/results/mean_shift_tracker/girl/metric.png}, 
 While the MST tracker error fluctuates significantly between lows of close to 0
-and highs of around 40 pixels, this seems to have to effect on the long-term
-accuracy of the tracker over this sequence as it performs better on average that
-the overall sequence tracking error of 11 pixels.
+and highs of around 40 pixels. The average challenge error for this subsequence
+(indicated in purple) is indistinguishable from the average tracker error for the overall girl
+sequence (indicated in red).
 
-Figure~\ref{fig:mean_shift_girl_scale} shows that the girl is successfully tracked within until the
-completion of the sequence by both the initialised kernels. The robustness is
-likely in part due to the distinct nature of her attire when compared to the
-rest of the scene. It should be noted that the smaller kernel seems to perform
-better than the larger kernel, this cannot however be quantified by the metric
-because ground values would be misleading if compared to an initialisation that
-doesn't is not whole target object.
+A set of representative visual snapshot of the of the tracker results for both initialised kernels
+for the scaling subsequence are presented in
+Figure~\ref{fig:mean_shift_girl_scale}. It shows that the girl is successfully
+tracked until the completion of the sequence by both the initialised kernels.
+The robustness is likely in part due to the distinct nature of her attire when
+compared to the rest of the scene. It should be noted that the smaller kernel
+seems to perform better than the larger kernel, this cannot however be
+quantified by the metric because ground values would be misleading if compared
+to an initialisation that is not around the whole target object.
 
 \begin{figure} 
     \makebox[\linewidth][c]{
@@ -533,15 +544,23 @@ The challenges presented by this sequence are the following:
     \item Track overlap
 \end{itemize}
 
+The graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png} shows the
+performance of the MST over the ant sequence according to the average error metric outlined in
+Section~\ref{methodology_data_analysis}.  
+
 \Figure[width=0.8\columnwidth]{Graph of tracker error of adaptive tracker (pixels) vs frames in ant sequence}{results/mean_shift_tracker/ants/metric.png}
 
 
+\subsubsection{Track Overlap}\label{mean_shift_track_overlap}
+This Challenges is exhibited in $\mathbf{f}_{214}$ to $\mathbf{240}$ in the
+original ant image sequence. The sequence h two ants coming within close proximity of
+each other, we can see that the yellow kernel switches to track the second Ant
+after the crossing of their tracks within the sequence. Let us refer to the
+original ant as $A_0$ and the second ant as $A_1$. 
 
-\subsubsection{Target speed}\label{mean_shift_target_speed}
-The relevant subsequence ranges from $\mathbf{f}_{202}$ to $\mathbf{f}_{250}$
-in the original sequence. In Figure~\ref{fig:mean_shift_target_speed}, frames
-$\mathbf{F}_{13}$ to $\mathbf{F}_{16}$ highlight this issue, as can be seen by
-the Green Kernel failing to track the Ant.
+Figure\ref{fig:mean_shift_ant_speed} presents a set of representative snapshots
+for the tracker results for the subsequence exhibiting the challenge of track
+overlap.
 
 \begin{figure}
     \makebox[\linewidth][c]{
@@ -566,8 +585,90 @@ the Green Kernel failing to track the Ant.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/15.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed/16.jpg}} \\   
     \end{tabular}}
-    \caption{Challenge: target speed: small kernel loses ant\label{fig:mean_shift_ant_speed}}
+    \caption{Challenge: target speed: small kernel loses blue ant\label{fig:mean_shift_ant_speed}}
 \end{figure}
+
+From the graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png},
+it can be seen that for $\mathbf{f}_0$ to $\mathbf{f}_{214}$ where the blue
+target ant is exhibiting relatively slow motion, the tracker error fluctuates
+around the 10 pixel region. Upon reaching the challenge of track overlap over
+frames $\mathbf{f}_{214}$ to $\mathbf{f}_{240}$, the tracker clearly fails, as
+evidenced by the continual rise in tracker error beyond this region.
+
+Upon inspection of the snapshots of the track overlap subsequence presented in
+Figure~\ref{fig:mean_shift_ant_speed}, snapshots $\mathbf{F}_5$ to
+$\mathbf{F}_{11}$, highlight that the yellow kernel begins to track the yellow
+ant in place of the original blue ant target. At this point the tracker has
+failed.
+
+It is important at this point to highlight the differences between this case of
+track overlap, and that detailed in Section~\ref{mean_shift_partial_occlusion},
+in which, despite the tracks for the yellow fish and grey fish overlapping
+entirely, the tracker remains remains unaffected.
+The answer lies within the feature space our tracker is based on. Within the RGB colour space,
+the yellow and grey fish are largely distinct. Hence the tracker will not be
+drawn to the grey fish as it exits the yellow kernel.
+
+In this case, the are two objects within the vicinity of yellow kernel that are practically
+indistinguishable within our chosen feature space. As the blue ant quickly exits
+the Kernel, the gradient within the domain of the similarity
+function is not sufficiently steep to draw the tracker away.
+
+With $A_b$ and $A_y$ close to each other, The fact that $A_b$ moves with a high
+velocity, $A_b$ between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ is easily be large
+enough to place $A_y$ closer to $A_b$ in $\mathbf{f}_{k+1}$, which makes the
+mean shift vector point to $A_{y}$ as the local maxima in the domain of the
+similarity function thus the MST latches onto $A_y$ as the it new location in
+$\mathbf{f}_{k+1}$.
+
+\subsubsection{Target speed}\label{mean_shift_target_speed}
+The smaller green kernel is continually affected by this challenge throughout
+the ant image sequence.
+For the larger yellow kernel the relevant subsequence exhibiting the challenge
+of target speed occurs within $\mathbf{f}_{256}$ and $\mathbf{f}_{277}$ of in
+the original sequence. 
+Since the tracker has changed tracks from the blue to the yellow ant before
+reaching this challenge, the graph of tracker error against frame presented in
+Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png} is of no use because
+the subsequent ground truth values correspond to the blue ant and not the yellow
+ant that the MST is centred on. Subsequent analysis aims to highlight the effect
+of kernel size when faced with the challenge of high target speed.
+
+Beginning with the smaller green kernel.
+Figure~\ref{fig:mean_shift_target_speed}, presents representative snapshots. 
+It is apparent that the green kernel barely moves to track any of the ants it is
+centred on throughout the ant sequence. A proposed explanation for this
+observation ties back to sampling theory and knowledge of the mean shift
+procedure as defined in subsection~\ref{theoretical_framework_mean_shift}.
+
+Keeping in mind that a digital video is a sampling of an analogue scene.
+In order to discuss the effect of the ``speed'' of a target on tracker
+performance it is necessary to interpret this speed more clearly
+as the magnitude of an object's inter-frame displacement, $\mathbf{\delta}$ - which
+we define as the distance between an object's
+position between two adjacent frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$.
+This is an adequate formulation because, depending on the sampling frequency $f_s$ of
+a particular sequence, a fast object such as a car sampled at a high $f_s$ can
+have a smaller $\mathbf{\delta}$ than a relatively slow snail sampled at a lower
+$f_s$~\cite{Tekalp2014}. 
+
+As the $\delta$ of an object between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
+increases in magnitude, less of the object lies within the dimensions
+$(h_x,h_y)$ of the kernel that we initialise at it's last known pixel location
+$\mathbf{c_0}$ in $\mathbf{f}_k$. In terms of the mean shift tracking algorithm this simply
+results in a larger mean shift vector, $\vec{m}$. That said, the initialised green kernel
+throughout Figure~\ref{fig:mean_shift_ant_speed} highlights the extreme case in
+which the kernel initialised at the last known target location $\mathbf{c_0}$
+from $\mathbf{f}_{k}$ does not even partly contain the target in
+$\mathbf{f}_{k+1}$.
+
+Within the overall ant sequence, the performance of the larger yellow kernel in
+tracking the blue ant is consistent until faced with the challenge
+of track overlap, 
+
+Figure~\ref{fig:mean_shift_ant_speed2} shows snapshots from $\mathbf{f}_{265}$ to
+$\mathbf{f}_{277}$ of the original sequence. It highlights the fact that even the larger
+yellow kernel is not completely robust to the challenge of high target speed. 
 
 \begin{figure}
     \makebox[\linewidth][c]{
@@ -577,88 +678,43 @@ the Green Kernel failing to track the Ant.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/3.jpg}} &
         \subfloat{\includegraphics[width = 1.5in]{figures/results/mean_shift_tracker/ants/speed2/4.jpg}} \\
     \end{tabular}}
-    \caption{Challenge: target speed: large kernel loses ant\label{fig_mean_shift_ant_speed2}}
+    \caption{Challenge: target speed: large kernel loses ant\label{fig:mean_shift_ant_speed2}}
 \end{figure}
 
-Keeping in mind that a digital video is a sampling of an analogue scene.
-In order to discuss the effect of the ``speed'' of a target on tracker
-performance it is necessary to interpret this speed more clearly
-as the magnitude of an object's inter-frame displacement, $\delta$ - which
-we define as the distance between an object's
-position between two adjacent frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$.
-This is an adequate formulation because, depending on the sampling frequency $f_s$ of
-a particular sequence, a fast object such as a car sampled at a high $f_s$ can
-have a smaller $\delta$ than a relatively slow snail sampled at a lower $f_s$. 
-
-As the $\delta$ of an object between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ 
-increases in magnitude, less of the object lies within the dimensions
-$(h_x,h_y)$ of the kernel that we initialise at it's last known pixel location
-$\mathbf{c_0}$ in $\mathbf{f}_k$. In terms of the mean shift tracking algorithm this simply
-results in a larger mean shift vector, $\vec{m}$.
-
-As shown in the experiment in Section~\ref{results_varying_epsilon}, The MST
-parameter, $\epsilon$ - which limits the allowed magnitude of $\vec{m}$ between
-$\mathbf{f}_{k}$ and $\mathbf{f}_{k+1}$ - can increase the tracker's tolerance
-to challenges such as Object speed and occlusion, at the
-cost of increased track ``jitter''. 
-
-However the Green Kernel throughout Figure~\ref{fig:mean_shift_ant_speed}
-highlights the extreme case in which the kernel initialised at $\mathbf{c_0}$ in
-$\mathbf{f}_{k+1}$ does not even partly contain the Target.  
-
-We do see that the larger Yellow Kernel manages to track the Ant successfully
-from $\mathbf{F_1}$ to $\mathbf{F_7}$ before changing tracks for a better closer
-candidate as elaborated in section~\ref{mean_shift_track_overlap}.
-Figure~\ref{fig:mean_shift_ant_speed2} shows $f_{271}$ to $f_{274}$ of the original
-sequence, highlighting that even the larger Yellow Kernel can fail to track the
-Object for a sufficiently high inter-frame displacement.
-
-The results in Figures~\ref{mean_shift_ant_speed} tell us
+The snapshots presented in Figure~\ref{fig:mean_shift_ant_speed} tell us
 that a larger kernel larger kernel size is more robust to the effects of large
-$\delta$, but as Figure~\ref{fig:mean_shift_ant_speed2}, even a
+$\mathbf{\delta}$ than the smaller green kernel. However, as
+Figure~\ref{fig:mean_shift_ant_speed2} presents, even a larger
 kernel enclosing the whole object of interest can lose track of the object given
-a sufficiently large $\delta$. It is also not feasible to increase our kernel
-size largely beyond the object dimensions, as it would incorporate a lot of
-noise into the object model $\hat(q)$, likely deteriorating tracker performance
-when faced with other challenges.
+a sufficiently large $\mathbf{\delta}$, for which the target object in $\mathbf{f}_{k+1}$ lies
+to far from it's last known location $\mathbf{c_0}$ in $\mathbf{f}_k$, as was
+the case for the smaller green kernel. 
 
-It is important to note that a solution to the problem can be tied back to
-sampling rate, $f_s$ used to obtain the sequence. If a higher sampling rate were
-used, it would mean higher redundancy between frames with smaller $\delta$
-values. An impractical solution therefore could be to try and obtain the
-same sequence again, but sampled at a higher $f_s$.
+In looking for a solution to this issue, it is important to note that increasing
+our kernel size largely beyond the object dimensions is clearly not a feasible solution
+for dealing with this challenge, as it would incorporate a lot of noise into the
+object model $\hat{q}$, likely deteriorating tracker performance when faced with
+other motion tracking challenges.
 
+As discussed in subsection~\ref{results_eps}, The MST parameter, $\epsilon$ has
+the potential to increase the MST's robustness to challenges such as target
+speed and occlusion, at the cost of increased track ``jitter''. 
+
+One approach to to the problem can be tied back to the initial sampling rate,
+$f_s$ used to obtain the sequence. If a higher sampling rate were used, it would
+mean higher redundancy between adjacent frames in the image sequence resulting
+in smaller $\mathbf{\delta}$ values. An impractical solution therefore could be to try
+and obtain the same sequence again, but sampled at a higher $f_s$.
 This is likely unfeasible. Furthermore, one can easily imagine situations in which the
 available technology is constrained by factors such as budget, size etc. In such
-situations, we would still like to be able to track our object of interest.  A
-possible solution could be to augment the basic Mean Shift Algorithm with other
-forms of more information possibly from other tracking methodologies highlighted
-in Figure\ref{fig:motion_tracking_taxonomy}. 
+situations, we would still like to be able to track our object of interest. 
 
-\subsubsection{Track Overlap}\label{mean_shift_track_overlap}
-In Figure~\ref{fig:mean_shift_ant_speed}, $\mathbf{F}_5$ to $\mathbf{F}_{11}$
-highlight this challenge. We have two ants coming within close proximity of
-each other, we can see that the yellow kernel switches to track the second Ant
-after the crossing of their tracks within the sequence. Let us refer to the
-original ant as $A_0$ and the second ant as $A_1$. 
+A possible solution could be to augment the basic MST implementation with other
+forms ideas from from some of the other tracking methodologies originally
+presented in Figure~\ref{fig:literaturereview_taxonomy_motion_tracking}. This is
+possibility is explored as a possible improvement and future work in
+subsection~\ref{conclusion_mst_future_work}. 
 
-It is important at this point to highlight the differences between this case of
-track overlap, and that detailed in Section~\ref{mean_shift_partial_occlusion},
-in which, despite the tracks for the yellow fish and grey fish overlapping
-entirely, the tracker remains remains unaffected.
-The answer lies within the feature space our tracker is based on. Within the RGB colour space,
-the yellow and grey fish are largely distinct. Hence the tracker will not be
-drawn to the grey fish as it exits the Yellow Kernel.
-
-In this case, the are two objects within the Yellow Kernel that are practically
-indistinguishable within our chose feature space. One ant exits the Kernel, there exists
-no gradient within the domain of the similarity function to draw the tracker away.
-
-With $A_0$ and $A_1$ close to each other, The fact that $A_0$ moves with a high
-velocity, means that the inter-frame displacement of $A_0$ between
-$\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ is easily be large enough to place $A_1$
-closer to $A_0$ in $\mathbf{f}_{k+1}$, which makes the mean shift iteration
-likely to pick $A_1$ as the target location in $\mathbf{f}_{k+1}$
 
 \section{Graphical User Interface}\label{results_gui}
 This Section presents the results of the implemented GUI. The presentation is in
@@ -690,9 +746,9 @@ shown in the subsequence sections.
     \caption{Algorithm User Flow\label{fig:gui_CHD}}
 \end{figure}
 
-Figure~\ref{fig:gui_CHD} outlines the user flow for performing initialising the
-Co-occurrence histogram detection on a sequence.
-
+Figure~\ref{fig:gui_CHD} outlines the results of a similar user flow for
+initialising the co-occurrence histogram detector. This is essentially the same
+as the user flow highlighted by the sequence diagram in Figure~\ref{implementation_sequence_diagram}. 
 
 \subsection{Parameter Selection}
 In addition to implementing the algorithms, the parameters for the individual
