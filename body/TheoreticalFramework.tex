@@ -31,15 +31,56 @@ Matching.
 Template Matching is easily defined by its constituent words. A template is a
 model, representation for a particular object or task and matching is
 association of one or more objects by some measure of similarity. Template
-Matching is a technique by which a known object represented by a template, $t$
-can be localised within a larger image or frame of interest, $\mathbf{f}_k$.
+Matching is a technique by which a known object represented by a template,
+$\mathbf{T}$ can be localised within a larger image or frame of interest,
+$\mathbf{f}_k$~\ref{Brunelli}.
 
-\subsection{Simple template matching}\label{theoretical_framework_simple_tm}
-In it's simplest form, 
+Template matching is often refers to matching performed using the template
+descriptor as outlined in Subsection~\ref{literature_review_template}. However
+it can be extended to the matching derivative descriptors of the initial
+template.
+This paper limits itself to the case of simple template matching based on the template descriptor
+defined by and extraction of pixels over a particular region of interest in a
+particular frame.
 
-\subsection{Adaptive template matching}\label{theoretical_framework_adaptive_tm}
+\subsection{Similarity measure}
+The degree of similarity between a specific $T$ and a target region
+within a particular frame $\mathbf{f}_k$ is determined by the use of a similarity
+measure. The literature lists several similarity measures, the most widely
+adopted of which is the pixel-wise \textit{sum of square differences} (ssd)~\ref{Brunelli}.
 
 \subsection{Template matching tracking algorithms}\label{theoretical_framework_tm_algorithms}
+Figure~\ref{fig:design_template_tracking_algorithm} conveniently expresses the
+steps involved in two variations \textit{template matching trackers} (TMT) based
+on the idea of tracking purely by detection.
+
+Given a known template $\mathbf{T}$, the first variant, termed the
+\textit{simple template tracker} (STT) simply convolves $\mathbf{T}$ with a
+particular $\mathbf{f}_k$, the coordinates corresponding the highest value for
+the sum or square differences similarity measure is the location of the object
+in $\mathbf{f_k}$. A threshold $\tau$, determines the minimum ssd value between
+$\mathbf{T}$ and a candidate region necessary for a particular region of interest to
+constitute a match.
+
+The tracking is achieved by performing the matching procedure is repeated for
+the remainder of the image sequence $\mathbf{f}_k\ldots\mathbf{f_k+1}$.
+
+The above tracker is based on the assumption that an particular target object
+maintains the same appearance for the duration of the sequence
+$\mathbf{f}_0 \ldots \mathbf{f}_n$. This is clearly not case in any practical
+situation, as the challenges in Section~\ref{literature_review_challenges}
+elaborate on.
+
+The second variant of TMT, termed the \textit{adaptive template tracker} (ATT),
+attempts to address this issue by amending the assumption in the STT. The
+underlying assumption in the ATT is that target objects only maintain the same
+appearance for a (small) set of $K$-adjacent frames $\mathbf{f}_k \ldots
+\mathbf{f}_{k+K}$ within a particular image sequence. To account for the change
+beyond the $K$-frame interval, the ATT updates the model to be matched before
+the target object appearance can vary enough for the similarity measure to fall
+below the set threshold $\tau$.
+
+\Figure[width=0.8\columnwidth]{Flow chart of template tracking algorithm between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ $\mathbf{f}_k$}{design_template_tracking_algorithm}
 
 \section{Colour Co-occurrence Histogram Detector}\label{theoretical_framework_ch}
 As presented in Sections~\ref{results_simple_template_matching} and~\ref{results_adaptive_template_matching}, 
@@ -173,7 +214,7 @@ thereby enabling efficient target localisation in subsequent frames.
 A description of theory underlying the mean shift tracker follows:
 
 \subsection{Mean shift}\label{theoretical_framework_mean_shift}
-The mean shift Method is an algorithm that is capable of finding the modes of a 
+The mean shift method is an algorithm that is capable of finding the modes of a 
 non-parametric distribution by use of samples of the unknown underlying distribution. 
 
 \subsection{Model representation}
