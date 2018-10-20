@@ -138,7 +138,7 @@ the man, the adaptive template is updated with information from the man in the
 background which as the girl moves away becomes the larger match, thus the
 tracker loses the girl. 
 
-\Figure[width=0.8\columnwidth]{Graph of average error of adaptive tracker (pixels) vs frames in sequence}{results/adaptive_template_tracker/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of ATT (pixels) vs frames in sequence}{results/adaptive_template_tracker/metric.png}
 
 \begin{figure}     
     \makebox[\linewidth][c]{
@@ -308,7 +308,7 @@ between vertical bars, with the partial occlusion/track overlap challenge and th
 Reference to the graph is made in the treatment of the discussion of the
 particular challenges that follows.
 
-\Figure[width=0.8\columnwidth]{Graph of average error of MST (pixels) vs frames in sequence}{results/mean_shift_tracker/fish3/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in fish sequence}{results/mean_shift_tracker/fish3/metric.png}
 
 \subsubsection{Partial occlusion}\label{mean_shift_partial_occlusion}
 The relevant subsequence exhibiting partial occlusion ranges from
@@ -424,7 +424,7 @@ Section~\ref{methodology_data_analysis}.
 The motion tracking challenges present within the sequence are highlighted
 between vertical bars.
 
-\Figure[width=0.8\columnwidth]{Graph of average error of MST (pixels) vs frames in sequence}{results/mean_shift_tracker/girl/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in girl sequence}{results/mean_shift_tracker/girl/metric.png}
 
 \subsubsection{Complete occlusion}
 The relevant subsequence exhibiting occlusion ranges from $\mathbf{f}_{97}$ to
@@ -532,6 +532,10 @@ The challenges presented by this sequence are the following:
     \item Target speed
     \item Track overlap
 \end{itemize}
+
+\Figure[width=0.8\columnwidth]{Graph of tracker error of adaptive tracker (pixels) vs frames in ant sequence}{results/mean_shift_tracker/ants/metric.png}
+
+
 
 \subsubsection{Target speed}\label{mean_shift_target_speed}
 The relevant subsequence ranges from $\mathbf{f}_{202}$ to $\mathbf{f}_{250}$

@@ -632,6 +632,9 @@ INPUT ./figures/results/mean_shift_tracker/girl/scale/15.jpg
 INPUT figures/results/mean_shift_tracker/girl/scale/16.jpg
 INPUT ./figures/results/mean_shift_tracker/girl/scale/16.jpg
 INPUT ./figures/results/mean_shift_tracker/girl/scale/16.jpg
+INPUT figures/results/mean_shift_tracker/ants/metric.png
+INPUT ./figures/results/mean_shift_tracker/ants/metric.png
+INPUT ./figures/results/mean_shift_tracker/ants/metric.png
 INPUT figures/results/mean_shift_tracker/ants/speed/1.jpg
 INPUT ./figures/results/mean_shift_tracker/ants/speed/1.jpg
 INPUT ./figures/results/mean_shift_tracker/ants/speed/1.jpg
