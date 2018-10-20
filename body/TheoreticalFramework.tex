@@ -146,9 +146,6 @@ $$\tau=\alpha I_{mm}$$
 
 
 \subsection{Co-occurrence histogram detector algorithm}
-
-\Figure[width=0.65\columnwidth]{Flow chart of co-occurrence histogram localisation algorithm for $\mathbf{f}_k$}{design_algorithm_CH}
-
 The general search algorithm used is shown in
 Figure~\ref{fig:design_algorithm_CH}. Given the model CH $q$ and number of
 levels in the search $n$, The localisation algorithm specifies the search window
@@ -159,6 +156,9 @@ model CCHs $q$.  At the end of a Search, the best match of a particular level
 $n$ is then fed back to the lower level for a more refined search, for which the
 localisation algorithm defines a refined search window. At the lowest search
 level where $n=0$, the object is located.
+
+\Figure[width=0.65\columnwidth]{Flow chart of co-occurrence histogram localisation algorithm for $\mathbf{f}_k$}{design_algorithm_CH}
+
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
 As summarised in Section~\ref{literature_review_mean_shift}, the mean shift tracker was

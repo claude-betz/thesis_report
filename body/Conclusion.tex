@@ -3,9 +3,10 @@ This Chapter aims to tie together the work of the preceding Chapters
 by contextualising the progression of the project with the initial objectives 
 described in Chapter~\ref{chapter_introduction}.
 
-Conclusions from the front-end and back-end development, implementations and
-results are presented, followed by insights from the overall integrated system.
-Finally possible future improvements and extensions to the project are addressed.
+A general reflection on the work done is presented. Conclusions from
+the front-end and back-end subsystems' design, implementation and result are
+presented, followed by insights from the overall integrated system. Finally
+possible future improvements and extensions to the project are addressed.
 
 \section{Template Matching Trackers}
 The simple template tracker implementation was only slightly effective in
@@ -20,7 +21,7 @@ duration of the sequence.
 The approach of updating the template with the detected region in each
 $\mathbf{f}_k$ to be used in $\mathbf{f}_{k+1}$ partly allowed the tracker to
 deal with changes in object appearance in subsequent frames. However, the
-approach did not have a means to effectively center the detected region, hence
+approach did not have a means to effectively centre the detected region, hence
 over long sequence the tracker would exhibit ``drift'', eventually losing the
 object to be tracked as more and more background noise was added to the model at
 each update.
@@ -29,11 +30,12 @@ In addition, when faced with the challenge of occlusion, depending on it's
 similarity threshold $\tau$ and the rate at which the occlusion covers the
 target between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$, the adaptive template
 tracker either fails to locate the target or incorporates the occlusion into
-subsequent target models.
+subsequent target models. Thoughts on further pursuit of template tracking are
+presented in Subsection~\ref{future_tmt}.
 
 \section{Colour Co-occurrence Histogram Detector}
 Still within the sphere of detection-based tracking and template matching, a
-feature-based co-occurrence histogram detector was implemented largely as an
+feature-based co-occurrence histogram detector (CCH-detector) was implemented largely as an
 experiment to gauge, whether template matching-based tracking can be extended to deal
 with some of the motion tracking challenges. 
 Picking up from where the adaptive template tracker failed, the CCH-detector was
@@ -60,19 +62,37 @@ The main appeal of this approach is that machine learning and deep learning
 based methods take large amounts of data to be trained, a refined algorithm with
 faster execution time and less sensitivity to tuning parameters could have
 applicability in fast deployment systems, based off multi-view templates of a
-desired object to detect.
+desired object to detect. Thoughts on future iterations of co-occurrence
+histogram based detection and tracking are discussed in
+Subsection~\ref{future_tmt} together with the simple and adaptive template
+approaches.
 
 \section{Mean shift tracker}
+This Section aims to conclude the results and analysis from of the mean shift
+tracker (MST) performed in Section~\ref{results_mean_shift_tracker}.
 In terms of performance in relation to the motion tracking problem and to the
-challenges in achieving effective tracking, the mean shift tracker was by far
+challenges in achieving effective tracking, the mean MST was by far
 the most successful of the trialled kernel-based tracking implementations.
-
 This allowed for more comprehensive performance tests against a variety of
 sequences, exhibiting various of the outlined challenges to motion tracking.
 
-Throughout the experiments, the mean shift tracker showed good robustness to
-challenges such as occlusion, changes in scale, camera ego motion, and  
+Throughout the experiments, the MST implementation showed good robustness to
+challenges such as partial occlusion and changing in target scale provided that
+the target model was sufficiently distinguishable from the background and other
+objects within the kernel location.
 
+The quantitative and qualitative results indicated that the while the MST
+usually successfully tracked translations, it significantly
+lagged the location of the target object within this sub-sequences. This is
+evidences by Experiments such as the fish, where the MST tracking error averages
+were significantly lower when faced with the challenges of partial occlusion and
+changing orientation than when the fish was in translation.
+
+The takeaway from the MST implementation was that it was, naturally, very suited to
+applications that aligned with the underlying low-level feature choice. It had
+trouble tracking translations without a constant offset error between the
+tracker and ground truth centroids. Possible directions for future work on the
+MST are outlined in Subsection~\ref{future_mst}.
 
 \section{Graphical user interface}
 The GUI system implemented in the Qt framework was overall very responsive. The
@@ -89,12 +109,12 @@ initial a frame, $\mathbf{f}_k$.
 
 \section{Future work}\label{future}
 This Section outlines the possible improvements and areas
-of future work for different subsystems of the MT system. Suggestions are based
+of future work for different subsystems of the MT system as well as the overall
+research methodology. Suggestions are based
 on the conclusions drawn and knowledge obtained from the initial survey of the
 literature in Section~\ref{chapter_literature_review}.
 
-\subsection{Template matching tracker and colour co-occurrence histogram
-detector}
+\subsection{Template matching tracker and colour co-occurrence histogram detector}\label{future_tmt}
 The adaptive template matching trackers showed potential in tracking templates for
 short sequences, it's lack of generalisation however made it incapable of
 application to more complex sequences. 
@@ -109,7 +129,7 @@ There is still likely a limit to the effectiveness of this as the configuration
 was relatively sensitive to changes to the $n_c$ and $n_d$ parameters which is
 undesirable in a real world application.
 
-\subsection{Mean shift tracker}\label{conclusion_mst_future_work}
+\subsection{Mean shift tracker}\label{future_mst}
 Mean shift tracking remains an active field of research. The mean shift tracker
 (MST) was the most successful of the trialled kernel-based tracker implementations, and
 accordingly has the most room for extension.
@@ -151,14 +171,14 @@ There are several well researched approximations to the ideal Bayesian filter
 under different constraints such as Kalman Filters, Point mass filters, Particle
 filters etc.~\cite{Challa2011}.  
 
-\subsection{Graphical User Interface}
+\subsection{Graphical user interface}\label{future_analysis}
 In terms of the GUI there is a lot room for improvement. The user flow sequences
 require a more thorough testing, this would be in the form of branch testing where
 each possible sequence of user actions is tested to ensure it does not fail in
 certain control sequences, as only the main user flow sequences were tested, as
 presented in Section~\ref{results_gui}.
 
-In terms of rendering the selected sequences to the two frame and template views
+In terms of rendering the selected sequences to the frame and template views
 of the GUI, the frames and templates to be displayed should scale to the current
 view size rather than dynamically changing the window size. This limits the
 application to lower resolution videos as the window could scale beyond the
@@ -166,4 +186,25 @@ particular screen dimensions.
 Correction of this would require the implementation of a coordinate transform
 to convert the dimensions from the scaled frame to to the original pixel
 dimensions for the user selected kernels that the back-end subsystem operates on.
+
+\subsection{Analysis methodology}\label{future_analysis}
+The methodology outlined for assessing the tracker performance in
+Section~\ref{methodology_testing} is very limited for several reasons. 
+The simple metric used for quantitative analysis, termed the tracker error- the
+distance between the particular tracker centroid and ground truth centroid for a
+particular image sequence. Firstly basing a metric solely on one point negates
+information of bounding box orientation, a more suitable for example could be
+based off bounding box overlap between annotated bounding boxes. 
+
+Further optimisations to the metric can be thought out. However, ultimately what
+is required is actual integration of proposed tracker implementations into established
+datasets and benchmark tool-kits. This would allow for rapid testing via
+automated generation of various metrics indicative of the tracker performance.
+
+Not only does this alleviate the time and effort required to develop and
+implement a particular testing methodology, it allows for a more comprehensive
+and unbiased assessment of tracker performance by removing the choice data
+selection from the testing methodology~\ref{}
+
+
 

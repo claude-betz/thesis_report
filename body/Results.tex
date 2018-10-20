@@ -721,17 +721,28 @@ This Section presents the results of the implemented GUI. The presentation is in
 terms of functionality relating to the MT system user requirements in
 Section~\ref{introduction_user_requirements}.
 
-An overview of implemented GUI system is displayed in Figure~\ref{fig:results/gui/first_look}
+An overview of implemented GUI system is displayed in
+Figure~\ref{fig:results/gui/first_look}. The implementation closely follows the layout of the design in
+Figure~\ref{fig:design_gui_mockup} the only differences being a reordering of
+the menu bar and additional buttons for more convenient navigation of selected
+sequences.
 
 \Figure[width=1\columnwidth]{Image of the MOT System GUI implementation applying the MS-Tracker to a fish sequence}{results/gui/first_look}
-The GUI implementation closely follows the layout of the design in
-Figure~\ref{fig:design_gui_mockup} 
 
 \subsection{I/O functionality}
 The GUI allows for user selected sequence selection from any file directory on
 the system it is being run on.
 
-\subsection{Algorithm Integration}
+\subsection{Navigational functionality}.
+
+
+\subsection{Parameter selection}
+In addition to implementing the algorithms, the parameters for the individual
+algorithms can be varied by by the user.
+
+\section{Integration}
+
+\subsection{Algorithm integration}
 The three algorithms discussed in Section~\ref{chapter_theoretical_framework}
 successfully integrated with the Front-end GUI. Their usage within the GUI is
 shown in the subsequence sections.
@@ -749,9 +760,5 @@ shown in the subsequence sections.
 Figure~\ref{fig:gui_CHD} outlines the results of a similar user flow for
 initialising the co-occurrence histogram detector. This is essentially the same
 as the user flow highlighted by the sequence diagram in Figure~\ref{implementation_sequence_diagram}. 
-
-\subsection{Parameter Selection}
-In addition to implementing the algorithms, the parameters for the individual
-algorithms can be varied by by the user.
 
 
