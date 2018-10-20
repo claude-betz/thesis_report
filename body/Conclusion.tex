@@ -106,7 +106,6 @@ interest. A user could navigate the sequences and apply one of the implemented
 back-end detectors or trackers after selecting an object of interest in the
 initial a frame, $\mathbf{f}_k$.
 
-
 \section{Future work}\label{future}
 This Section outlines the possible improvements and areas
 of future work for different subsystems of the MT system as well as the overall
@@ -134,7 +133,7 @@ Mean shift tracking remains an active field of research. The mean shift tracker
 (MST) was the most successful of the trialled kernel-based tracker implementations, and
 accordingly has the most room for extension.
 
-The (MST) implementation, has static kernel dimensions. A clear first
+The MST implementation has static kernel dimensions. A clear first
 step to optimisation would be to add dynamic dimensioning for the kernel region
 as the scale of the object of interest changes, this would mean that less
 background noise is incorporated when computing candidate PDFs for calculating
@@ -155,7 +154,7 @@ When faced with challenges such as complete occlusion or target overlap with
 similar objects, the MST performed poorly peaking in the error metric or failing
 to keep track of the object entirely. A possible refinement could be to augment
 the tracker with Bayesian algorithms. As detailed in
-Section~\ref{literature_review_point}, Bayesian estimation algorithms compute
+Subsection~\ref{literature_review_point}, Bayesian estimation algorithms compute
 the posterior density of a parameter/state of interest. In the tracking
 problem, this parameter/state could be our object position, velocity or both in
 $\mathbf{f}_k$. 
@@ -188,11 +187,11 @@ to convert the dimensions from the scaled frame to to the original pixel
 dimensions for the user selected kernels that the back-end subsystem operates on.
 
 \subsection{Analysis methodology}\label{future_analysis}
-The methodology outlined for assessing the tracker performance in
-Section~\ref{methodology_testing} is very limited for several reasons. 
+The analysis methodology outlined in Section~\ref{methodology_testing} that was
+used in assessing the tracker performances is very limiting for several reasons.
 The simple metric used for quantitative analysis, termed the tracker error- the
 distance between the particular tracker centroid and ground truth centroid for a
-particular image sequence. Firstly basing a metric solely on one point negates
+particular image sequence. Basing the metric solely on one point negates
 information of bounding box orientation, a more suitable for example could be
 based off bounding box overlap between annotated bounding boxes. 
 
@@ -204,7 +203,7 @@ automated generation of various metrics indicative of the tracker performance.
 Not only does this alleviate the time and effort required to develop and
 implement a particular testing methodology, it allows for a more comprehensive
 and unbiased assessment of tracker performance by removing the choice data
-selection from the testing methodology~\ref{}
+selection from the testing methodology~\cite{Bei}.
 
 
 
