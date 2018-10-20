@@ -53,7 +53,7 @@ Python3 package manager.
 
 \subsection{Relevant libraries}
 The relevant Python3 libraries chosen for the development of the MT system are
-outlined below. The Implementation Chapter presents their use in detail.
+outlined below. The implementation chapter presents their use in detail.
 \begin{itemize}
     \item \textbf{NumPy}: The NumPy library is used for it's high performance
         multidimensional array object and the efficient operations it provides.
@@ -74,7 +74,8 @@ The focus of the back-end design will be in the implementation of the various
 approaches to object detection and motion tracking developed in
 Chapter~\ref{chapter_theoretical_framework}.
 Emphasis is placed on minimal reliance on libraries for functional
-implementations.
+implementations in favour of a low-level theory driven approach to design and
+implementation.
 
 \subsection{Object oriented approach}
 The back-end structure will follow the object oriented programming paradigm with
@@ -87,17 +88,17 @@ development life-cycle.
 
 In line with this, the UML diagram in Figure~\ref{fig:design_uml} goes into
 detail about the proposed class structure of the back-end and also highlights how the 
-this functionality will interface with the front end to create the MT system.
+this functionality will interface with the front end to create the MT System.
 
-\Figure[width=1.2\columnwidth, angle=90, scale=1.2]{UML diagram outlining the MT system class structure}{design_uml} 
+\Figure[width=1.2\columnwidth, angle=90, scale=1.2]{UML diagram outlining the MT System class structure}{design_uml} 
 
 \subsection{Software dependencies}
 This subsection describes the software dependencies within the back-end
 subsystem.
 
-The simple and adaptive template matching variants in the TM-tracker class
-variants are the only back-end class with a dependency on the \textbf{OpenCV}
-library which it makes use of for it's highly optimised implementation of the
+The simple and adaptive template matching variants of the Template Tracker are
+the only back-end classes with a dependency on the \textbf{OpenCV} library which
+it makes use of for it's highly optimised implementation of the
 template matching algorithm.
 
 The CH-Detector class' main dependency is the \textbf{NumPy} library, it makes
@@ -110,7 +111,8 @@ The MS-Tracker class has the \textbf{NumPy} library as it's sole dependency.
 The front-end is the graphical user interface (GUI) that users of the MT
 system interact with. 
 It interfaces with the underlying functionality encapsulated in the back-end API to
-satisfy the system user requirements. 
+satisfy the system user requirements. This is effectively illustrated in
+Figure~\ref{fig:desing_uml}. 
 
 \subsection{GUI requirements}
 The tasks that the front end must achieve relate directly to the user
@@ -127,7 +129,7 @@ GUI application should afford a user the following functions.
 \end{itemize}
 
 Figure~\ref{fig:design_gui_mockup} details a simple mock-up of a possible GUI
-for the proposed MT system. The proposed layout is simple, it proposes menus for
+for the proposed MT System. The proposed layout is simple, it proposes menus for
 file and algorithm selection, two views to display tracking results to the user
 and several buttons that allow a user to navigate a particular sequence
 When integrated with the system back-end, the GUI functionality will directly
@@ -136,8 +138,8 @@ satisfy the defined system user requirements.
 \Figure[width=0.8\columnwidth]{Graphical user interface mock-up}{design_gui_mockup} 
 
 \subsection{GUI programming}
-In line with the general model-view-controller architecture, the GUI consists
-of:
+The fundamental programming paradigm followed in the GUI design and development
+is the model-view-controller architecture. In line with this
 \begin{itemize}
     \item \textbf{A model}: this is the application object responsible for the
         dynamic behaviour of the GUI through the event loop.
