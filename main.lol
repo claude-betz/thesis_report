@@ -13,5 +13,4 @@
 \contentsline {lstlisting}{\numberline {6.13}Mean shift tracker integration in GUI}{53}{lstlisting.6.13}
 \contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{85}{lstlisting.A.1}
 \contentsline {lstlisting}{\numberline {A.2}Additional functions for Mean Shift Tracker Impementation}{87}{lstlisting.A.2}
-\contentsline {lstlisting}{\numberline {A.3}QLabel Mouse Event Code}{88}{lstlisting.A.3}
-\contentsline {lstlisting}{\numberline {A.4}GUI Impementation Code}{89}{lstlisting.A.4}
+\contentsline {lstlisting}{\numberline {A.3}GUI Impementation Code}{88}{lstlisting.A.3}
