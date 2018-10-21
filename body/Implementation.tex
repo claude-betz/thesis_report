@@ -23,23 +23,72 @@ matching function provided by the \textbf{OpenCV} library.
 
 The reason for reliance on the \textbf{OpenCV} implementation is based on the fact that
 preliminary experimentation and research revealed that the execution time of
-naive implementation convolution was orders of magnitude from
-what would be required to feasibly implement a template
-tracker. 
+naive implementation convolution was orders of magnitude from what would be
+required to feasibly implement a template tracker. 
+
 The necessary optimisations are achievable by conversion to the frequency domain using a
 Short-Time Fourier Transform (STFT). The requisite and time into an optimised
 correlation implementation for a template matching tracker was deemed tangential
 and beyond the scope of this study. However, a comprehensive treatment of this
-optimisation is provided by~\cite{Usevitch2010}.
+optimisation is provided by~\cite{Usevitch2010}. The two STT and ATT algorithm
+implementations for detecting and object in $\mathbf{f}_k$ are presented below.
 
 \subsection{Simple template tracker}
+The implementation of the STT follows directly from the simple algorithm
+proposed in Figure~\ref{fig:design_template_tracking_algorithm}.
+Listing~\ref{lst:STT} details the algorithm for the STT\@. Given a frame,
+$\mathbf{f}_k$ and a
+template $\mathbf{T}$ of the target object to be located, the \textbf{OpenCV} \lstinline{cv.matchTemplate ()} function
+returns the \lstinline{res} array. This array has entries of the similarity
+measure (normed sum of square differences) and the
+corresponding coordinates for each of the overlaps in the 2D convolution of the
+template and frame. The entries range from $\left[ 0,1 \right]$ with 0
+corresponding to the worst possible match, and 1 corresponding to the best
+possible match. The \lstinline{threshold} parameter defines error margin of
+similarity. 
+The function returns the location of the best match provided it exceeds the
+specified threshold.
+
+\begin{lstlisting}[language=Python, caption={STT tracking loop}, captionpos=b, label={lst:STT}]
+def simpleTT(frame, template, threshold=0.8):
+    """perform simple template matching"""
+    res = cv.matchTemplate(frame, template, cv.TM_CCOEFF_NORMED)
+    if(np.max(res)<threshold): # control threshold
+        return -1
+    loc = np.where(res==np.max(res))
+    loc = (loc[0].flatten()[0], loc[1].flatten()[0])        
+    return loc
+\end{lstlisting}
 
 \subsection{Adaptive template tracker}
+As detailed in the ATT step in the algorithm of Figure~\ref{fig:design_template_tracking_algorithm}.
+The difference between the ATT and STT implementations is that the ATT has the
+aditional template update step, as seen by the return value.
 
+\begin{lstlisting}[language=Python, caption={ATT tracking loop}, captionpos=b, label={lst:ATT}]
+def adaptiveTT(frame, template, threshold):
+    """perform adaptive template matching"""
+    res = cv.matchTemplate(frame, template, cv.TM_CCOEFF_NORMED)
+    if(np.max(res)<threshold): # control threshold
+        return -1
+    loc = np.where(res==np.max(res))
+    loc = (loc[0].flatten()[0], loc[1].flatten()[0])        
+    
+    h, w = template.shape[:2] # get template dimensions
+    template = frame[loc[0]:loc[0]+h, loc[1]: loc[1]+w] # update template
+    return loc, template
+\end{lstlisting}
+
+\subsection{Template Matching Tracker}
+The two implementations in Listings~\ref{lst:STT} and~\ref{lst:ATT} are simply
+detectors. The tracking is performed by integration into a loop and application
+of the chosen template detector to each frame within the selected sequence.
+A notable implementation detail is that the ssd measure is computed on greyscale
+images.
 
 \section{Colour Co-occurrence Histogram Detector}\label{implementation_ch}
-The implementation of the CH-Detector follows directly from the algorithm
-description in Section~\ref{theoretical_framework_ch}.
+The implementation of the CH-Detector follows directly from the theory developed
+in Section~\ref{theoretical_framework_ch}.
 
 \subsection{Computing model and candidate CCHs}
 The model and candidate CCH's are computed by the \lstinline{get_model_CH (template,nc,nd)} 
@@ -85,7 +134,7 @@ def get_candidate_CH(kmeans, template, nc, nd):
 \end{lstlisting}
 
 \subsection{Computing the similarity measure}
-The co-occurrence histogram intersection as expressed in
+The CCH intersection as expressed in
 Equation~\ref{eqn:intersection} is computed by the code in
 Listing~\ref{lst:intersection}
 
