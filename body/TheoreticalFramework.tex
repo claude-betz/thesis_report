@@ -1,53 +1,55 @@
 \chapter{Theoretical Framework}\label{chapter_theoretical_framework}
-
 This Chapter aims to provide a comprehensive treatment of the theory necessary
-for the implementation of the Overall MOT System. This is in line with the
-objectives of the study outlined in Section~\ref{introduction_objectives} and
-the research direction determined in reviewing the relevant literature in
-Chapter~\ref{chapter_literature_review}.
+for the implementation of the kernel based tracking approaches within the
+back-end of the overall MT System. This is in line with the objectives
+of the study outlined in
+Section~\ref{introduction_objectives} and the research direction determined in
+reviewing the relevant literature in Chapter~\ref{chapter_literature_review}.
 
-In Sections~\ref{theoretical_framework_tm} and~\ref{theoretical_framework_ch} we first
-explore the development of a Tracker that is based purely on Detection. We
-review both correlation based and feature based approaches within field of Template Matching.
+In Sections~\ref{theoretical_framework_tm}, we explore the development of both a
+simple template tracker (STT) and an adaptive template tracker (ATT) that are
+both based purely on detection. The STT and ATT use low-level pixel based
+template correlation approach to template matching.
 
-Section~\ref{theoretical_framework_ch} presents the feature based Template
-Matching based on the Co-occurrence Histogram texture feature as proposed by
-Chang~\cite{Chang1999}. The presentation is also supplemented treatment of the
+Section~\ref{theoretical_framework_ch} presents a possible improvement to
+the STT and ATT correlation based trackers. This comes in form of a tracker
+based on a co-occurrence Histogram descriptor as proposed by Chang et
+al~\cite{Chang1999}. The presentation is also supplemented treatment of the
 feature extraction by Hall~\cite{Hall-beyer2018}.
 
-Section~\ref{theoretical_framework_mean_shift_tracker} draw heavily from the
+Section~\ref{theoretical_framework_mean_shift_tracker} is a presentation of the
+theory behind the mean shift tracker. While it draws heavily from the
 work and presentations of the by~\cite{Comaniciu2002, Comaniciu2003,
-Shah2011} of the theory behind the Mean Shift Tracker. They do however take the
-liberty in making some changes to the notation and order of presentation, while
-adding some visual illustrations and
+Shah2011}, it does take some liberty in making some changes to the notation and
+order of presentation, while adding some visual illustrations and
 context to certain steps. 
-
 
 \section{Template Matching Tracker}\label{theoretical_framework_tm}
 The detection and recognition of objects within an image is one of the
-fundamental Computer vision problems. A basic approach to this task is Template
-Matching.
+fundamental computer vision problems. A basic approach to this task is template
+matching.
 
-Template Matching is easily defined by its constituent words. A template is a
+Template matching is easily defined by its constituent words. A template is a
 model, representation for a particular object or task and matching is
 association of one or more objects by some measure of similarity. Template
-Matching is a technique by which a known object represented by a template,
+matching is a technique by which a known object represented by a template,
 $\mathbf{T}$ can be localised within a larger image or frame of interest,
-$\mathbf{f}_k$~\ref{Brunelli}.
+$\mathbf{f}_k$~\cite{Brunelli}.
 
 Template matching is often refers to matching performed using the template
-descriptor as outlined in Subsection~\ref{literature_review_template}. However
+descriptor as outlined in Subsection~\ref{literature_review_descriptors}. However
 it can be extended to the matching derivative descriptors of the initial
 template.
-This paper limits itself to the case of simple template matching based on the template descriptor
-defined by and extraction of pixels over a particular region of interest in a
-particular frame.
+This paper limits itself to the case of simple template matching based on the
+template descriptor defined by and extraction of pixels over a particular region
+of interest in a particular frame.
 
 \subsection{Similarity measure}
 The degree of similarity between a specific $T$ and a target region
-within a particular frame $\mathbf{f}_k$ is determined by the use of a similarity
+within a particular frame is determined by the use of a similarity
 measure. The literature lists several similarity measures, the most widely
-adopted of which is the pixel-wise \textit{sum of square differences} (ssd)~\ref{Brunelli}.
+adopted of which is the pixel-wise \textit{sum of square differences}
+(ssd)~\cite{Brunelli}.
 
 \subsection{Template matching tracking algorithms}\label{theoretical_framework_tm_algorithms}
 Figure~\ref{fig:design_template_tracking_algorithm} conveniently expresses the
@@ -56,29 +58,28 @@ on the idea of tracking purely by detection.
 
 Given a known template $\mathbf{T}$, the first variant, termed the
 \textit{simple template tracker} (STT) simply convolves $\mathbf{T}$ with a
-particular $\mathbf{f}_k$, the coordinates corresponding the highest value for
-the sum or square differences similarity measure is the location of the object
+particular $\mathbf{f}_k$. The coordinates corresponding the highest value for
+the sum or square differences similarity measure are taken to be the location of the object
 in $\mathbf{f_k}$. A threshold $\tau$, determines the minimum ssd value between
 $\mathbf{T}$ and a candidate region necessary for a particular region of interest to
 constitute a match.
-
-The tracking is achieved by performing the matching procedure is repeated for
-the remainder of the image sequence $\mathbf{f}_k\ldots\mathbf{f_k+1}$.
-
-The above tracker is based on the assumption that an particular target object
+The STT algorithm is based on the assumption that an particular target object
 maintains the same appearance for the duration of the sequence
-$\mathbf{f}_0 \ldots \mathbf{f}_n$. This is clearly not case in any practical
+$\{\mathbf{f}_0,\ldots,\mathbf{f}_n\}$. This is clearly not case in any practical
 situation, as the challenges in Section~\ref{literature_review_challenges}
 elaborate on.
 
-The second variant of TMT, termed the \textit{adaptive template tracker} (ATT),
-attempts to address this issue by amending the assumption in the STT. The
-underlying assumption in the ATT is that target objects only maintain the same
-appearance for a (small) set of $K$-adjacent frames $\mathbf{f}_k \ldots
-\mathbf{f}_{k+K}$ within a particular image sequence. To account for the change
-beyond the $K$-frame interval, the ATT updates the model to be matched before
-the target object appearance can vary enough for the similarity measure to fall
-below the set threshold $\tau$.
+The tracking is achieved by performing the matching procedure is repeated for
+the remainder of the image sequence $\{\mathbf{f}_k,\ldots,\mathbf{f}_{k+1}\}$.
+
+The second variant of template matching tracker is termed the \textit{adaptive
+template tracker} (ATT), attempts to address this issue by amending the
+assumption in the STT\@. The underlying assumption in the ATT is that target
+objects only maintain the same appearance for a (small) set of $K$-adjacent
+frames $\{\mathbf{f}_k,\ldots, \mathbf{f}_{k+K}\}$ within a particular image
+sequence. To account for the change beyond the $K$-frame interval, the ATT
+updates the model to be matched before the target object appearance can vary
+enough for the similarity measure to fall below the set threshold $\tau$.
 
 \Figure[width=0.8\columnwidth]{Flow chart of template tracking algorithm between $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ $\mathbf{f}_k$}{design_template_tracking_algorithm}
 
@@ -89,21 +90,21 @@ approaches showed some success when applied to the motion
 tracking problem. However, the simple template tracker was unable to cope with
 slight rotation of the target as the sequence progressed.
 While the Adaptive variant could deal with these changes in target
-orientation, it suffered the problem of ``drift'' in which the model contained
+orientation, it suffered the problem of \textit{drift} in which the model contained
 more and more noise as the sequence progressed.
 Furthermore the adaptive template tracker could not cope with the problem of
 occlusion.
 
-Both variants of the simple template tracking approach suffers from poor generalisation- the
-ability to adapt to unseen data. Template Matching applications often require
+Both variants of the template matching tracker approach suffers from poor generalisation- the
+ability to adapt to unseen data. Template matching applications often require
 that templates be characterized by the joint use of geometrical and textural
 information~\cite{Brunelli}, i.e.\ a feature based approach.
 
-Furthering the concept that a reliable detector can make for a reliable tracker,
-the work by Chang et al.~\cite{Chang1999}, proposed a robust template
-localization approach based on the use of co-occurrence histograms as template
-features. A description of the theory underlying the implementation of such a
-detector follows.
+Furthering the concept that a reliable detector can make for a reliable
+tracker, and drawing from the work by Chang et al.~\cite{Chang1999}, that proposed a
+robust template localization approach based on the use of \textit{colour co-occurrence
+histograms} as template descriptors. A description of the theory underlying the
+implementation of such a detector follows.
 
 \subsection{Model representation}
 A colour histogram is a binned count of pixel values over a particular image
@@ -118,16 +119,16 @@ Defined within the RGB-colour space, a CCH holds the number of occurrences of
 pixel pairs $\mathbf{P_i}=(R_i,G_i,B_i)$ and $\mathbf{P_j}=(R_j,G_j,B_j)$ that
 are separated by a vector $\vec{v}=(\Delta{x}, \Delta{y})$ in the pixel plane.
 
-For the CCH-Detector, instead of $\vec{v}$, we use it's euclidean norm $d$ as our
+For the CCH-detector, instead of $\vec{v}$, we use it's euclidean norm $d$ as our
 augmented feature where 
-$$d = \sqrt{{(\Delta{x})}^2 + {(\Delta{y})}^2}$$ 
+\[d = \sqrt{{(\Delta{x})}^2 + {(\Delta{y})}^2}\] 
 This is a necessary step in order to reintroduce invariance to orientation for
 the CH feature. 
 
 The colours are quantized into a set $C$ of $n_c$ colour levels, where 
 $C = \{c_1,c_2,\dots,c_{n_c}\}$. Likewise the distances are quantized into
-a set $D$ consisting of $n_d$ distances, where $D = \{\left[ 0,1
-\right),\left[ 1,2\right), \dots , \left[ n_{d-1},n_{d} \right)\}$.
+a set $D$ consisting of $n_d$ distances, where $ D = \{ \left[ 0,1
+\right), \left[ 1,2 \right), \dots , \left[ n_{d-1}, n_{d} \right) \}$.
 
 The colour quantization is conveniently achieved by application of the kmeans clustering
 algorithm to the set of pixels in our region of interest, characterised by their
@@ -135,15 +136,15 @@ euclidean distance within the RGB-colour space. The number of clusters is
 specified as $n_c$. 
 
 With this we can settle on a definition for our CCH descriptor as
-$$\text{CH} = \{C_d\}_{d \in D}$$ 
+\[\text{CH} = {\{C_d\}}_{d \in D} \] 
 where $C_d \in \mathbb{Z}^{n_c \times n_c}$ index the
 frequencies/counts of the quantized source and destination pixels within an
 image at each distance $d \in D$. Row and column indices of
 $C_d$, $(i,j)$ represent source and destination bins respectively.  
 
 \subsection{Similarity measure}\label{theoretical_framework_intersection}
-The problem is here is fundamentally similar to that in the Simple Template
-Matching case. Given a template we would like to locate it within a given frame.
+The problem is here is fundamentally similar to that in the STT or ATT\@. 
+Given a template we would like to locate it within a given frame.
 This is also done by the sliding window approach.
 
 The CCH-detector involves the added step of feature extraction. In a basic
@@ -152,9 +153,9 @@ With the sliding window approach, candidate models $CH_c$ are extracted and
 assessed for their similarity to $CH_m$. The region in which the $CH_c$ most
 similar to the $CH_m$ is regarded as the match. 
 
-The similarity measure used by \cite{Chang1999} is the 
-Intersection between $CH_m$ and a potential $CH_c$. The main motivation behind
-this is that the Intersection is relatively robust against changes in the
+The similarity measure used by~\cite{Chang1999} is the 
+intersection between $CH_m$ and a potential $CH_c$. The main motivation behind
+this is that the intersection is relatively robust against changes in the
 dimension of the sliding window.
 We can thereby avoid a computationally expensive exhaustive search by initially
 searching with a larger search window, and hierarchically refining the search
@@ -162,7 +163,7 @@ window.
 
 The intersection between a model and candidate histogram is defined as
 \begin{equation}\label{eqn:intersection}
-    I_{cm} = \sum_{k=0}^{n_d}\sum_{i=0}^{n_c}\sum_{j=0}^{n_c} = min[(CH_m(k,i,j),CH_c(k,i,j))]
+    I_{cm} = \sum_{k=0}^{n_d}\sum_{i=0}^{n_c}\sum_{j=0}^{n_c} = \min[(CH_m(k,i,j),CH_c(k,i,j))]
 \end{equation}
 where:
 \begin{itemize}
@@ -172,7 +173,7 @@ where:
 \end{itemize}
 
 Chang~\cite{Chang1999} expresses the intersection as a measure of how well the
-candidate accounts for the model CCH. In taking the minimum between the two
+candidate accounts for the model CCH\@. In taking the minimum between the two
 for each quantization level and distance two things are occurring. Firstly if a
 candidate has high counts for certain quantizations, the $I_{cm}$ ignores these
 by keeping the model counts. Conversely if a candidate has low counts for a
@@ -183,17 +184,16 @@ $I_{cm}$ which is a perfect match obtained by the auto-intersection of our
 model $I_{mm}$.
 The criteria for finding an object is therefore presented by a Threshold, $\tau$ which
 is a fraction, $\alpha$ of the maximum possible Intersection $I_{mm}$
-$$\tau=\alpha I_{mm}$$
-
+\[\tau=\alpha I_{mm}\]
 
 \subsection{Co-occurrence histogram detector algorithm}
 The general search algorithm used is shown in
-Figure~\ref{fig:design_algorithm_CH}. Given the model CH $q$ and number of
+Figure~\ref{fig:design_algorithm_CH}. Given the model CCH $CH_m$ and number of
 levels in the search $n$, The localisation algorithm specifies the search window
 size $w$ of dimensions scaled by $sf_n$ for a particular $n$. The Search
 Algorithm then convolves this search window with the image with a specific step
-and at each overlap computes the Intersection of the candidate and the known
-model CCHs $q$.  At the end of a Search, the best match of a particular level
+and at each overlap computes the intersection of the candidate CCH $CH_c$ and
+the known $CH_m$.  At the end of a search, the best match of a particular level
 $n$ is then fed back to the lower level for a more refined search, for which the
 localisation algorithm defines a refined search window. At the lowest search
 level where $n=0$, the object is located.
@@ -202,9 +202,9 @@ level where $n=0$, the object is located.
 
 
 \section{Mean Shift Tracker}\label{theoretical_framework_mean_shift_tracker}
-As summarised in Section~\ref{literature_review_mean_shift}, the mean shift tracker was
-first proposed by Commaniciu et al~\cite{Comaniciu2003}. It is addresses the
-visual tracking problem of target representation and localisation.
+As summarised in Section~\ref{literature_review_mean_shift}, the mean shift
+tracker (MST) was first proposed by Commaniciu et al~\cite{Comaniciu2003}. It is
+addresses the visual tracking problem of target representation and localisation.
 
 The idea of this tracker is that spatially masking an object with an
 isotropic kernel allows for the definition of a spatially-smooth similarity
@@ -218,9 +218,9 @@ The mean shift method is an algorithm that is capable of finding the modes of a
 non-parametric distribution by use of samples of the unknown underlying distribution. 
 
 \subsection{Model representation}
-To represent a particular target or candidate Model, a suitable feature space
+To represent a particular target or candidate model, a suitable feature space
 must be chosen. This choice could be anything from greyscale intensity, RGB
-intensity or Texture of the particular object. Objects are geometrically described 
+intensity or texture of the particular object. Objects are geometrically described 
 as elliptical sub-domains $\mathbf{D}$ of a frame, with dimensions $h_x$ and
 $h_y$, centred at pixel location $\mathbf{c}=(x,y)$ within the frame. (see
 Figure~\ref{fig:TF_epanechnikov_kernel} for an illustration)
@@ -238,8 +238,8 @@ weighted histograms within the relevant feature space. The weighting is achieved
 by use of a Kernel. 
 
 \subsection{Kernel function}
-A Kernel is a weighting function employed in non-parametric density estimation.
-The recommended kernel function for the mean shift tracker is that of the
+A kernel is a weighting function employed in non-parametric density estimation.
+Although alternative kernels may be used, the recommended kernel function for the MST is that of the
 Epanechnikov kernel~\cite{Comaniciu2002}.
 The Epanechnikov Kernel has the following general equation:
 \begin{equation}
@@ -253,7 +253,7 @@ where:
 \begin{itemize}
    \item $d$: the dimensions of the kernel
    \item $c_d$: the area of a unit circle in the dimension $d$
-   \item $x$: the square of the Euclidian distance of the normalized pixel in
+   \item $x$: the square of the Euclidean distance of the normalized pixel in
        $\mathbf{n_x}$
 \end{itemize}
 
@@ -271,13 +271,13 @@ illustrated in Figure~\ref{fig:TF_epanechnikov_kernel}.
 The pixels in the elliptical mask of the target/candidate are normalized to a unit
 circle by scaling the ellipse by $h_y$ and $h_x$ (which are the major and minor
 axes size of the ellipse). Each pixel is then assigned a weight according to the
-value of the 2D Epanechnikov Kernel profile for said pixel's normalized euclidean
+value of the 2D Epanechnikov kernel profile for said pixel's normalized euclidean
 distance from the unit circle centre as illustrated in Figure~\ref{fig:TF_epanechnikov_kernel}.
 
 These weights derived from the kernel profile are subsequently used to scale
 pixel counts when creating m-bin histogram. The monotonically decreasing Kernel
 assigns higher weight to pixels at the centre of $\mathbf{D}$ while giving lower
-weighting to pixels further away from the domain center $\mathbf{c}$. 
+weighting to pixels further away from the domain centre $\mathbf{c}$. 
 This is desirable because not only does it enable the development of a spatially
 smooth similarity function as addressed in Section~\ref{maximising_bhat} but it
 also encodes into our model robustness to the effects of occlusions at the
@@ -327,9 +327,10 @@ metric describing how strongly a target $\hat{p}(\mathbf{c_i})$ resembles
 $\hat{q}(\mathbf{c_0})$ i.e.
 $\rho_i \equiv \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]$
 
-As per~\cite{Comaniciu2003} we make use of the Bhattacharyya coefficient, $BC$ as our
-measure of similarity measure $\rho$ between the target and candidate PDFs. The
-Bhattacharyya coefficient is defined by the following equation:
+As per~\cite{Comaniciu2003} we make use of the Bhattacharyya coefficient as our
+measure of similarity measure $\rho$ between the target and candidate PDFs. It
+is essentially dot product between the two distributions. The
+Bhattacharyya coefficient is defined by the following equation
 \begin{equation}\label{eqn:bhattacharyya}
     BC = \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]=\sum_{u=1}^{m}\sqrt{\hat{p}_u(\mathbf{c_i})\hat{q}_u(\mathbf{c_0})}
 \end{equation}
@@ -337,14 +338,14 @@ Bhattacharyya coefficient is defined by the following equation:
 \subsection{Maximising the Bhattacharyya coefficient}\label{maximising_bhat}
 Since a monotonically decreasing kernel weighting function is applied in the
 derivation of our feature histograms, the similarity function $\rho$ defined by the
-Bhattacharyya Coefficient is smooth over the (x,y) domain.
+Bhattacharyya coefficient is smooth over the (x,y) domain.
 
 As stated, we begin with a target model $\hat{q}(\mathbf{c_0})$ in frame k and a candidate
 model at the same location $\hat{p}(c_0)$ in $\mathbf{f}_{k+1}$. We compute
 $\rho_0=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]$ 
 
-Since $\rho$ is spatially smooth, we can apply optimization. This involves
-taking the first order Taylor Series approximation of $\rho$ around our initial
+Since $\rho$ is spatially smooth, we can apply gradient based optimization. This involves
+taking the first order Taylor series approximation of $\rho$ around our initial
 estimate $\mathbf{c_0}$. 
 \begin{equation}\label{eqn:rho_taylor}
     \rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_i})]=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]+\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}
@@ -356,13 +357,12 @@ which usually holds between adjacent frames in the video sequence.
 The first term on the right hand side is a constant, by maximising the second
 term 
 \[\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\]
-We maximise $\rho$ and in doing so we locate our object in frame k+1.
+We maximise $\rho$ and in doing so we locate our object in $\mathbf{f}_{k+1}$.
 
 By substitution of Equation~\ref{eqn:mean_shift_histogram} for $\hat{p}(\mathbf{c_i})$ in
 the second term of Equation~\ref{eqn:rho_taylor} it can be observed that is that the
-second term is the density estimate of the underlying pdf at center
-$\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to the
-following equation:
+second term is the density estimate of the underlying pdf at centre
+$\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to
 
 \[\rho_0=\rho[\hat{p}(\mathbf{c_0})]=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\]
 
@@ -370,16 +370,18 @@ following equation:
     w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\delta[b(\mathbf{x_i}^*-u)]
 \end{equation}
 
-Using the mean shift procedure outlined in Section~\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus locating
-our object in frame $\mathbf{f}_{k+1}$.
+Using the mean shift procedure outlined in
+Section~\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus
+locating our object in frame $\mathbf{f}_{k+1}$.
 
 \subsection{Mean shift tracker algorithm}\label{theoretical_framework_mean_shift_algorithm}
-The general algorithm for mean shift tracking between two frames is defined by
-flow chart in Figure~\ref{fig:design_mean_shift_tracking_algorithm}. This algorithm follows
-the optimized practical implementation expanded on by Comaniciu~\cite{Comaniciu2003}. 
+The general algorithm for the MST between two adjacent frames $\mathbf{f}_k$ and
+$\mathbf{f}_{k+1}$ is defined by the flow chart in
+Figure~\ref{fig:design_mean_shift_tracking_algorithm}. This algorithm follows
+the optimized practical implementation expanded on by
+Comaniciu~\cite{Comaniciu2003}. 
 
 \Figure[width=0.75\columnwidth]{Flow chart of mean shift tracking algorithm
 between consecutive frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$}{design_mean_shift_tracking_algorithm}
 
-The preceding theory for the basis for the implementation of the mean shift
-Tracker implemented in Chapter~\ref{chapter_implementation}.
+The preceding theory for the basis for the implementation of the MST as implemented in Chapter~\ref{chapter_implementation}.

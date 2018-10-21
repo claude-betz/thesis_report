@@ -1,5 +1,5 @@
 \contentsline {lstlisting}{\numberline {6.1}Computing model CH}{46}{lstlisting.6.1}
-\contentsline {lstlisting}{\numberline {6.2}Computing candidate CH}{46}{lstlisting.6.2}
+\contentsline {lstlisting}{\numberline {6.2}Computing candidate CH}{47}{lstlisting.6.2}
 \contentsline {lstlisting}{\numberline {6.3}Computing intersection of two CCH's}{47}{lstlisting.6.3}
 \contentsline {lstlisting}{\numberline {6.4}CCH detection localization algorithm}{48}{lstlisting.6.4}
 \contentsline {lstlisting}{\numberline {6.5}CCH detection search algorithm}{48}{lstlisting.6.5}

@@ -1,28 +1,36 @@
 \chapter{Implementation}\label{chapter_implementation}
-This Chapter details the implementation of the relevant software modules of the
-overall MT System. The work is firmly grounded within the Theoretical Framework
-established in Chapter~\ref{chapter_theoretical_framework} and the system design
-developed in Chapter~\ref{chapter_design}. The implementations documented here
-are subsequently tested in Chapter~\ref{chapter_results}.
+This Chapter details the implementations of the relevant software modules of the
+overall MT System. They constitute the practical work performed in line with the system design
+developed in Chapter~\ref{chapter_design} and are firmly grounded within the theoretical framework
+established in Chapter~\ref{chapter_theoretical_framework}.
 
-The focus of this Chapter is in the presentation of the algorithmic
-implementation, independent of class structure. The reason behind this is so
-that the parallels to the underlying theory in
+The focus of this Chapter in terms of the back-end is in the presentation of the
+procedural algorithmic implementation, independent of class structure. The
+reason behind this is so that the parallels to the underlying theory in
 Chapter~\ref{chapter_theoretical_framework} can better be appreciated.
-
 The only differences between the class-based implementations according to the
 UML Diagram in Figure~\ref{fig:design_uml} and those presented here, is that the
 class functions are not procedurally implemented. The procedural implementation
-was presented here to enhance clarity and reproducibility. The class based
+was presented here is also meant enhance clarity and reproducibility. The class based
 implementations can be seen in Appendix~\ref{appendix_implementation}.
 
 \section{Template Matching Tracker}\label{implementation_tm}
-This Section details the implementation of the two variants of template tracker
-described in Section~\ref{theoretical_framework_tm}. The template trackers were
-implemented using the highly optimized \textbf{OpenCV} template matching
-functions, as preliminary naive implementations would did meet the speed requirements to
-tracking and research into optimization was deemed beyond the scope of this
-study.
+This Section details the implementation of the two variants of Template matching
+tracker, namely the simple template tracker (STT) and the adaptive template
+tracker (ATT) as described in Section~\ref{theoretical_framework_tm}. The template trackers were
+implemented using the highly optimized \lstinline{cv2.matchTemplate ()} template
+matching function provided by the \textbf{OpenCV} library.  
+
+The reason for reliance on the \textbf{OpenCV} implementation is based on the fact that
+preliminary experimentation and research revealed that the execution time of
+naive implementation convolution was orders of magnitude from
+what would be required to feasibly implement a template
+tracker. 
+The necessary optimisations are achievable by conversion to the frequency domain using a
+Short-Time Fourier Transform (STFT). The requisite and time into an optimised
+correlation implementation for a template matching tracker was deemed tangential
+and beyond the scope of this study. However, a comprehensive treatment of this
+optimisation is provided by~\cite{Usevitch2010}.
 
 \subsection{Simple template tracker}
 
