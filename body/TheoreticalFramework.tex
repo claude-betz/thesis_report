@@ -206,16 +206,15 @@ As summarised in Section~\ref{literature_review_mean_shift}, the mean shift
 tracker (MST) was first proposed by Commaniciu et al~\cite{Comaniciu2003}. It is
 addresses the visual tracking problem of target representation and localisation.
 
+The mean shift method is an algorithm that is capable of finding the modes of a 
+non-parametric distribution by use of samples of the unknown underlying
+distribution~\cite{Comaniciu2002}. This approach forms the basis of the MST.
 The idea of this tracker is that spatially masking an object with an
 isotropic kernel allows for the definition of a spatially-smooth similarity
 function relating a target and potential candidate model in a particular feature
 space. This smooth similarity lends itself to gradient-based optimization,
 thereby enabling efficient target localisation in subsequent frames.
-A description of theory underlying the mean shift tracker follows:
-
-\subsection{Mean shift}\label{theoretical_framework_mean_shift}
-The mean shift method is an algorithm that is capable of finding the modes of a 
-non-parametric distribution by use of samples of the unknown underlying distribution. 
+A description of theory underlying the mean shift tracker follows.
 
 \subsection{Model representation}
 To represent a particular target or candidate model, a suitable feature space
@@ -225,10 +224,10 @@ as elliptical sub-domains $\mathbf{D}$ of a frame, with dimensions $h_x$ and
 $h_y$, centred at pixel location $\mathbf{c}=(x,y)$ within the frame. (see
 Figure~\ref{fig:TF_epanechnikov_kernel} for an illustration)
 
-Target and candidate models are defined as PDFs within the chosen feature
+Target and candidate models are defined as PDFs within a chosen feature
 space defined over $\mathbf{D}$. In the initial frame, $\mathbf{f}_k$, a target
 model of the object to be tracked located at $\mathbf{c_0}$ is defined by it's
-pdf, $\hat{q}(\mathbf{c_0})$. In the subsequent frame, $\mathbf{f}_{k+1}$, a
+PDF, $\hat{q}(\mathbf{c_0})$. In the subsequent frame, $\mathbf{f}_{k+1}$, a
 candidate model is defined with pdf $\hat{p}(\mathbf{c_0})$ starting at the last
 known object position $\mathbf{c_0}$. 
 
@@ -286,7 +285,7 @@ periphery of the object domain.
 \subsection{PDF development}
 Computing the PDF then occurs according to the following equation:
 \begin{equation}\label{eqn:mean_shift_histogram}
-    \text{pdf}(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\delta[b(\mathbf{x_i}^*)-u]    
+    \text{pdf}(u)=C\sum_{i=1}^{n_x}\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c}^*}\parallel}^2)\delta[b(\mathbf{x_i}^*)-u]    
 \end{equation}
 \begin{equation}\label{eqn:histogram_normalisation}
     C=\frac{1}{\sum_{i=1}^{n_x}\kappa({\parallel\mathbf{x_i}^*\parallel}^2)}
@@ -295,9 +294,10 @@ where:
 \begin{itemize}
     \item $\mathbf{x_i}^*$: normalised pixel 
     \item $n_x$: normalised pixel domain.
-    \item $\parallel{\mathbf{x_i}}^*-{\mathbf{x_0}}^*\parallel$: The euclidean
-        norm between $\mathbf{x_i}^*$ and ${\mathbf{x_0}}^*$ squared which
-        reduces to $\parallel{\mathbf{x_i}}^*\parallel$ for $\mathbf{c_0} = 0$. 
+    \item $\parallel{\mathbf{x_i}}^*-{\mathbf{c}}^*\parallel$: The euclidean
+        norm between $\mathbf{x_i}^*$ and ${\mathbf{c}}^*$ squared which
+        reduces to $\parallel{\mathbf{x_i}}^*\parallel$ as the normalised centre
+        $\mathbf{c}^* = 0$. 
     \item $\kappa({\parallel{\mathbf{x_i}}^*\parallel}^2)$: Kernel function that
         defining weights based on $\parallel{\mathbf{x_i}}^*\parallel^2$.
     \item $b({\mathbf{x_i}}^*)$: A function which maps the normalized pixel
@@ -312,8 +312,8 @@ $m$, as we are increasing the dimensionality of our feature space by 1 for each
 additional feature thus incrementing the size by a factor of $m$-bins.
 
 The models for the target and candidate are summarised below:
-\[\text{target model:}\hat{q}(\mathbf{c_0}) = {\{\hat{q}_u(\mathbf{c_0})\}}_{u=1,\ldots,m}\]
-\[\text{candidate model:}\hat{p}(\mathbf{c_i}) = {\{\hat{p}_u(\mathbf{c_i})\}}_{u=1,\ldots,m}\]
+\[\text{target model: }  \hat{q}(\mathbf{c_0}) = {\{\hat{q}_u(\mathbf{c_0})\}}_{u=1,\ldots,m}\]
+\[\text{candidate model: }  \hat{p}(\mathbf{c_i}) = {\{\hat{p}_u(\mathbf{c_i})\}}_{u=1,\ldots,m}\]
 
 All model/candidate histograms are normalized. Therefore, a general m-bin
 histogram, $\hat{p}(\mathbf{c_i})$ defined over spacial sub-domain, $\mathbf{D}$
@@ -348,40 +348,54 @@ Since $\rho$ is spatially smooth, we can apply gradient based optimization. This
 taking the first order Taylor series approximation of $\rho$ around our initial
 estimate $\mathbf{c_0}$. 
 \begin{equation}\label{eqn:rho_taylor}
-    \rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_i})]=\rho[\hat{q}(\mathbf{c_0})\hat{p}(\mathbf{c_0})]+\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}
+    \rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_i})]=\rho[\hat{q}(\mathbf{c_0}),\hat{p}(\mathbf{c_0})]+\frac{1}{2}\sum_{u=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}
 \end{equation}
 
 This is a valid approximation for small changes to $\hat{p}(\mathbf{c_i})$
 which usually holds between adjacent frames in the video sequence. 
-
-The first term on the right hand side is a constant, by maximising the second
-term 
+The first term on the right hand side of Equation~\ref{eqn:rho_taylor} is a
+constant. Therefore we focus on the second term.
+By maximising 
 \[\frac{1}{2}\sum_{i=1}^{m}\hat{p}(\mathbf{c_i})\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\]
-We maximise $\rho$ and in doing so we locate our object in $\mathbf{f}_{k+1}$.
+we maximise $\rho$ identifying the most similar region to our model in
+$\mathbf{f}_{k+1}$, in doing so we locate our object.
 
 By substitution of Equation~\ref{eqn:mean_shift_histogram} for $\hat{p}(\mathbf{c_i})$ in
 the second term of Equation~\ref{eqn:rho_taylor} it can be observed that is that the
-second term is the density estimate of the underlying pdf at centre
-$\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to
+second term is the density estimate of the underlying PDF centred at
+$\mathbf{c_i}$ in $\mathbf{f}_{k+1}$ with pixels weighted according to $w_i$.
 
-\[\rho_0=\rho[\hat{p}(\mathbf{c_0})]=\frac{C}{2}\sum_{i=1}^{m}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\]
+\[\rho_0=\rho[\hat{q}, \hat{p}(\mathbf{c_0})]=\frac{C}{2}\sum_{i=1}^{n_x}w_i\kappa({\parallel{\mathbf{x_i}^*}-{\mathbf{c_0}^*}\parallel}^2)\]
 
 \begin{equation}\label{eqn:mean_shift_weights}
-    w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}}\delta[b(\mathbf{x_i}^*-u)]
+    w_i(\mathbf{c_0})=\sum_{u=1}^{m}\sqrt{\frac{\hat{q}_u}{\hat{p}_u(\mathbf{c_0})}} \delta[b(\mathbf{x_i}^*-u)]
 \end{equation}
 
-Using the mean shift procedure outlined in
-Section~\ref{theoretical_framework_mean_shift}, $\rho$ can be maximised thus
-locating our object in frame $\mathbf{f}_{k+1}$.
+Using these pixel weights it is possible to compute the mean shift vector is defined as
+\begin{equation}\label{eqn:mean_shift_vector}
+    \vec{m} = \frac{\sum_{i=1}^{n_x}w_i(\mathbf{c_0})\mathbf{x_i}}{\sum_{i=1}^{n_x}w_i(\mathbf{c_0})}-\mathbf{c_0}
+\end{equation}
+
+Using the mean shift procedure, we can maximise $\rho$ around the
+last known target location $\mathbf{c_0}$, thereby locating our target object in frame $\mathbf{f}_{k+1}$. 
+The mean shift procedure is a two step process of computing the mean shift
+vector, $\vec{m}$ and translating our kernel centre to the mean shift location~\cite{Comaniciu2002}. 
+\[\mathbf{c_1} = \mathbf{c_0} + \vec{m}(\mathbf{c_0})\]
+
+Computationally the shift is performed recursively until the magnitude of $\vec{v}$ converges
+to a sufficiently small value below a pixel threshold $\epsilon$. The centre
+$\mathbf{c_i}$ at the point of termination will be in the close proximity of the
+mode of the similarity function defined by $\rho[\hat{q},\hat{p}(\mathbf{c_i})]$.
 
 \subsection{Mean shift tracker algorithm}\label{theoretical_framework_mean_shift_algorithm}
 The general algorithm for the MST between two adjacent frames $\mathbf{f}_k$ and
-$\mathbf{f}_{k+1}$ is defined by the flow chart in
+$\mathbf{f}_{k+1}$ is communicated in the flow chart in
 Figure~\ref{fig:design_mean_shift_tracking_algorithm}. This algorithm follows
-the optimized practical implementation expanded on by
-Comaniciu~\cite{Comaniciu2003}. 
+the optimized practical implementation expanded on by~\cite{Comaniciu2003}. 
 
-\Figure[width=0.75\columnwidth]{Flow chart of mean shift tracking algorithm
-between consecutive frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$}{design_mean_shift_tracking_algorithm}
+\Figure[width=0.75\columnwidth]{Flow chart of mean shift tracking algorithm between consecutive frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$}{design_mean_shift_tracking_algorithm}
 
-The preceding theory for the basis for the implementation of the MST as implemented in Chapter~\ref{chapter_implementation}.
+The theory outlined in this Chapter forms the basis of the design developed in
+Chapter~\ref{chapter_design}, and is closely coupled to the implementations
+presented in Chapter~\ref{chapter_implementation}.
+

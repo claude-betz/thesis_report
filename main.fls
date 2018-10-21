@@ -701,6 +701,9 @@ INPUT ./figures/results/mean_shift_tracker/ants/speed2/4.jpg
 INPUT figures/results/gui/first_look.png
 INPUT ./figures/results/gui/first_look.png
 INPUT ./figures/results/gui/first_look.png
+INPUT figures/results/gui/second_look.jpeg
+INPUT ./figures/results/gui/second_look.jpeg
+INPUT ./figures/results/gui/second_look.jpeg
 INPUT figures/results/gui/CHD_1.png
 INPUT ./figures/results/gui/CHD_1.png
 INPUT ./figures/results/gui/CHD_1.png

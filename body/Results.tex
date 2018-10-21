@@ -255,7 +255,7 @@ this could be a pedestrian walking past a telephone mast. On the other hand,
 if the step is too large the tracker response will ``jitter'' due to the
 choosing of suboptimal locations for the location of new object position, as it
 would skip the necessary iterative refinement step to pick the position that best
-matches the model PDF. 
+matches the model PDF\@. 
 The trade-off in the selection of the MST parameter $\epsilon$ is between faster
 execution and accuracy.
 Furthermore, as addressed later, $\epsilon$ can encode a level of robustness to some challenges such
@@ -712,10 +712,10 @@ available technology is constrained by factors such as budget, size etc. In such
 situations, we would still like to be able to track our object of interest. 
 
 A possible solution could be to augment the basic MST implementation with other
-forms ideas from from some of the other tracking methodologies originally
+forms ideas from other tracking methodologies originally
 presented in Figure~\ref{fig:literaturereview_taxonomy_motion_tracking}. This is
-possibility is explored as a possible improvement and future work in
-subsection~\ref{conclusion_mst_future_work}. 
+possibility is explored as a possible improvement and avenue for future work in
+Subsection~\ref{future_mst}. 
 
 
 \section{Graphical User Interface}\label{results_gui}
@@ -724,13 +724,21 @@ terms of functionality relating to the MT system user requirements in
 Section~\ref{introduction_user_requirements}.
 
 An overview of implemented GUI system is displayed in
-Figure~\ref{fig:results/gui/first_look}. The implementation closely follows the layout of the design in
+Figure~\ref{fig:gui_integration}. The implementation closely follows the layout of the design in
 Figure~\ref{fig:design_gui_mockup} the only differences being a reordering of
 the menu bar and additional buttons for more convenient navigation of selected
 sequences.
 
-\Figure[width=1\columnwidth]{Image of the MOT System GUI implementation applying the MS-Tracker to a fish sequence}{results/gui/first_look}
+\begin{figure}
+    \makebox[\linewidth][c]{
+    \begin{tabular}{cc}
+        \subfloat{\includegraphics[width = 3in]{figures/results/gui/first_look}} &
+        \subfloat{\includegraphics[width = 3in]{figures/results/gui/second_look}} 
+    \end{tabular}}
+    \caption{Image of integrated MT System on the Ubuntu and OS X operating systems\label{fig:gui_integration}}
+\end{figure}
 
+        
 \subsection{I/O functionality}
 The GUI allows for user selected sequence selection from any file directory on
 the system it is being run on.
@@ -743,7 +751,7 @@ In addition to implementing the algorithms, the parameters for the individual
 algorithms can be varied by by the user.
 
 \section{Integration}
-
+This section deals with documenting the integrated MT System
 \subsection{Algorithm integration}
 The three algorithms discussed in Section~\ref{chapter_theoretical_framework}
 successfully integrated with the Front-end GUI. Their usage within the GUI is

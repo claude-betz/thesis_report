@@ -232,8 +232,13 @@ Computing a PDF for a particular region of interest according to
 Equation~\ref{eqn:mean_shift_histogram} is performed by the \lstinline{get_pdf (template, m)} 
 method shown in Listing~\ref{lst:pdf}.
 
+One computational optimisation not mentioned in
+Section~\ref{theoretical_framework_mean_shift_algorithm} that not all RGB
+channels need to be used. As suggested by~\cite{Valenti2003}, we can select two
+RGB channels omitting low correlation with 
+
 \begin{lstlisting}[language=Python, caption={Function computing the PDF}, captionpos=b, label={lst:pdf}]
-def get_pdf(template,m=8):
+def get_pdf(template,m=16):
     """compute 2d colour histogram given template,bin number,m and kernel function"""
     # step1: limit pixels to elliptical region inscribed in rectangle
     height, width = template.shape[0], template.shape[1]
@@ -246,9 +251,8 @@ def get_pdf(template,m=8):
     for y in range(0,height):
         for x in range(0,width): 
             if(elliptical_mask[y,x]==True): # only deal with points in the mask
-                u, v = int((template[y,x,0]/256)*m),
-                int((template[y,x,1]/256)*m) # get quantized R, G
-                index_r, index_g = u//m, v//m # used to index 2d-histogram
+                u, v = template[y,x,0], template[y,x,1] # get quantized R, G
+                index_r, index_g = u//(256//m), v//(256//m) # used to index 2d-histogram
                 hist[index_r,index_g] = hist[index_r,index_g] + kernel[y,x] # add weighted point
     
     C = np.sum(hist) # normalisation constant
@@ -313,7 +317,7 @@ be available. See Appendix~\ref{appendix_supportMS} for code listings of their i
 
 \subsection{Computing the mean shift vector}
 Computing of the Mean Shift Vector is implemented in Listing~\ref{lst:msv}
-according to %Equation~\ref{eqn:mean_shift_vector}.
+according to Equation~\ref{eqn:mean_shift_vector}.
 
 \begin{lstlisting}[language=Python, caption={Function computing the mean shift vector}, captionpos=b, label={lst:msv}]
 def mean_shift(template, weights):
