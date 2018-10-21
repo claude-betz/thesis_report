@@ -1,44 +1,50 @@
 \chapter{Introduction}\label{chapter_introduction}
-This Chapter provides a background to the project and motivation for project.
-It outlines the main objectives of study, highlighting the scope and limitations
-of the undertaking before settling on a set of user requirements for the final
-product.
-This chapter also provides a brief overview of all the chapters meant to help a
-reader navigate the content of this thesis.
+This Chapter provides a background and motivation for this thesis' investigation
+into the field of motion tracking. It outlines the main objectives of study,
+highlighting the scope and limitations of the undertaking before settling on a
+set of user requirements for the final product.  This chapter also provides a
+brief overview of all the chapters, this is meant
+to help a reader navigate the content of this thesis.
 
 \section{Background to Study}
 Motion draws the attention of an observer. A moving object in the field of
 motion of an observer of a certain scene could hint towards danger or another
 sort of change to said observer's immediate environment. Advancements in
-technology necessitate the same level of sophistication in terms of
-reliability, speed, resistance to ``noise'' and the ability to generalize that
-humans or other animals exhibit in performing this task.
+technology aim to have machines exhibit the same level of sophistication in terms of
+reliability, speed, resistance to ``noise'' and the ability to generalise that
+humans or other animals exhibit in performing this task. Some notable
+application areas of this include, motion capture for animation, surveillance
+systems, target systems and sports analysis.
 
 Motion tracking is a very application specific endeavour. For example, An
-algorithm that reliably tracks the motion of pedestrian in a city scene may fall
-short at detecting the motion of an animal in the woods. Even after evaluation
-the trade-offs between various approach, this problem still requires
-considerable fine tuning of model parameters assumptions before arrival at a
-reliable solution to a problem. For example, the introduction of occlusion to a
-scene, or changes in illumination of a scene can all drastically affect model
-performance should it not intrinsically account for this.
+algorithm that reliably tracks the motion of a pedestrian in a city scene may fall
+short at detecting the motion of an animal in the woods. A military targeting
+system would have drastically different constraints to say a sports analyst
+who highlights player movement to draw attention to a particular play.
+Accordingly, there are several approaches to the problem. Even after evaluation
+the trade-offs between various approaches, this problem can still require
+considerable fine tuning of model parameters and assumptions before arrival at a
+reliable solution to a particular application domain. 
+For example, the introduction of occlusion to a scene, or changes in
+illumination of a scene can all drastically affect model performance should it
+not intrinsically account for this. 
 
 \section{Objectives}\label{introduction_objectives}
-This Section details the outcomes and motivation behind this research project.
-Section~\ref{introduction_problem} elaborates on the nature of the investigation
-while the Section~\ref{introduction_purpose} qualifies the investigation.
+This Section details the outcomes of this research project.
+Subsection~\ref{introduction_problem} states the research problem to be
+investigated while the Subsection~\ref{introduction_purpose} outlines the
+purpose of the investigation.
 
 \subsection{Problem statement}\label{introduction_problem}
 The general problem investigated in this study is that of motion tracking- The
 localisation of a known object within a frame $\mathbf{f}_k$ in subsequent
 frames of a given video or image sequence.  
-
 The goal is to gain an understanding of solutions that address this problem and
 select a subset of these to be trialled. We will assess the strengths and
 weaknesses of the solutions when applied to a variety of situations.
 
 From the insights during the Literature Review in Chapter~\ref{chapter_literature_review}, the
-research question becomes to what extent are kernel based motion tracking
+research question becomes is defined to deal with the extent to which kernel based motion tracking
 methods effective in solving the motion tracking problem?
 
 \subsection{Purpose of study}\label{introduction_purpose}
@@ -47,35 +53,37 @@ specifically by exploring the task of Motion Tracking. The approach taken is a
 bottom up approach in which emphasis is placed on firm theoretical
 understanding, which is then translated into a product.
 
-The outcome of this endeavour is the development of a Motion Tracker
-(MT) System that enables a user to analyse video sequences in which they would like
-to track a particular object in motion, and isolate it's motion. The application
-loosely draws inspiration from sports analysis segments where presented would often like
-to highlight the motion of a player within a particular game.
+Drawing inspiration from sport analysis segments. The outcome of this endeavour
+is the development of a Motion Tracker (MT) System that enables a user to
+analyse video sequences in which they would like to track a particular object in
+motion, and isolate it's motion. The application loosely draws inspiration from
+sports analysis segments where presented would often like to highlight the
+motion of a player within a particular game.
 
 \section{Scope and Limitations}\label{introduction_scope}
 The scope of this Thesis includes: 
 \begin{itemize}
-    \item A review of literature relevant to the problem, and usage of
-        said literature in the development of the Motion Tracking System.
+    \item A review of literature relevant to the motion tracking problem, and usage of
+        said literature in the development of the MT System.
     \item The application of relevant project management methodologies in the
         achievement of the overall system objective.
     \item Hierarchical design of the motion tracking system at various levels.
-        In line with user requirements and technical specifications.
-    \item The development of the system in line with good software development
-        practices according to the specified design.
-    \item Testing of functionality at a unit and system level
-    \item Benchmarking of motion tracking system performance both at a
-        functional and user level.
-    \item Treatment of results, conclusions and recommendations.
+        In line with well defined user requirements.
+    \item The development of the MT System in line with good software development
+        practices according and in accordance with the specified methodology and design.
+    \item Testing of the system functionality at a unit and system level.
+    \item Benchmarking of MT System performance both qualitatively and
+        quantitatively at the system and subsystem level.
+    \item A comprehensive presentation of the results, conclusions and areas of
+        future work 
 \end{itemize}
-This Thesis is a 12-week undertaking.
+This thesis is a 12-week undertaking.
 
 \section{User Requirements}\label{introduction_user_requirements}
 The base user requirements of the proposed MT System are elaborated upon by the
 following points:
 \begin{itemize}
-    \item The GUI application should have a menu that allows for a system
+    \item A GUI application should have a menu that allows for a system
         user to select a video or image sequence of interest.
     \item Upon the selection of an image sequence, the system will allow for a
         user to specify an object or point of interest within the first sequence
@@ -88,29 +96,30 @@ following points:
 \end{itemize}
 
 \section{Outline of thesis}
-This Section aims to present and summarise the main Chapters of this Thesis
-(excluding this Introduction Chapter). The summaries are presented below, and
-should act as a road map to the structure of the project.
+This Section aims to present and summarise the main Chapters of this thesis
+(excluding this introduction Chapter). The chapter summaries are presented below, and
+are intended to act as a road map to the structure of the project.
 
 \subsection{Literature Review}
 Chapter~\ref{chapter_literature_review} provides a review of the
-relevant literature. We first identify the general sub-tasks of the overall
-Motion Tracking problem. Solutions to these sub-tasks are then surveyed and
-assessed in line with the objectives, purpose and user requirements. 
+relevant literature. It begins by identifying the general sub-tasks of the
+overall motion tracking problem. Solutions to these sub-tasks are then surveyed and
+feed into the refinement of the objectives, purpose and user requirements of
+this study.
 
 \subsection{Methodology}
-Chapter~\ref{chapter_methodology} aims to list and elaborate on the various
-phases involved in the development and successful completion of this project. It
-also settles on a set of governing process models, to effectively govern the progression
-through the project phases. It also outlines the data collection and analysis 
-framework employed in the presentation of the Results in Chapter~\ref{chapter_results}
+Chapter~\ref{chapter_methodology} aims to state and elaborate on the various
+project phases involved in the development and successful completion of this
+project. It settles on a set of governing process model that are necessary to
+effectively govern the progression through the project phases. It also outlines
+the data collection and analysis framework employed in the presentation of the
+results in Chapter~\ref{chapter_results}.
 
 \subsection{Theoretical Framework}
-Chapter~\ref{chapter_theoretical_framework} is an
-extensive survey into the relevant theory necessary to implement the
-MT system. It forms the foundation of the subsequent system design and
-implementation, in line with the objective of theoretically driven design and
-implementation. 
+Chapter~\ref{chapter_theoretical_framework} is an extensive survey into the
+relevant theory necessary to implement the MT system. It forms the foundation of
+the subsequent system design and implementation. This is in line with the objective of
+theoretically driven design and implementation. 
 
 \subsection{Design}
 Chapter~\ref{chapter_design} is an extensive development of the
@@ -120,18 +129,20 @@ phases 3- 5 governed by the spiral model.
 
 \subsection{Implementation}
 Chapter~\ref{chapter_implementation} details the
-implementation of the system in line with the design. The presentation follows
-closely the progression of the Theoretical Framework, again in line with the
-idea of theoretically driven design and implementation.
+implementation of the system in line with the design according to the spiral
+model. The presentation follows closely the progression of the theoretical
+framework, again, in line with the idea of a design and implementation grounded
+in a solid theoretical understanding.
 
 \subsection{Results}
-Chapter~\ref{chapter_results} present a quantitative and
+Chapter~\ref{chapter_results} presents a quantitative and
 qualitative performance assessment of the implemented front- and back-end
-subsystems, as well as the overall integrated system. 
+subsystems. It also presents the overall integrated MT System. 
 
 \subsection{Conclusion}
-Chapter~\ref{chapter_conclusion} tie together the project by
+Chapter~\ref{chapter_conclusion} ties together the project by
 relating the outcomes of the various Chapters back to the initial objectives. 
-It also explores possible improvements and avenues for future work within the
-different modules of the front- and back-end subsystems.
+It reflects on the various subsystem implementations and explores possible
+improvements and avenues for future work within the different modules of the
+front- and back-end subsystems.
 

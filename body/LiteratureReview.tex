@@ -1,50 +1,48 @@
 \chapter{Literature Review}\label{chapter_literature_review}
-This Literature Review is structured as follows: It begins by establishing key
-definitions necessary for navigating the literature.
-
-The review outlines a general framework to solving the motion tracking
-problem in terms of two approaches of Detection and Tracking. It then details
-the subtasks relevant to these approaches.
+This literature review begins by establishing key definitions necessary for
+navigating the literature.
+It proceeds to outline a general framework to solving the motion tracking
+problem in terms of two approaches of detection and tracking. After outlining
+the challenges within the field of motion tracking, it details
+the subtasks relevant to these approaches. These subtasks are conveniently expressed as
+taxonomies that are elaborated on. The review settles on a subset of approaches
+to the motion tracking problem, expressed as kernel based tracking. The
+exploration of kernel based tracking methods forms the foundation of this study.
 
 \section{Key Terms}
-The field of Computer Vision is riddled with similar sounding terms whose intent
-can easily get muddled during the discussion of concepts. The purpose of this section
+The field of computer vision is riddled with similar sounding terms whose intent
+can get muddled during the discussion of concepts. The purpose of this section
 is to establish the intent of these keywords as they are used later in this
-review.
-
-Detailed below are definitions of important terms within the field of computer
-vision, some of which are used rather loosely within the literature or are
-despite seeming interchangeable may refer to different concepts. 
+review. Detailed below are definitions of important deemed important to the
+subsequent presentation of the literature. Some of these words may not be
+mentioned, but can provide
+context to other terms used.
 
 \textbf{Image Segmentation}: This is the process of partitioning an image into multiple
 sets of pixels with the goal of making the image easier to analyse, it typically
 involves finding boundary lines of objects. 
 
-\textbf{Motion Segmentation}: Motion Segmentation refers to the labelling of pixels that
+\textbf{Motion Segmentation}: Motion segmentation refers to the labelling of pixels that
 are associated with each independently moving 3D object in sequence of images
 that can feature multiple motions.~\cite{Tekalp2014}
 
-\textbf{Object Recognition}: This a method by which Given an image, the objects within
-said image are detected and classified as one of a set of predefined Object
-Category i.e.\ ``What Object (s) are in this frame?''
+\textbf{Object Recognition}: This a method by which, given an image, the objects within
+said image are detected and classified as one of a set of predefined object
+category i.e.\ ``What object (s) are in this frame?''
 
-\textbf{Object Detection}: Object Detection can be seen as targeted recognition, it deals
+\textbf{Object Detection}: Object detection can be seen as targeted recognition, it deals
 with finding instances of objects within a given image or video frame, this
 technique usually makes use of extracted features and learning algorithms to
-recognize instances of an object category.  I.e. “Where is this particular
-object in this frame?”
+recognize instances of an object category i.e. ``Where is this particular
+object in this frame?''
 
-\textbf{Object Classification}: This is a broader treatments than Detection, where a
+\textbf{Object Classification}: This is a broader treatment than detection, where a
 system is not only able to identify objects within images but can differentiate
 between and label different classes of objects within the image. 
 
 \textbf{Optical Flow}: refers to the pattern of apparent motion of objects, surfaces and
 edges in a visual scene caused by the relative motion between an observer and a
 scene. Optic flow fields can be used to structure or segment a scene~\cite{Forsyth2012}.
-
-\textbf{Optical Flow Segmentation}: Refers to the grouping together of optical flow
-vectors that are associated with the same 3-D motion or structure. This problem
-is identical to motion segmentation provided a dense optical flow field~\cite{Tekalp2014}.
 
 \textbf{Object Tracking}: Object tracking also known as Video Tracking refers to the use
 of sensor measurements to determine the location, path and characteristics of
@@ -60,7 +58,7 @@ case of this paper Video/Object Tracking.
 
 \section{Approaches to Motion Tracking}\label{literature_review_general_approach}
 The problem of isolating moving objects of interest from a scene can
-be categorised under the branch of Computer Vision known as motion
+be categorised under the branch of computer vision known as motion
 tracking.
 
 The approaches to tracking objects of interest can be classified broadly in two ways:
@@ -71,15 +69,15 @@ The approaches to tracking objects of interest can be classified broadly in two 
         return it's location within a particular frame of interest. In this case, the
         tracking problem can be reduced to applying the detector to each
         subsequent $\mathbf{f}_k$ of the image sequence
-        $\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}$ and connecting each of the
-        $k$ detector responses to form a track~\cite{Forsyth2012}.
+        $\{\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}\}$ and connecting each of the
+        $n$ detector responses to form a track~\cite{Forsyth2012}.
 
         Certain situations lend themselves well to this approach. One could
         imagine that an overhead camera in a game of billiards could easily track the
         position of the 8-ball by searching each video frame for the colour black, as
         this colour differs significantly from the green felt, and the colour of the
         other balls. However, many practical applications cannot assume reliable
-        detection or single objects of interest.  Referring back to the above example,
+        detection or single objects of interest. Referring back to the above example,
         difficulty may arise if a player is wearing a long sleeved black shirt as the
         detector would interpret this as the ball, such a scenario may require more
         sophistication in the design of the detector.
