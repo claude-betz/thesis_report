@@ -1,42 +1,49 @@
 \chapter{Methodology}\label{chapter_methodology}
-This Chapter aims to define and develop the sequence of phases necessary for the completion
+This Chapter aims to outline and sequence the project phases necessary for the completion
 of the objectives of this project as detailed in
-Section~\ref{introduction_objectives}. It does so by outlining the process
-models governing the progression through the various development phases, and
-forming the approach successful completion of the project.
+Section~\ref{introduction_objectives}. It does so by initially defining the
+phases by the tasks they involve. Based on this set of well defined phases, this
+Chapter decides on a set of process models/methodologies that govern the
+progression of the project through it's various phases. The testing, data
+collection and analysis methodologies guiding the subsequent generation of
+results and conclusions are also elaborated on within this Chapter.
 
 \section{Project Phases and Process Models }
-An overview of the project phases as well as and process models is presented in
-Figure~\ref{fig:methodology_phases_and_process_models}.
+An overview of the project phases is presented in Figure~\ref{fig:methodology_phases_and_process_models}.
+In addition to this, the Figure also highlights the appropriate process
+models that govern the different project phases. Both the project phases and
+process models are subsequently elaborated on.
 \Figure[width=1\columnwidth, angle=90, scale=1.3]{Block diagram of project phases and process methodologies}{methodology_phases_and_process_models}
 
 \subsection{Project phases}
-The various project phases involved in the development of the MT system are
-outlined below. They correspond by number and name to the phases presented in
+The various project phases involved in the development of the MT System are
+developed below. They correspond by number and name to the project phases presented in
 Figure~\ref{fig:methodology_phases_and_process_models}.
 
 \subsubsection{Phase 1: Research and literature review}
-This phase serves as an surveying of the broad field of Motion Tracking to
-determine what the various established approaches to the Motion Tracking are.
+This phase serves as an initial surveying of the broad field of motion tracking to
+determine what the various established approaches to the motion tracking are.
 The outcome of this phase is a refined scope in terms of what approaches will be
-trialled to meet the User Requirements outlined in
-Section~\ref{introduction_user_requirements}. We break this phase into
-Chapter~\ref{chapter_literature_review} a Literature Review which broadly
-surveys the field. Chapter~\ref{chapter_theoretical_framework} then breaks down
-the approaches of interest in sufficient detail to allow for a ground up design
-and implementation.
+trialled to meet the user requirements outlined in
+Section~\ref{introduction_user_requirements}. This phase begins in
+Chapter~\ref{chapter_literature_review}, a literature review which broadly
+surveys the field, the outcome of which is a refined scope that clearly states
+the approaches to be trialled. Chapter~\ref{chapter_theoretical_framework} then
+researches and breaks down the selected approaches in sufficient detail to allow for
+theoretically driven design and implementation of a solution to the motion
+tracking problem.
 
 \subsubsection{Phase 2: Planning and preliminary design}
 This phase involves a translation of the relevant literature and theoretical
 foundation from phase 1 into a feasible design for the MT System. The scope of
-this project requires a delineation between the Front- and Back-end
+this project requires a logical delineation between the front- and back-end
 functionalities. This Phase is documented in the design laid out in
 Chapter~\ref{chapter_design}.
 
 It is important to note that while phases 1 and 2 are largely linear. The Nature
 of phases 3 to 5 is iterative, and make up the bulk of this project. Hence we
-make the use of the spiral process methodology, to ensure that at each iteration
-we have a working MT System prototype.  
+make the use of the spiral process model, to ensure that the outcome of each iteration
+is a working MT System prototype.  
 
 \subsubsection{Phase 3: Development and prototyping}
 This phase involves the implementation of the planned system functionality in a
@@ -46,26 +53,30 @@ Chapter~\ref{chapter_theoretical_framework} and outcomes of this phase which are
 presented in Chapter~\ref{chapter_implementation}.
 
 \subsubsection{Phase 4: Experimentation and testing}
-This phase follows involves a verification of the implementations on a
-functional level, as well as experimentation that can be used to assess the
-performance of the prototype in meeting the overall user requirements. The
-outcomes of this phase feed into phase 4. 
+This phase is focused on the verification of the implementations on a
+functional level. Experiments are performed in order to
+assess the performance of various MT System sub-modules as well as to gauge the
+extent to which the MT System meets it's overall user requirements. The
+outcomes of this phase are tightly linked phase 5 within iterations of the
+spiral model. 
 
 \subsubsection{Phase 5: Data collection and analysis}
-This phase is still within the iterations of the Spiral Model, it involves
-analysis of the outcomes of phase 4. The insights of this feed into the 
-subsequent iterations of the spiral model which iteratively refine the MT
-system. 
-During later iterations, the data collected and analysed in the results
-presented in 
-Chapter~\ref{chapter_results}, the main criteria for this being a satisfactory achievement
-of the defined user requirements.
+This phase is also under occurs under the jurisdiction of the spiral model. Per
+it's name, it involves the data collection and analysis of the outcomes of the
+experiments performed in phase 4. The insights gained from this phase are inputs
+to the subsequent iterations through phases 3 to 5 of the spiral model. The result
+being an iterative convergence refinement the MT System. During later
+iterations, the data collected and analysed is forms part of the results
+presented in Chapter~\ref{chapter_results}.
 
 \subsubsection{Phase 6: System integration and integration testing}
 This phase is concerned with the integration of front- and back-end subsystems that
-are sufficiently developed. To this effect there are several considerations such
+are sufficiently developed. To this effect there are several design
+considerations in the early stages of the project life cycle such
 as language choice and compiler compatibility of the front- and back-end
-subsystem implementations. 
+subsystem implementations. The outcomes of this phase is a fully integrated MT
+System, the performance of which gauged according to how well it meets the
+defined user requirements.  
 
 \subsubsection{Phase 7: Conclusions and future plans}
 This phase formalises the implications of the data collected in the various
@@ -75,15 +86,14 @@ It addressed possible improvements that are beyond the initial project scope
 and not achievable within the project time-frame.
 
 \section{Hierarchy of Process Models}
-Outlined below are the various process models employed in ensuring the
+Due to the scale of the undertaking, different process models were employed to
+address different aspects of the project.
+Outlined below are the two process models employed in ensuring the
 successful completion of the MT System within the allocated time. The phases
 each process model corresponds to is clearly illustrated in
 Figure~\ref{fig:methodology_phases_and_process_models}. 
 
 \subsection{V-model}
-Due to the scale of the undertaking, different process models were employed to
-address different aspects of the project.
-
 The process model chosen to guide the overall progression through the phases of
 this study is the V-model. This choice is tied to a number of reasons: 
 \begin{itemize}
@@ -96,7 +106,16 @@ The relevant V-diagram is detailed in Figure~\ref{fig:methodology_v_diagram}. It
 details the various levels of specification down to the implementation and
 highlights the stages of testing and integration of the MT system.
 
-\Figure[width=1\columnwidth, angle=90, scale=1.5]{V-Diagram process model}{methodology_v_diagram}
+The V-diagram enforces a linear progression through the project phases, but it
+also flexibility to allow for changes at later phases in the project life cycle.
+As we progress down the left side of the V, the system is defined with
+increasing granularity from the level of overall system design down to the
+functional design of modules within the different subsystems. This progression is mirrored on the right
+side of the V in in which testing increases in granularity over the same range.
+At each level there is room to for changes in design, thus this model enforces
+quality control into the development life cycle.
+
+\Figure[width=1\columnwidth, angle=90, scale=1.5]{V-diagram process model}{methodology_v_diagram}
 
 \subsection{Spiral model}
 The design task which spans phases; 4,5 and 6 as shown in
@@ -114,7 +133,7 @@ project. Furthermore, it guarantees that the final report can be progressively
 constructed alongside the development based on the outcomes of each iteration.
 
 \section{Data Collection Testing and Analysis}\label{methodology_testing}
-Chapter~\ref{chapter_design} details the design of the MT system in terms of
+Chapter~\ref{chapter_design} details the design of the MT System in terms of
 front- and back- end subsystems, this design is implemented in
 Chapter~\ref{chapter_implementation}. This Section aims to outline the data
 collection and analysis methods that will be used when assessing the
@@ -122,8 +141,8 @@ performance of the subsystems.
 
 \subsection{Back-end data}
 The implemented back-end, comprising of a set of trackers will be run on a
-standardised data set provided by the Visual Object Tracking 2017 Challenge
-(VOT2017)~\cite{VOT2017}. This data set comprises of an extensive set of image
+standardised data set provided by the \textit{Visual Object Tracking 2017
+Challenge} (VOT2017)~\cite{VOT2017}. This data set comprises of an extensive set of image
 sequences exhibiting a number of the challenges to motion tracking outlined in
 Section~\ref{literature_review_challenges}. 
 

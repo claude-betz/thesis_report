@@ -40,7 +40,7 @@ object in this frame?''
 system is not only able to identify objects within images but can differentiate
 between and label different classes of objects within the image. 
 
-\textbf{Optical Flow}: refers to the pattern of apparent motion of objects, surfaces and
+\textbf{Optical Flow}: This refers to the pattern of apparent motion of objects, surfaces and
 edges in a visual scene caused by the relative motion between an observer and a
 scene. Optic flow fields can be used to structure or segment a scene~\cite{Forsyth2012}.
 
@@ -94,21 +94,25 @@ The approaches to tracking objects of interest can be classified broadly in two 
 \end{itemize}
 
 \section{Challenges to Motion Tracking}\label{literature_review_challenges}
-Addressed here are several challenges faced when developing computer
-vision algorithms to solve the tasks of object detection and motion tracking. 
-These ideas will be necessary in assessing which approaches to focus on within
-this study, in line with the objectives outlined in Section~\ref{introduction_objectives}.
+Addressed here are several challenges faced by the various approaches to the to
+solve the tasks of object detection and motion tracking. These challenges can
+result in degradation or worse failure of a particular motion tracking
+implementation. Knowledge of them will be necessary choosing which
+approaches to focus on within this study, in line with the objectives outlined
+in Section~\ref{introduction_objectives}. 
 
 The challenges are conveniently expressed in
 Table~\ref{tbl:computer_vision_challenges}. Illustrations of these challenges
-are presented in Chapter~\ref{chapter_results} of this report.
+are presented in Chapter~\ref{chapter_results} where they are used to assess the
+performance of the implemented motion tracking approaches. These outlined challenges
+are often termed \textit{appearance changes} within the
+literature~\cite{Li2013}. 
 
 \newpage
 \begin{longtable}{p{5cm}  p{8cm}}
     \hline
     \textbf{Challenge} & \textbf{Description} \\ 
-    \hline\hline
-    
+    \hline\hline    
     1. Occlusion
     & 
     Objects of interest may only be partially visible in a
@@ -165,16 +169,17 @@ are presented in Chapter~\ref{chapter_results} of this report.
     observer of the scene.
     \\ \bottomrule
 
-    \caption{Table illustrating Computer Vision Challenges}
+    \caption{Table illustrating computer vision challenges}
 \end{longtable}\label{tbl:computer_vision_challenges}
 \newpage
 
 \section{A General Motion Tracking Framework}
-Porikli and Yilmaz~\cite{Porikli2012} defines a sufficiently general but
-comprehensive framework that detailing the fundamentals of video
-analysis based on detection and tracking. 
+Among the various surveys of the approaches to motion tracking, Porikli and
+Yilmaz~\cite{Porikli2012} stand out in defining a sufficiently general yet comprehensive
+framework that details the fundamentals of video analysis based on detection
+and tracking. 
 
-The framework consists of three stages
+Their proposed framework consists of three stages
 \begin{itemize}
     \item \textbf{Detection}: Identification and localisation of objects to
         track in an initial frame.
@@ -183,26 +188,26 @@ The framework consists of three stages
         model.
 \end{itemize}
 
-The stages and the various approaches to each stage are subsequently addressed.
+These three stages and the various approaches to each stage are subsequently addressed.
 
 \section{Object Detection}\label{literature_review_object_detection}
-Object Detection is the initial step to any motion tracking algorithm. It can
-either be change-based or classification-based, it is important to distinguish
-between these two.
+Object detection is the initial step to any motion tracking algorithm. It can
+either be \textit{change based} or \textit{classification based}. There is an
+important to distinction between these two.
 
-In classification-based object detection, no temporal information is directly
-used. Assuming an initial algorithm generate regions of interest within a frame, this
-could very well be regions identified by a change detector, edge detector or a
-simple sliding window. A representative set of features is extracted for each
-region of interest. For each region of interest, comparison to a known model
-feature using a similarity measure can determine the likelihood of an object of
-interest being present. 
+In classification based object detection, no temporal information is directly
+used. The assumption is that an initial algorithm generates regions of interest
+within a frame, this could very well be regions identified by a change detector,
+edge detector or a simple sliding window. A representative set of features is
+extracted for each region of interest and a comparison to a known model feature
+using a similarity measure can determine the likelihood of an object of interest
+being present. 
 This could be by comparison to a set of template models, or more generally the
 output of a trained classifier.
 
-Change-based object detection leverages temporal differences between adjacent frames
-$\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ within an image sequence to detect
-changes. 
+Change based object detection on the other hand leverages temporal differences
+between adjacent frames $\mathbf{f}_k$ and $\mathbf{f}_{k+1}$ within an image
+sequence to detect changes. This is often termed \textit{motion detection}. 
 
 \subsection{Why motion tracking?}
 Given that object detection can be used to track an object by way of repeated
@@ -210,24 +215,27 @@ detection, why the emphasis on the concept motion tracking?
 
 Object and there are inherent limitations to tracking based purely on
 detection based motion tracking as detection tends to be computationally
-expensive. Classification-based detection is also limited to objects who's
+expensive. Classification based detection is also limited to objects who's
 models are known a priori~\cite{Forsyth2012}.
-Tracking also allows for a variety approaches that address a lot of the
+
+Change based detection approaches usually exist as part and parcel of motion
+tracking approaches. Tracking offer variety approaches that address a lot of the
 challenges to the tracking problem outlined in
 Section~\ref{literature_review_challenges}.
 
+\subsection{Object detection approaches}
+There are various approaches to object detection.
 Figure~\ref{fig:literaturereview_taxonomy_motion_detection} outlines some
 approaches to object detection that a motion tracker implementation might take.
 
-\Figure[width=0.7\columnwidth]{Taxonomy of Motion Detection Approaches}{literaturereview_taxonomy_motion_detection}
+\Figure[width=0.7\columnwidth]{Taxonomy of object detection approaches}{literaturereview_taxonomy_motion_detection}
 
-*Explain Diagram*
+
 
 \section{Object Modelling}\label{literature_review_object_modelling}
 Object modelling refers to the process of defining an internal model of
 an identified object of interest subsequent tracking. Object modelling can be
-broken down into several layers, these being:
-
+broken down into several layers.
 \begin{itemize}
     \item \textbf{Model representation}: The spacial region occupied by object within a
         frame.
@@ -239,9 +247,9 @@ broken down into several layers, these being:
 \end{itemize}
 
 \subsection{Model representation}
-The representation of an object model refers to the parametric or non-parametric
+The model representation of an object refers to the parametric or non-parametric
 spacial definition of the object within a particular frame. Notable examples of
-representations include
+representations include. Figure
 
 \subsubsection{Point and region}
 This is an example of a parameterised representation. In a point and region
@@ -349,7 +357,7 @@ The mean-shift tracking algorithm provides an efficient tracking approach for
 target objects modelled by with density estimate descriptors such a colour or
 texture histograms. 
 Given the location of a detected object in $\mathbf{f}_k$, mean-shift tracking
-locates an object in $\{\mathbf{f}_{k+1},\ldots,\mathbf{f}_{k+n}\}$ by way of a
+locates an object in $\mathbf{f}_{k+1}$ by way of a
 non parametric gradient ascent procedure of a smooth similarity function around
 the last known location of an object~\cite{Comaniciu2003}. This procedure is
 extensively presented in Section~\ref{theoretical_framework_mean_shift_tracker}.
