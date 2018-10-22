@@ -1,6 +1,6 @@
 \chapter{Implementation}\label{chapter_implementation}
 This Chapter details the implementations of the relevant software modules of the
-overall MT System. They constitute the practical work performed in line with the system design
+overall Motion Tracking (MT) System. They constitute the practical work performed in line with the system design
 developed in Chapter~\ref{chapter_design} and are firmly grounded within the theoretical framework
 established in Chapter~\ref{chapter_theoretical_framework}.
 
@@ -13,6 +13,19 @@ UML Diagram in Figure~\ref{fig:design_uml} and those presented here, is that the
 class functions are not procedurally implemented. The procedural implementation
 was presented here is also meant enhance clarity and reproducibility. The class based
 implementations can be seen in Appendix~\ref{appendix_implementation}.
+
+This Chapter also presents the various implementation details of the front-end
+GUI implementation. Attention is drawn to the specific functionality to
+facilitate various methods of user interaction with the MT System. GUI
+components with similar functionality or implementation patterns are presented
+once. Appendix~\ref{appendix_gui} can be queried for the complete
+implementation. 
+
+This Chapter concludes with a presentation of the implementation details of the
+integration of the back-end tracker functionality with the front-end GUI in the
+overall MT System. The integrated project can be found at the project GitHub
+repository~\cite{repository}~\footnote{https://github.com/Claude47/thesis product}
+
 
 \section{Template Matching Tracker}\label{implementation_tm}
 This Section details the implementation of the two variants of Template matching
@@ -87,11 +100,11 @@ A notable implementation detail is that the ssd measure is computed on greyscale
 images.
 
 \section{Colour Co-occurrence Histogram Detector}\label{implementation_ch}
-The implementation of the CH-Detector follows directly from the theory developed
-in Section~\ref{theoretical_framework_ch}.
+The implementation of the CH-Detector follows directly from the theoretical
+development presented in Section~\ref{theoretical_framework_ch}.
 
 \subsection{Computing model and candidate CCHs}
-The model and candidate CCH's are computed by the \lstinline{get_model_CH (template,nc,nd)} 
+The model and candidate CCHs are computed by the \lstinline{get_model_CH (template,nc,nd)} 
 and \lstinline{get_candidate_CH (kmeans,template,nc,nd)}
 functions respectively.
 
@@ -136,7 +149,8 @@ def get_candidate_CH(kmeans, template, nc, nd):
 \subsection{Computing the similarity measure}
 The CCH intersection as expressed in
 Equation~\ref{eqn:intersection} is computed by the code in
-Listing~\ref{lst:intersection}
+Listing~\ref{lst:intersection}. It is subsequently used localise the model
+objects within a particular $\mathbf{f}_k$.
 
 \begin{lstlisting}[language=Python, caption={Computing intersection of two CCH's}, captionpos=b, label={lst:intersection}]
 def intersection(CH_1, CH_2, nc, nd):
@@ -151,21 +165,21 @@ def intersection(CH_1, CH_2, nc, nd):
 
 \subsection{Co-occurrence histogram detection algorithm}
 The detection algorithm as described in Figure~\ref{fig:design_algorithm_CH}
-is computed by a coarse and fine grained search of the frame of interest. 
-The implementation shown in Listings~\ref{lst:localisation} performs a two level
+is computed by a coarse and fine grained search of the frame of interest $\mathbf{f}_k$. 
+The implementation shown in Listing~\ref{lst:localisation} performs a two level
 search. In the coarse search, the search window has has twice the dimensions of the
-template we wish to locate and a step equal to the template dimensions. The
-coarse search returns a sub-region of the frame which becomes the frame in the
-fine grained search. 
+template, $\mathbf{T}$ we wish to locate and a step equal to the $\mathbf{T}$'s dimensions. The
+coarse search returns a sub-region of $\mathbf{f}_k$ which becomes the
+frame ${\mathbf{f}_k}^*$ in the fine grained search. 
 
-The fine grained search then operates within the best location of the coarse
-search with dimensions of the template and a step size of a quarter of the
-template dimensions for accurate localisation of the template within the
-sub-region identified within the coarse search.
+The fine grained search then operates within ${\mathbf{f}_k}^*$
+search with dimensions of $\mathbf{T}$ and a step size of a quarter of the
+template dimensions for accurate localisation of $\mathbf{T}$ within
+${\mathbf{f}_k}^*$ (which was the localization region of the coarse search).
 
 \subsubsection{Localisation algorithm}
-The localisation implementation is show in Listing~\ref{lst:localisation}.
-
+The implementation of the localisation algorithm is show in Listing~\ref{lst:localisation}. This
+function orchestrasted the different search levels in the 
 \begin{lstlisting}[language=Python, caption={CCH detection localization algorithm}, captionpos=b, label={lst:localisation}]
 def localize(template, frame, nc, nd, alpha=0.8):
     # obtain dimensions of frame, model and search window
@@ -222,10 +236,10 @@ their overall integration into a working MST\@.
 \subsection{Algorithm parameters}
 The MST has three parameters that can affect it's performance.
 The maximum allowable mean shift step size (in pixels), $\epsilon$. The number
-of bins used in computing our target and candidate PDFs $\hat{q}$ and
-$\hat{p}$, and finally the size of the kernel initialised around the target
-object.
-An implementation should allow for variations of these parameters.
+of bins $m$ used in computing our target and candidate PDFs ($\hat{q}$  and
+$\hat{p}$), and finally the user defined size of the kernel initialised around the target
+object in $\mathbf{f}_k$ of the tracking sequence.
+An MST implementation should allow for variations of these parameters.
 
 \subsection{Computing target and candidate PDFs}
 Computing a PDF for a particular region of interest according to 
@@ -235,7 +249,7 @@ method shown in Listing~\ref{lst:pdf}.
 One computational optimisation not mentioned in
 Section~\ref{theoretical_framework_mean_shift_algorithm} that not all RGB
 channels need to be used. As suggested by~\cite{Valenti2003}, we can select two
-RGB channels omitting low correlation with 
+RGB channels with a low correlation, cutting out a third of requisite the computation. 
 
 \begin{lstlisting}[language=Python, caption={Function computing the PDF}, captionpos=b, label={lst:pdf}]
 def get_pdf(template,m=16):
@@ -290,7 +304,7 @@ Computing the pixel weights within the region of interest is performed by the
 method \lstinline{get_weights (roi, q, p, m)} in Listing~\ref{lst:weights} according to Equation~\ref{eqn:mean_shift_weights}.
 
 \begin{lstlisting}[language=Python, caption={Function computing kernel Weights}, captionpos=b, label={lst:weights}]
-def pixel_weights(template, q, p, m=8):
+def get_weights(template, q, p, m=16):
     """compute the weights necessary for the mean shift algorithm given q and p"""
     # step1: limit pixels to elliptical region inscribed in rectangle
     height, width = template.shape[0],template.shape[1]
@@ -316,7 +330,7 @@ be available. See Appendix~\ref{appendix_supportMS} for code listings of their i
 \end{itemize}
 
 \subsection{Computing the mean shift vector}
-Computing of the Mean Shift Vector is implemented in Listing~\ref{lst:msv}
+Computing of the mean shift vector, $\vec{v}$ is implemented in Listing~\ref{lst:msv}
 according to Equation~\ref{eqn:mean_shift_vector}.
 
 \begin{lstlisting}[language=Python, caption={Function computing the mean shift vector}, captionpos=b, label={lst:msv}]
@@ -341,7 +355,7 @@ def mean_shift(template, weights):
         return 0,0 # return no shift
 \end{lstlisting}
 
-The implementation of Listing~\ref{lst:vector} requires the following methods to
+The implementation of Listing~\ref{lst:msv} requires the following methods to
 be available. See Appendix~\ref{appendix_supportMS} for code listings of their implementation. 
 \begin{itemize}
     \item \lstinline{get_elliptical_mask (roi)}
@@ -353,10 +367,10 @@ Figure~\ref{fig:design_mean_shift_tracking_algorithm}, the mean shift loop is
 applied to a frame $\mathbf{f}_{k+1}$ given the model pdf of the object of
 interest $\hat{q}$ and its location $\mathbf{c_0}$ in the previous frame
 $\mathbf{f}_{k}$, to compute it's current position $\mathbf{c_1}$ in
-$\mathbf{f}_{k+1}$
+$\mathbf{f}_{k+1}$ according to Equation~\ref{eqn:mean_shift_procedure} 
 
 \begin{lstlisting}[language=Python, caption={Mean shift loop}, captionpos=b, label={lst:loop}]
-def mean_shift_loop(frame, q, y0, x0, h, w, eps=5, m=8):
+def mean_shift_loop(frame, q, y0, x0, h, w, eps=5, m=16):
     """perform mean shift to get new location"""
     t1 = frame[y0:y0+h,x0:x0+w] # candidate template
     p0 = histogram(t1, m) # candidate histogram

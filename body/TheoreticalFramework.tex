@@ -171,7 +171,7 @@ The intersection between a model and candidate histogram is defined as
 \end{equation}
 where:
 \begin{itemize}
-    \item $k$ iterates the $n_d$ distances of the CH lattice.
+    \item $k$ iterates the $n_d$ distances of the CCH lattice.
     \item $i,j$ iterates the source and destination quantized pixel counts level respectively over the
         region of interest.
 \end{itemize}
@@ -384,7 +384,10 @@ Using the mean shift procedure, we can maximise $\rho$ around the
 last known target location $\mathbf{c_0}$, thereby locating our target object in frame $\mathbf{f}_{k+1}$. 
 The mean shift procedure is a two step process of computing the mean shift
 vector, $\vec{m}$ and translating our kernel centre to the mean shift location~\cite{Comaniciu2002}. 
-\[\mathbf{c_1} = \mathbf{c_0} + \vec{m}(\mathbf{c_0})\]
+
+\begin{equation}\label{eqn:mean_shift_procedure}
+    \mathbf{c_1} = \mathbf{c_0} + \vec{m}(\mathbf{c_0})
+\end{equation}
 
 Computationally the shift is performed recursively until the magnitude of $\vec{v}$ converges
 to a sufficiently small value below a pixel threshold $\epsilon$. The centre

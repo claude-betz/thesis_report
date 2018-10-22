@@ -1,39 +1,60 @@
 \chapter{Results}\label{chapter_results}
 
-This Chapter is concerned with the presentation results obtained from a practical
+This Chapter is concerned with the presentation of the results obtained from a practical
 application of the algorithms implemented in
 Chapter~\ref{chapter_implementation} on various image sequences. 
 The image sequences are mainly taken from the Visual Object Tracking 2017
-Challenge (VOT2017)~\cite{VOT2017}, and the famous Hamburg taxi sequence is also used as an
+Challenge (VOT2017)~\cite{VOT2017}. The famous Hamburg taxi
+sequence~\cite{Hamburg} is also used as an
 initial experiment for the template matching trackers.
 
 The analysis of the algorithms is both quantitative and qualitative as defined
 in Section~\ref{methodology_testing}. The
-quantitative analysis is based on the tracker performance per the centroid error metric
-The qualitative analysis is based on both the metric and experts of bounding
-boxes, it aims to provide an insight into the results based on the data informed by
-an understanding of the various algorithm implementations. 
+quantitative analysis is based on the tracker performance per the defined centroid
+``tracker error'' metric. The qualitative analysis is based on both the metric
+and experts of bounding boxes, it aims to provide an insight into the results
+based on the data informed by an understanding of the various algorithm
+implementations. 
 
-This chapter also presents the results of the overall integrated MT System, and
+This Chapter also presents the results of the overall integrated MT System, and
 gauges it's performance by relating it back to the system
 s user requirements stated in Section~\ref{introduction_user_requirements}.
 
 
 \section{Template Matching Tracker}
-This Section presents with a qualitative analysis of both the simple- and
+This Section presents a qualitative and quantitative (where applicable) analysis
+of the performance of the simple and
 adaptive template tracker variants (STT and ATT respectively) that were proposed
 in Section~\ref{theoretical_framework_tm}. 
 
-Both trackers were applied to the famous Hamburg taxi sequence \cite{} as an initial
+Both trackers were applied to the Hamburg taxi sequence  as an initial
 test of their applicability to the motion tracking problem.
 The template trackers below were run for a threshold $\tau=0.8$.
 
 \subsection{Simple template matching tracker}\label{results_simple_template_matching}
-The initial template used is the shown by the rectangular region around the car
+In Figure~\ref{fig:simple_template_tracking} the initial user selected template used for matching is the shown by the rectangular region around the car
 in the first frame. The images shown correspond to almost equally spaced
 samples of the 40 frame taxi sequence.
 
-\begin{figure}\label{fig:simple_template_tracking}    
+It can be seen that the STT manages to track the car
+up until $\mathbf{F}_{6}$ in the Figure, corresponding to $\mathbf{f}_{12}$ in
+the sequence, beyond which the rotation of the car drives the sum of square
+differences similarity measure between the initial template chosen in
+$\mathbf{f}_0$ and the region of interest in $\mathbf{f}_{12}$ below the
+threshold.
+
+It is important to highlight that, while lowering the detection threshold allows
+the tracker to follow the car for a larger amount of frames, this is not a
+solution to the problem as the tracker becomes more susceptible to noise, and is
+certainly not a good model for robustness across different sequences.
+
+An idea to get around the changing template, is the implementation of an
+adaptive template matching algorithm, in which we update the model we are
+looking for each $\mathbf{f}_k$.
+
+
+
+\begin{figure}    
     \makebox[\linewidth][c]{
     \begin{tabular}{cccc}
         \subfloat{\includegraphics[width = 1.5in]{figures/results/simple_template_tracker/taxi_sequence/1.jpg}} &
@@ -57,24 +78,8 @@ samples of the 40 frame taxi sequence.
         \subfloat{\includegraphics[width = 1.5in]{figures/results/simple_template_tracker/taxi_sequence/16.jpg}} \\   
 
         \end{tabular}}
-    \caption{Simple template tracker applied to Hamburg taxi sequence}
+    \caption{Simple template tracker applied to Hamburg taxi sequence\label{fig:simple_template_tracking}}
 \end{figure}
-
-In Figure~\ref{fig:simple_template_tracking} it can be seen that the Simple
-template tracker (STT) manages to track the car up until $\mathbf{F}_{6}$
-in the Figure, corresponding to $\mathbf{f}_{12}$ in the sequence, beyond which
-the rotation of the car drives the sum of square differences similarity measure
-between the initial template chosen in $\mathbf{f}_0$ and the region of interest
-in $\mathbf{f}_{12}$ below the threshold.
-
-It is important to highlight that, while lowering the detection threshold allows
-the tracker to follow the car for a larger amount of frames, this is not a
-solution to the problem as the tracker becomes more susceptible to noise, and is
-certainly not a good model for robustness across different sequences.
-
-An idea to get around the changing template, is the implementation of an
-adaptive template matching algorithm, in which we update the model we are
-looking for each $\mathbf{f}_k$.
 
 \subsection{Adaptive template matching tracker}\label{results_adaptive_template_matching}
 As described in Section~\ref{theoretical_framework_tm}, the assumption
@@ -83,14 +88,21 @@ $K$ frames. Beyond this interval, the template from $\mathbf{f}_{k}$ is sufficie
 from the object to be matched in $\mathbf{f}_{k+K}$ such that the similarity
 measure falls below $\tau$. For the experiments a threshold of $\tau=0.8$ was used.
 
-The idea behind the adaptive template tracker (ATT) is that we update the
-template which we are trying to match before the we traverse more than
+The idea behind the ATT is that we update the template which we are trying to
+match before the we traverse more than
 $K$ frames.
 
 \subsubsection{Hamburg taxi sequence}
 The sequence in Figure~\ref{fig:adaptive_template_tracking} is generated by
 updating the template every frame, the located object in frame,
 $\mathbf{f}_{k-1}$. becomes the template for $\mathbf{f}_k$.
+
+From Figure~\ref{fig:adaptive_template_tracking} it shows that the ATT manages
+to locate the car within a bounding box in each frame of the sequence. It should
+however be noted that there is a noticeable ``drift'' in
+the localisation. 
+This is due to the fact that the algorithm has no way of controlling the amount of
+background noise that is allowed into the template.
 
 \begin{figure}     
     \makebox[\linewidth][c]{
@@ -119,15 +131,8 @@ $\mathbf{f}_{k-1}$. becomes the template for $\mathbf{f}_k$.
     \caption{Adaptive template tracker applied to Hamburg taxi sequence\label{fig:adaptive_template_tracking}}
 \end{figure}
 
-From Figure~\ref{fig:adaptive_template_tracking} it shows that the ATT manages
-to locate the car within a bounding box in each frame of the sequence. It should
-however be noted that there is a noticeable ``drift'' in
-the localisation. 
-This is due to the fact that the algorithm has no way of controlling the amount of
-background noise that is allowed into the template.
-
 \subsubsection{Adaptive template tracker vs occlusion}
-The graph in Figure~\ref{fig:results/adaptive_template_tracker/metric.png}, shows the
+The graph in Figure~\ref{fig:results/adaptive_template_tracker/metric}, shows the
 performance of the MST according to the tracking error metric outlined in
 Section~\ref{methodology_testing}. 
 
@@ -186,7 +191,7 @@ and their corresponding target models (updated templates) are shown.
 This Section details the results of the Colour co-occurrence histogram detector
 (CCH-detector) implemented in Section~\ref{implementation_ch}.
 As discussed in Section~\ref{theoretical_framework_ch}, the rationale behind
-implementing the CCH-detector is assessing whether it could overcome the
+implementing the CCH-detector lies in assessing whether a feature-based approach could overcome the
 shortcomings of the template matching approaches in terms of drift due to not
 being able to filter out the background, and lack of generalisation.
 
