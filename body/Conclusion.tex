@@ -8,13 +8,50 @@ the front-end and back-end subsystems' design, implementation and result are
 presented, followed by insights from the overall integrated system. Finally
 possible future improvements and extensions to the project are addressed.
 
+\section{General Remarks}
+The general underlying goal of this project was to perform an investigation into the
+field of motion tracking. The outcome was framed in terms of a comprehensive Motion
+Tracking (MT) System, with specific user requirements. 
+
+The literature review in Chapter~\ref{chapter_literature_review} 
+managed to gather a solid framework within which to tackle the motion tracking
+problem. This framework served as a scaffolding for investigation into the
+various approaches to the stages of detection, modelling and tracking involved
+in most motion tracking problems. 
+
+Further assessment of these stages allowed for the definition of a suitable
+scope and area of investigation. This was chosen to be the class of kernel based
+trackers. In line with the approach of theoretically driven design, the
+approaches of template tracking and mean shift tracking were extensively
+presented in the theoretical framework developed in
+Chapter~\ref{chapter_theoretical_framework}. 
+
+The theoretical framework formed the basis of the MT System design and
+implementations detailed in Chapters~\ref{chapter_design}
+and~\ref{chapter_implementation}, which were tested by the results presented
+Chapter~\ref{chapter_results} in line with the project methodology
+outlined in Chapter~\ref{chapter_methodology}.
+
+The general conclusions to be drawn are that the project was completed as
+desired. The overall integrated MT System met the user requirements that were
+laid out in Section~\ref{introduction_user_requirements}, and was compatible
+across different operating systems. Also, the back end
+implementations were mostly built using a ground up, theoretically driven
+approach, which is evident in the parallels between the theoretical framework
+and implementation Chapters.
+
+As alluded to in the introductory Chapter, further development of the MT System
+could possibly find applicability in the field of sports analysis, where the
+human based detection approach is relevant.
+
+
 \section{Template Matching Trackers}
-The simple template tracker implementation was only slightly effective in
+The simple template tracker (STT) implementation was only slightly effective in
 managing to track even the simplest of sequences. It is clear that simple template
 Matching applied to every frame of a sequence does the necessary built-in
 flexibility towards even subtle changes in target appearance between frames.
 
-The adaptive template tracker implementation showed some promise in solving the
+The adaptive template tracker (ATT) implementation showed some promise in solving the
 tracking problem. Where the simple template tracker failed in tracking the
 taxi in the Hamburg taxi sequence, The adaptive tracker succeeded for the
 duration of the sequence. 
@@ -106,6 +143,11 @@ interest. A user could navigate the sequences and apply one of the implemented
 back-end detectors or trackers after selecting an object of interest in the
 initial a frame, $\mathbf{f}_k$.
 
+The results detailed by the results of the integration in
+Section~\ref{results_integration}, the cross platform compatibility of the MT
+System across different operating systems is a testament to good modular design
+and development choices.
+
 \section{Future Work}\label{future}
 This Section outlines the possible improvements and areas
 of future work for different subsystems of the MT system as well as the overall
@@ -114,7 +156,7 @@ on the conclusions drawn and knowledge obtained from the initial survey of the
 literature in Section~\ref{chapter_literature_review}.
 
 \subsection{Template matching tracker and colour co-occurrence histogram detector}\label{future_tmt}
-The adaptive template matching trackers showed potential in tracking templates for
+The ATT showed potential in tracking templates for
 short sequences, it's lack of generalisation however made it incapable of
 application to more complex sequences. 
 The CCH-detector was an experiment at defining a deformable template
@@ -140,7 +182,7 @@ background noise is incorporated when computing candidate PDFs for calculating
 the mean shift vector.
 
 The MST is not limited to descriptors based on colour low-level features.
-Section~\ref{results_speed} showed that the MST had difficulty when operating on
+Subsection~\ref{mean_shift_target_speed} showed that the MST had difficulty when operating on
 object and backgrounds that were similar within the RGB colour-space. A solution
 to this could be to use different of a combination of different low-level
 features. For example, despite an object and background being similar in colour,

@@ -1,5 +1,6 @@
-\nomenclatureentry{aSTT@[{STT}]\begingroup Mean Shift Tracker\nomeqref {0}|nompageref}{xiii}
-\nomenclatureentry{aATT@[{ATT}]\begingroup Mean Shift Tracker\nomeqref {0}|nompageref}{xiii}
-\nomenclatureentry{aCCH@[{CCH}]\begingroup Mean Shift Tracker\nomeqref {0}|nompageref}{xiii}
+\nomenclatureentry{aSTT@[{STT}]\begingroup Simple Template Tracker\nomeqref {0}|nompageref}{xiii}
+\nomenclatureentry{aATT@[{ATT}]\begingroup Adaptive Template Tracker\nomeqref {0}|nompageref}{xiii}
+\nomenclatureentry{aCCH@[{CCH}]\begingroup Colour Co-occurrence Histrogram Detector\nomeqref {0}|nompageref}{xiii}
 \nomenclatureentry{aMST@[{MST}]\begingroup Mean Shift Tracker\nomeqref {0}|nompageref}{xiii}
-\nomenclatureentry{aMST@[{MST}]\begingroup Mean Shift Tracker\nomeqref {0}|nompageref}{xiii}
+\nomenclatureentry{a$\mathbf{f}_k$@[{$\mathbf{f}_k$}]\begingroup a frame k in original sequence\nomeqref {0}|nompageref}{xiii}
+\nomenclatureentry{a$\mathbf{F}_k$@[{$\mathbf{F}_k$}]\begingroup a snapshot of a sequence\nomeqref {0}|nompageref}{xiii}

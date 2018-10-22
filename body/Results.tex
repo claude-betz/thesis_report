@@ -619,7 +619,7 @@ The answer lies within the feature space our tracker is based on. Within the RGB
 the yellow and grey fish are largely distinct. Hence the tracker will not be
 drawn to the grey fish as it exits the yellow kernel.
 
-In this case, the are two objects within the vicinity of yellow kernel that are practically
+In this case, the are two ants within the vicinity of yellow kernel that are practically
 indistinguishable within our chosen feature space. As the blue ant quickly exits
 the Kernel, the gradient within the domain of the similarity
 function is not sufficiently steep to draw the tracker away.
@@ -728,7 +728,7 @@ Subsection~\ref{future_mst}.
 
 \section{Graphical User Interface}\label{results_gui}
 This Section presents the results of the implemented GUI. The presentation is in
-terms of functionality relating to the MT system user requirements in
+terms of functionality relating to the MT System user requirements in
 Section~\ref{introduction_user_requirements}.
 
 An overview of implemented GUI system is displayed in
@@ -745,18 +745,21 @@ sequences.
     \end{tabular}}
     \caption{Image of integrated MT System on the Ubuntu and OS X operating systems\label{fig:gui_integration}}
 \end{figure}
-
         
-\subsection{I/O functionality}
-The GUI allows for user selected sequence selection from any file directory on
-the system it is being run on.
+The GUI implementation conforms with good design practices in terms of layout.
+This evidenced by menu groupings and the use of intuitive visual icons in the
+design. 
 
-\subsection{Navigational functionality}.
-The GUI implementation provides navigational buttons that provide a user a
-standard video sequence interface.
+As per the requirements the GUI allows for the loading of user selected
+sequences from any file directory on the system it is being run on. It also provides
+navigational buttons that provide a user with a standard video sequence interface. 
 
-\section{Integration}
-This section deals with documenting the integrated MT System
+A major success of the GUI and the integrated MT System is that cross platform
+compatibility, as shown in Figure~\ref{fig:gui_integration}. 
+
+\section{Integration}\label{results_integration}
+This section deals with documenting the results of the overall implemented MT
+System.
 
 \subsection{Algorithm integration}
 The three algorithms discussed in Section~\ref{chapter_theoretical_framework}
@@ -764,7 +767,7 @@ successfully integrated with the front-end GUI. A sample use sequence within the
 presented in Figure~\ref{fig:gui_CHD}. This sequence presents the user flow
 involved in applying the CCH-detector to a particular frame. This is essentially
 the same user flow as the one highlighted by the sequence diagram in
-Figure~\ref{implementation_sequence_diagram}. 
+Figure~\ref{fig:implementation_sequence_diagram}. 
 
 \begin{figure}
     \makebox[\linewidth][c]{

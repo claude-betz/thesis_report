@@ -1,21 +1,18 @@
 \chapter{Design}\label{chapter_design}
-In this chapter we aim to document the design process of the MT system. It does so
-while in line with the user requirements detailed in 
+This Chapter aims to document the design process of the MT System. It does so
+in line with the user requirements detailed in 
 Section~\ref{introduction_user_requirements}. 
-We then detail the design from a higher-level system overview in terms of a
-delineation of the front-end and back-end subsystems. The detailed the design of
+The design is specified from a higher-level system overview in terms of a
+delineation of the front-end and back-end subsystems. Following this, a detailed the design of
 these subsystems is then presented with care given to clearly define their
 interfaces and dependencies with each other, this allows for independent
 development of the subsystems in the early stages of the development life cycle,
-and should help result in a smooth integration phase.
-
-This following Section is concerned with the system level design of the
-front- and back-end subsystems of the Motion Tracking (MT) System.
+and should result in a smooth integration phase.
 
 \section{System Level Design}
 Development of the overall system design can conveniently be divided into
 front-end and back-end. The front-end system is the point of interaction for the
-system user. It is GUI application that thereby satisfying the User Requirements
+system user. It is GUI application that thereby satisfying the user requirements
 of the system. The back-end consists of the algorithms enabling the tracking of
 objects of interest within the relevant image sequence.
 
@@ -43,7 +40,7 @@ portability.
 The Python3.6 programming language is used for the front- and
 back-end implementation.
 
-Python virtual environments is used in order to guarantee portability of the
+Python virtual environments are used in order to guarantee portability of the
 final product. It creates isolated installation libraries that ensure there are
 no version clashes by the changes to the global python packages during the
 project development life cycle.
@@ -70,7 +67,7 @@ Based on these tools, an in depth treatment of the front- and back-end subsystem
 design follows. 
 
 \section{Back-End Design}\label{design_back_end}
-The focus of the back-end design will be in the implementation of the various
+The focus of the back-end design is in terms of the implementation of the various
 approaches to object detection and motion tracking developed in
 Chapter~\ref{chapter_theoretical_framework}.
 Emphasis is placed on minimal reliance on libraries for functional
@@ -139,7 +136,7 @@ satisfy the defined system user requirements.
 
 \subsection{GUI programming}
 The fundamental programming paradigm followed in the GUI design and development
-is the model-view-controller architecture. In line with this
+is the model-view-controller architecture\cite{wiki:mvc,Summerfield}. 
 \begin{itemize}
     \item \textbf{A model}: this is the application object responsible for the
         dynamic behaviour of the GUI through the event loop.
@@ -148,6 +145,8 @@ is the model-view-controller architecture. In line with this
     \item \textbf{Controllers}: these are elements with which users interact with
         the application. They emit signals.
 \end{itemize}
+
+This is addressed further in Section~\ref{implementation_gui}.
 
 \subsection{Software dependencies}
 This subsection outlines the software dependencies of the front-end subsystem.

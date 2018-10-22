@@ -13,6 +13,6 @@
 \contentsline {lstlisting}{\numberline {6.13}Code listing detailing sequence selection controller and connection to slot}{59}{lstlisting.6.13}
 \contentsline {lstlisting}{\numberline {6.14}Code for User selection of regions/objects of interest}{60}{lstlisting.6.14}
 \contentsline {lstlisting}{\numberline {6.15}Mean shift tracker integration in GUI}{63}{lstlisting.6.15}
-\contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{98}{lstlisting.A.1}
-\contentsline {lstlisting}{\numberline {A.2}Additional functions for Mean Shift Tracker Impementation}{100}{lstlisting.A.2}
-\contentsline {lstlisting}{\numberline {A.3}GUI Impementation Code}{101}{lstlisting.A.3}
+\contentsline {lstlisting}{\numberline {A.1}Additional functions for Co-occurrence Histogram Detection}{99}{lstlisting.A.1}
+\contentsline {lstlisting}{\numberline {A.2}Additional functions for Mean Shift Tracker Impementation}{101}{lstlisting.A.2}
+\contentsline {lstlisting}{\numberline {A.3}GUI Impementation Code}{102}{lstlisting.A.3}
