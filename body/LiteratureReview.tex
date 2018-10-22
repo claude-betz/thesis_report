@@ -238,7 +238,7 @@ particular system to highlight a region of interest containing an object in
 a particular frame. This is sometimes used as an initialisation step in some
 motion tracking applications. Kernel based motion tracking methods as addressed
 in Subsection~\ref{literature_review_kernel}, are sometimes manually
-initialised~\ref{Prajapati2015}.
+initialised~\cite{Prajapati2015}.
 
 \subsection{Template detection}
 Template detection is a simple detection method in which a known object
@@ -306,12 +306,12 @@ spacial definition of the object within a particular frame. Notable examples of
 representations include
 
 \subsubsection{Point and region}
-This is an example of a parameterised representation. In a point and region
+This is an example of a parametrised representation. In a point and region
 representation, an object is defined by a centroid and a predefined shape such
 as a rectangle or an ellipse.
 
 \subsubsection{Silhouette representation}
-This is a more complex non-parameterised representation. Here, the object of
+This is a more complex non-parametrised representation. Here, the object of
 interest is defined by it's silhouette-the shape inscribed by it's outline.
 
 There are yet more complex model representations, some of which further segment
@@ -326,7 +326,7 @@ by the chosen model representation. An effective descriptor is one which allows
 for good discrimination between different objects or regions they
 describe. Discrimination is characterised by a similarity measure that
 facilitates a quantitative assessment of how similar a particular candidate
-descriptor in $\mathbf{f}_{k}$ matches it's model descriptor.
+descriptor in $\mathbf{f}_{k}$ matches it's model descriptor~\cite{Shantaiya2013}.
 Some common descriptors are
 
 \subsubsection{Templates}\label{literature_review_template}
@@ -339,7 +339,8 @@ Density estimates as model descriptors can be Parametric or Non-Parametric. They
 estimate the probability density function based on an underlying low-level
 feature within the relevant model representation.
 Common low-level features used include; colour-space values, spacial and
-temporal intra- and inter-frame derivatives within a given colour-space etc.
+temporal intra- and inter-frame derivatives within a given colour-space
+etc~\cite{Shantaiya2013}.
 
 \subsection{Model low-level features}
 Feature selection is a very relevant step in the development of computer vision
@@ -386,7 +387,17 @@ Section~\ref{literature_review_object_modelling}.
 \Figure[width=0.7\columnwidth]{Taxonomy of motion tracking approaches}{literaturereview_taxonomy_motion_tracking}
 
 \subsection{Point tracking}\label{literature_review_point}
+As the name suggest, point tracking, represents objects detected in consecutive
+frames by a set of points. Association between the different points is based on
+their state in the previous frame(s). Therefore, an external detection algorithm
+is required to supply the points at each frame in the image sequence.
 
+There are several approaches to this problem such as Kalman filtering or
+Multiple hypothesis tracking each of which focus on the estimation of future
+states based on past states. This is a complex yet powerful method as it can
+make inference about objects that in face of challenges such as complete
+occlusion based on past dynamics (state), where other purely appearance based tracker
+models might fail~\cite{Shantaiya2013,Prajapati2015}.
 
 \subsection{Kernel tracking}\label{literature_review_kernel}
 Kernel based tracking is usually performed by defining a kernel around an object
