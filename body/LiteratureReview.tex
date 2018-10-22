@@ -272,12 +272,11 @@ overlap. A representative feature vector is extracted for each object and the
 detections made according to the classifier output for each object. There have
 been significant strides within this with the advent of deep learning.
 Consequently, Classifier detection has been applied extensively to real time detection
-based motion tracking in recent years with the advent of deep
-learning~\cite{goturn}.
+based motion tracking in recent years~\cite{goturn}.
 
 \subsection{Motion detection}
-Motion based detection methods in their basic form hinge upon the thresholding
-of the pixel wise difference between adjacent frames in an image
+Motion based detection methods in their basic form hinge upon the application of
+a threshold to the pixel wise difference between adjacent frames in an image
 sequence~\cite{Shantaiya2013}. The regions with large differences likely
 correspond to objects in motion. There are several extensions to this using
 probabilistic models to more accurately model background and foreground objects.
@@ -387,13 +386,13 @@ Section~\ref{literature_review_object_modelling}.
 \Figure[width=0.7\columnwidth]{Taxonomy of motion tracking approaches}{literaturereview_taxonomy_motion_tracking}
 
 \subsection{Point tracking}\label{literature_review_point}
-As the name suggest, point tracking, represents objects detected in consecutive
+As the name suggests, point tracking represents objects detected in consecutive
 frames by a set of points. Association between the different points is based on
 their state in the previous frame(s). Therefore, an external detection algorithm
 is required to supply the points at each frame in the image sequence.
 
 There are several approaches to this problem such as Kalman filtering or
-Multiple hypothesis tracking each of which focus on the estimation of future
+multiple hypothesis tracking each of which focus on the estimation of future
 states based on past states. This is a complex yet powerful method as it can
 make inference about objects that in face of challenges such as complete
 occlusion based on past dynamics (state), where other purely appearance based tracker
@@ -409,7 +408,7 @@ descriptors and their underlying low-level features~\cite{Prajapati2015}
 \subsubsection{Simple template matching}
 Template Matching is a pattern recognition technique in which stored patterns 
 are identified within an image. It can be performed at various levels ranging
-from a pixel-level to higher level comparisons of average intensity.
+from a pixel-level comparison of intensity, to higher level descriptor comparisons.
 
 It is an operation that aims to determine what elements of a given image match a
 specified template of the element of interest. Formally we have a source image,
@@ -440,7 +439,7 @@ sequence. The Hough transform is clustering algorithm in which data samples
 “vote” for the most representative feature values in a quantized feature
 space~\cite{Tekalp2014}. 
 
-Applied to silhouettes, the Hough Transform parametrises lines and circles of a
+Applied to silhouettes, the Hough transform parametrises lines and circles of a
 detected shape. Similarity is gauged by the use of a threshold, if a candidate
 parametrisation lies above the threshold it is considered a
 detection~\cite{Delprado2013} There are various extensions to this approach
