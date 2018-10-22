@@ -229,11 +229,12 @@ spite of significant occlusion on by the man obscuring the girl.
     }
 \end{figure}
 
-\section{Mean Shift Tracker}
-This Section deals with the analysis of the mean shift tracker (MST)
-implemented in Section~\ref{implementation_mean_shift_tracker}. The analysis is
-broken down into a set of experiments each dealing with a different image
-sequence of interest.
+\section{Mean Shift Tracker}\label{results_mean_shift_tracker}
+This Section deals with the qualitative and quantitative analysis of the mean
+shift tracker (MST) performance as implemented in
+Section~\ref{implementation_mean_shift_tracker}. The analysis is broken down
+into a set of experiments each dealing with a different image sequence of
+interest.
 
 There are generally three parameters that a user can vary when using the MST
 \begin{itemize}
@@ -244,13 +245,15 @@ There are generally three parameters that a user can vary when using the MST
 We subsequently assess the performance of the MST implementation
 for varying parameters $\epsilon$ and $m$ for the sequence in order to see the
 effect their on tracker performance, the goal being to select reasonable values
-for the two parameters to asses the general practical performance of the Mean
-Shift Tracker. 
+for the two parameters to asses the general practical performance of the MST. 
 
-We perform this assessment in a series of experiments, each of which is based on an image
-sequence that exhibits one or more of the challenges to motion tracking outlined
-in Section~\ref{literature_review_challenges}. 
- 
+We perform this assessment as a series of experiments, each of which is based on an image
+sequence that exhibits one or more of the challenges to motion tracking
+outlined in Section~\ref{literature_review_challenges}. 
+The quantitative analysis is in terms of the tracker error metric over the whole
+sequence. The qualitative analysis is based of snapshots of the frames
+exhibiting the particular challenge.
+
 \subsection{Effect of step size, $\epsilon$}\label{results_eps}
 The parameter $\epsilon$ defines the maximum allowable mean shift step. The
 effect of $\epsilon$ on tracker performance varies and is not quantified easily.
@@ -308,9 +311,8 @@ tracked. The challenges to motion tracking that arise in this image sequence are
     \item Scaling 
 \end{itemize}
 
-The graph in Figure~\ref{fig:results/mean_shift_tracker/fish3/metric.} shows the
-performance of the MST according to the average error metric outlined in
-Section~\ref{methodology_data_analysis}. 
+The graph in Figure~\ref{fig:results/mean_shift_tracker/fish3/metric} shows the
+performance of the MST according to the tracker error metric.
 The motion tracking challenges present within the sequence are highlighted
 between vertical bars, with the partial occlusion/track overlap challenge and the changing orientation challenge occurring in the green domain.
 Reference to the graph is made in the treatment of the discussion of the
@@ -377,11 +379,11 @@ The relevant subsequence exhibiting the challenge of ranges from
 $\mathbf{f}_{430}$ to $\mathbf{f}_{512}$ of the fish sequence.  
 
 This interval is represented by the green domain of the graph in
-Figure~\ref{fig:results/mean_shift_tracker/fish3/metric.png}. From the graph it can be
+Figure~\ref{fig:results/mean_shift_tracker/fish3/metric}. From the graph it can be
 seen that the mean shift tracker actually performs better when faced with this
-challenge than it does in the sub sequences that exhibit motion, the average error between the
-tracker centroid and the ground truth centroids in this region is around 4
-pixels. 
+challenge than it does in the sub sequences that exhibit motion, the average
+tracker error between the tracker centroid and the ground truth centroids in
+this region is around 5 pixels. 
 
 \begin{figure}     
     \makebox[\linewidth][c]{
@@ -499,7 +501,7 @@ the camera, the result being that her dimensions within the frame are becoming
 smaller.
 
 The scaling challenge occurs within the green domain of the graph in
-Figure~\ref{fig:results/results/mean_shift_tracker/girl/metric.png}, 
+Figure~\ref{fig:results/mean_shift_tracker/girl/metric}, 
 While the MST tracker error fluctuates significantly between lows of close to 0
 and highs of around 40 pixels. The average challenge error for this subsequence
 (indicated in purple) is indistinguishable from the average tracker error for the overall girl
@@ -566,7 +568,7 @@ each other, we can see that the yellow kernel switches to track the second Ant
 after the crossing of their tracks within the sequence. Let us refer to the
 original ant as $A_0$ and the second ant as $A_1$. 
 
-Figure\ref{fig:mean_shift_ant_speed} presents a set of representative snapshots
+Figure~\ref{fig:mean_shift_ant_speed} presents a set of representative snapshots
 for the tracker results for the subsequence exhibiting the challenge of track
 overlap.
 
@@ -643,11 +645,11 @@ ant that the MST is centred on. Subsequent analysis aims to highlight the effect
 of kernel size when faced with the challenge of high target speed.
 
 Beginning with the smaller green kernel.
-Figure~\ref{fig:mean_shift_target_speed}, presents representative snapshots. 
+Figure~\ref{fig:mean_shift_ant_speed}, presents representative snapshots. 
 It is apparent that the green kernel barely moves to track any of the ants it is
 centred on throughout the ant sequence. A proposed explanation for this
 observation ties back to sampling theory and knowledge of the mean shift
-procedure as defined in subsection~\ref{theoretical_framework_mean_shift}.
+procedure as defined in Section~\ref{theoretical_framework_mean_shift_tracker}.
 
 Keeping in mind that a digital video is a sampling of an analogue scene.
 In order to discuss the effect of the ``speed'' of a target on tracker
