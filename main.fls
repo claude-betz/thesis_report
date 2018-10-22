@@ -197,9 +197,6 @@ OUTPUT main.lot
 INPUT main.lol
 INPUT main.lol
 OUTPUT main.lol
-INPUT frontmatter/Nomenclature.tex
-INPUT frontmatter/Nomenclature.tex
-OUTPUT main.nlo
 INPUT body/Introduction.tex
 INPUT body/Introduction.tex
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
