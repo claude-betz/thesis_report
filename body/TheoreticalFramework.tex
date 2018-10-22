@@ -45,11 +45,15 @@ template descriptor defined by and extraction of pixels over a particular region
 of interest in a particular frame.
 
 \subsection{Similarity measure}
-The degree of similarity between a specific $T$ and a target region
+The degree of similarity between a specific $\mathbf{T}$ and a target region
 within a particular frame is determined by the use of a similarity
 measure. The literature lists several similarity measures, the most widely
 adopted of which is the pixel-wise \textit{sum of square differences}
-(ssd)~\cite{Brunelli}.
+(ssd)~\cite{Brunelli}, where
+
+\[\text{ssd}=\frac{1}{n_T-1}\sum_{i=0}^{n_T-1}(p_{i}^{\mathbf{T}}-p_{i}^{\mathbf{I}^*}) \]
+over the for each overlapping region in the flattened 2D convolution of $\mathbf{T}$ over the target
+sub region $\mathbf{I}^*$. $n_T$ is the number of pixels in the 
 
 \subsection{Template matching tracking algorithms}\label{theoretical_framework_tm_algorithms}
 Figure~\ref{fig:design_template_tracking_algorithm} conveniently expresses the
