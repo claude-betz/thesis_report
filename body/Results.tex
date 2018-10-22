@@ -138,7 +138,7 @@ the man, the adaptive template is updated with information from the man in the
 background which as the girl moves away becomes the larger match, thus the
 tracker loses the girl. 
 
-\Figure[width=0.8\columnwidth]{Graph of tracker error of ATT (pixels) vs frames in sequence}{results/adaptive_template_tracker/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of ATT (pixels) vs frames in sequence}{results/adaptive_template_tracker/metric}
 
 \begin{figure}     
     \makebox[\linewidth][c]{
@@ -216,8 +216,8 @@ spite of significant occlusion on by the man obscuring the girl.
 \begin{figure}     
     \makebox[\linewidth][c]{
     \begin{tabular}{cc}
-        \subfloat{\includegraphics[width = 2.5in]{figures/results/ch_detector/results_girl/frame.jpg}} &
-        \subfloat{\includegraphics[width = 2.5in]{figures/results/ch_detector/results_girl/result.jpg}} \\
+        \subfloat{\includegraphics[width = 2.5in]{figures/results/ch_detector/results_girl/frame}} &
+        \subfloat{\includegraphics[width = 2.5in]{figures/results/ch_detector/results_girl/result}} \\
 
         \end{tabular}}
     \caption{Colour co-occurrence histogram detection against occlusion\label{fig:ch_partial_occlusion}
@@ -278,7 +278,8 @@ particular bin. The access time of the bins in the underlying \textbf{NumPy} arr
 a significant bottle neck for array sizes (bin counts) ranging 1 to 256.
 
 The effect of varying the $m$ on the calculation of the Bhattacharyya coefficient is
-detailed in Figure~\ref{fig:results_m_bc}. The execution time of the get\_BC() goes  
+detailed in Figure~\ref{fig:results_m_bc}. The execution time of the
+\lstinline{get_BC ()} goes  
 
 \Figure[width=0.7\columnwidth]{Graph showing effect of bin size (m) on execution time (ms) of \lstinline{get\_pdf()}}{results/mean_shift_tracker/results_m_pdf}
 
@@ -302,7 +303,7 @@ tracked. The challenges to motion tracking that arise in this image sequence are
     \item Scaling 
 \end{itemize}
 
-The graph in Figure~\ref{fig:results/mean_shift_tracker/metric.png} shows the
+The graph in Figure~\ref{fig:results/mean_shift_tracker/fish3/metric.} shows the
 performance of the MST according to the average error metric outlined in
 Section~\ref{methodology_data_analysis}. 
 The motion tracking challenges present within the sequence are highlighted
@@ -310,14 +311,14 @@ between vertical bars, with the partial occlusion/track overlap challenge and th
 Reference to the graph is made in the treatment of the discussion of the
 particular challenges that follows.
 
-\Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in fish sequence}{results/mean_shift_tracker/fish3/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in fish sequence}{results/mean_shift_tracker/fish3/metric}
 
 \subsubsection{Partial occlusion}\label{mean_shift_partial_occlusion}
 The relevant subsequence exhibiting partial occlusion ranges from
 $\mathbf{f}_{178}$ to $\mathbf{f}_{240}$ of the original sequence. 
 
 This interval is represented by the orange domain of the graph in
-Figure~\ref{fig:results/mean_shift_tracker/fish3/metric.png}. From the graph it can be
+Figure~\ref{fig:results/mean_shift_tracker/fish3/metric}. From the graph it can be
 seen that the mean shift tracker actually performs better under occlusion than in
 some other sub sequences that exhibit motion, the average error between the
 tracker centroid and the ground truth centroids in this region is around 5
@@ -425,19 +426,19 @@ effect of this on the tracker performance is hard to quantify. The results and
 analysis of the challenges of complete occlusion and scaling are subsequently
 presented.
 
-The graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png} shows the
+The graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric} shows the
 performance of the MST throughout the girl sequence according to the average error metric outlined in
 Section~\ref{methodology_testing}.  
 
-\Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in girl sequence}{results/mean_shift_tracker/girl/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of MST (pixels) vs frames in girl sequence}{results/mean_shift_tracker/girl/metric}
 
 \subsubsection{Complete occlusion}
 The relevant subsequence exhibiting complete occlusion ranges from $\mathbf{f}_{97}$ to
 $\mathbf{f}_{127}$ in the original sequence. This range corresponds to 
 the orange domain of the graph in
-Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png}. 
-A set of equally spaced visual results for the subsequence exhibiting complete occlusion
-is presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
+Figure~\ref{fig:results/mean_shift_tracker/girl/metric}. To visualise the
+challenge, a set of equally spaced snapshots for the subsequence exhibiting complete occlusion
+are presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
 
 \begin{figure}    
     \makebox[\linewidth][c]{
@@ -467,15 +468,15 @@ is presented in Figure~\ref{fig:mean_shift_complete_occlusion}.
     \caption{Challenge: complete occlusion\label{fig:mean_shift_complete_occlusion}}
 \end{figure}
 
-From the graph in Figure~\ref{fig:results/results/mean_shift_tracker/girl/metric.png}, it is
-apparent by the large spike in tracker error that the MST deals poorly with the
-challenge of complete occlusion.  This is expected as the implementation of the
-MST is based on visual low-level features of the RGB colour space. It does
-however relocate the girl relatively fast after the occlusion ends, but it this
-would not necessarily be the can in the case of longer occlusion periods that
-could allow the tracker to drift too far to relocate the target model. 
+It is apparent by the large spike in tracker error over the orange domain, that
+the MST deals poorly with the challenge of complete occlusion.  This is expected
+as the implementation of the MST is based on visual low-level features of the
+RGB colour space. It does however relocate the girl relatively fast after the
+occlusion ends, but it this would not necessarily be the case in sequences exhibiting 
+longer occlusion periods as this could allow the tracker to drift too far to
+relocate the target model. 
 
-Figure~\ref{fig:mean_shift_complete_occlusion} provides a visual insight into
+Figure~\ref{fig:mean_shift_complete_occlusion} provides visual insight into
 what is going on. Snapshots $\mathbf{F}_4$ to $\mathbf{F}_{13}$ show that the
 MST is able to relocate the girl within after a man completely occludes her. We
 see that the smaller green kernel is offset by man for a bit, whereby the larger
@@ -546,15 +547,15 @@ The challenges presented by this sequence are the following:
     \item Track overlap
 \end{itemize}
 
-The graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png} shows the
+The graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric} shows the
 performance of the MST over the ant sequence according to the average error metric outlined in
 Section~\ref{methodology_data_analysis}.  
 
-\Figure[width=0.8\columnwidth]{Graph of tracker error of adaptive tracker (pixels) vs frames in ant sequence}{results/mean_shift_tracker/ants/metric.png}
+\Figure[width=0.8\columnwidth]{Graph of tracker error of adaptive tracker (pixels) vs frames in ant sequence}{results/mean_shift_tracker/ants/metric}
 
 
 \subsubsection{Track Overlap}\label{mean_shift_track_overlap}
-This Challenges is exhibited in $\mathbf{f}_{214}$ to $\mathbf{240}$ in the
+This Challenge is exhibited in $\mathbf{f}_{214}$ to $\mathbf{f}_{240}$ in the
 original ant image sequence. The sequence h two ants coming within close proximity of
 each other, we can see that the yellow kernel switches to track the second Ant
 after the crossing of their tracks within the sequence. Let us refer to the
@@ -590,7 +591,7 @@ overlap.
     \caption{Challenge: target speed: small kernel loses blue ant\label{fig:mean_shift_ant_speed}}
 \end{figure}
 
-From the graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png},
+From the graph in Figure~\ref{fig:results/mean_shift_tracker/girl/metric},
 it can be seen that for $\mathbf{f}_0$ to $\mathbf{f}_{214}$ where the blue
 target ant is exhibiting relatively slow motion, the tracker error fluctuates
 around the 10 pixel region. Upon reaching the challenge of track overlap over
@@ -631,7 +632,7 @@ of target speed occurs within $\mathbf{f}_{256}$ and $\mathbf{f}_{277}$ of in
 the original sequence. 
 Since the tracker has changed tracks from the blue to the yellow ant before
 reaching this challenge, the graph of tracker error against frame presented in
-Figure~\ref{fig:results/mean_shift_tracker/girl/metric.png} is of no use because
+Figure~\ref{fig:results/mean_shift_tracker/girl/metric} is of no use because
 the subsequent ground truth values correspond to the blue ant and not the yellow
 ant that the MST is centred on. Subsequent analysis aims to highlight the effect
 of kernel size when faced with the challenge of high target speed.
@@ -744,18 +745,19 @@ The GUI allows for user selected sequence selection from any file directory on
 the system it is being run on.
 
 \subsection{Navigational functionality}.
-
-
-\subsection{Parameter selection}
-In addition to implementing the algorithms, the parameters for the individual
-algorithms can be varied by by the user.
+The GUI implementation provides navigational buttons that provide a user a
+standard video sequence interface.
 
 \section{Integration}
 This section deals with documenting the integrated MT System
+
 \subsection{Algorithm integration}
 The three algorithms discussed in Section~\ref{chapter_theoretical_framework}
-successfully integrated with the Front-end GUI. Their usage within the GUI is
-shown in the subsequence sections.
+successfully integrated with the front-end GUI. A sample use sequence within the GUI is
+presented in Figure~\ref{fig:gui_CHD}. This sequence presents the user flow
+involved in applying the CCH-detector to a particular frame. This is essentially
+the same user flow as the one highlighted by the sequence diagram in
+Figure~\ref{implementation_sequence_diagram}. 
 
 \begin{figure}
     \makebox[\linewidth][c]{
@@ -767,8 +769,12 @@ shown in the subsequence sections.
     \caption{Algorithm user flow\label{fig:gui_CHD}}
 \end{figure}
 
-Figure~\ref{fig:gui_CHD} outlines the results of a similar user flow for
-initialising the co-occurrence histogram detector. This is essentially the same
-as the user flow highlighted by the sequence diagram in Figure~\ref{implementation_sequence_diagram}. 
+\subsection{Repository}
+The integrated MT System is available at the relevant GitHub
+repository~\cite{repository}~\footnote{https://github.com/Claude47/thesis\_product}.
+The README.md file within the repository provides potential users with a comprehensive guide to
+easily installing the MT System and its dependencies within an isolated Python virtual environment.
 
-
+Upon installation, a user is offered a choice between using the back-end APIs to
+integrate the tracker implementations into their own applications or to interact
+with the trackers via the GUI interface. 
