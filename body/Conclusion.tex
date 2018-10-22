@@ -3,10 +3,11 @@ This Chapter aims to tie together the work of the preceding Chapters
 by contextualising the progression of the project with the initial objectives 
 described in Chapter~\ref{chapter_introduction}.
 
-A general reflection on the work done is presented. Conclusions from
-the front-end and back-end subsystems' design, implementation and result are
-presented, followed by insights from the overall integrated system. Finally
-possible future improvements and extensions to the project are addressed.
+A general reflection on the work done is presented. Conclusions drawn from
+the design, implementation and results of the front-end and back-end subsystems
+are presented. These are followed by insights from the overall integrated
+system. Finally, possible future improvements and extensions to the project are
+addressed.
 
 \section{General Remarks}
 The general underlying goal of this project was to perform an investigation into the
@@ -15,7 +16,7 @@ Tracking (MT) System, with specific user requirements.
 
 The literature review in Chapter~\ref{chapter_literature_review} 
 managed to gather a solid framework within which to tackle the motion tracking
-problem. This framework served as a scaffolding for investigation into the
+problem. This framework served as a scaffolding for further investigation into the
 various approaches to the stages of detection, modelling and tracking involved
 in most motion tracking problems. 
 
@@ -23,7 +24,7 @@ Further assessment of these stages allowed for the definition of a suitable
 scope and area of investigation. This was chosen to be the class of kernel based
 trackers. In line with the approach of theoretically driven design, the
 approaches of template tracking and mean shift tracking were extensively
-presented in the theoretical framework developed in
+presented within the theoretical framework developed in
 Chapter~\ref{chapter_theoretical_framework}. 
 
 The theoretical framework formed the basis of the MT System design and
@@ -37,28 +38,26 @@ desired. The overall integrated MT System met the user requirements that were
 laid out in Section~\ref{introduction_user_requirements}, and was compatible
 across different operating systems. Also, the back end
 implementations were mostly built using a ground up, theoretically driven
-approach, which is evident in the parallels between the theoretical framework
+approach, which is evident in the close parallels between the theoretical framework
 and implementation Chapters.
 
 As alluded to in the introductory Chapter, further development of the MT System
 could possibly find applicability in the field of sports analysis, where the
 human based detection approach is relevant.
 
-
 \section{Template Matching Trackers}
 The simple template tracker (STT) implementation was only slightly effective in
 managing to track even the simplest of sequences. It is clear that simple template
-Matching applied to every frame of a sequence does the necessary built-in
+matching applied to every frame of a sequence does not have the necessary built-in
 flexibility towards even subtle changes in target appearance between frames.
 
 The adaptive template tracker (ATT) implementation showed some promise in solving the
-tracking problem. Where the simple template tracker failed in tracking the
-taxi in the Hamburg taxi sequence, The adaptive tracker succeeded for the
-duration of the sequence. 
+tracking problem. Where the STT failed in tracking the
+taxi in the Hamburg taxi sequence, The ATT succeeded in tracking the taxi for the duration of the sequence. 
 The approach of updating the template with the detected region in each
 $\mathbf{f}_k$ to be used in $\mathbf{f}_{k+1}$ partly allowed the tracker to
 deal with changes in object appearance in subsequent frames. However, the
-approach did not have a means to effectively centre the detected region, hence
+approach did not have a means to effectively centre the detected region. Hence,
 over long sequence the tracker would exhibit ``drift'', eventually losing the
 object to be tracked as more and more background noise was added to the model at
 each update.
@@ -73,45 +72,42 @@ presented in Subsection~\ref{future_tmt}.
 \section{Colour Co-occurrence Histogram Detector}
 Still within the sphere of detection-based tracking and template matching, a
 feature-based co-occurrence histogram detector (CCH-detector) was implemented largely as an
-experiment to gauge, whether template matching-based tracking can be extended to deal
-with some of the motion tracking challenges. 
-Picking up from where the adaptive template tracker failed, the CCH-detector was
+experiment to gauge whether template matching-based tracking can be extended to
+deal with the shortcomings of the ATT\@. 
+Picking up from where the ATT failed, the CCH-detector was
 trialled to see whether it could overcome the challenge of occlusion.
 
-The approach was able to detect the model of the girl obtained from
-$\mathbf{f}_0$ in a subsequent frame $\mathbf{f}_{139}$ despite the target being
-significantly occluded. 
-The method was however very sensitive to template selection, with small
-variations in template dimensions resulting in failures, and this keeping in
-mind that the target -the girl- is a significantly distinct object from it's
-background. 
-
+The approach was able to detect the feature model of the girl obtained from a
+template defined in $\mathbf{f}_0$ in a subsequent frame $\mathbf{f}_{139}$
+despite the target being significantly occluded.  The method was however very
+sensitive to template selection, with small variations in template dimensions
+resulting in failures, and this keeping in mind that the target -the girl- is a
+significantly distinct object from it's background. 
 Furthermore, the execution time in computing the colour co-occurrence histogram
 feature is a significant bottleneck in the execution time of the detector,
 limiting it's applicability. 
 
-It has potential to be used as an initial detector. Based of a database of
-learned shapes, an initial match can be made within the initial frame,
-$\mathbf{f}_0$ of a particular sequence, once a match is made, it can be linked
-with the fast and robust mean shift tracker to track the objects motions for
-subsequent frames in the sequence. 
-The main appeal of this approach is that machine learning and deep learning
-based methods take large amounts of data to be trained, a refined algorithm with
-faster execution time and less sensitivity to tuning parameters could have
-applicability in fast deployment systems, based off multi-view templates of a
-desired object to detect. Thoughts on future iterations of co-occurrence
-histogram based detection and tracking are discussed in
-Subsection~\ref{future_tmt} together with the simple and adaptive template
+It does however have the potential to be used as an initial detector. Based of a
+database of learned shapes, an initial match can be made within the initial
+frame, $\mathbf{f}_0$ of a particular sequence, once a match is made, it can be
+linked with the fast and robust mean shift tracker to track the objects motions
+for subsequent frames in the sequence.  The main appeal of this approach is that
+machine learning and deep learning based methods take large amounts of data to
+be trained, a refined algorithm with faster execution time and less sensitivity
+to tuning parameters could have applicability in fast deployment systems, based
+off multi-view templates of a desired object to detect. Thoughts on future
+iterations of co-occurrence histogram based detection and tracking are discussed
+in Subsection~\ref{future_tmt} together with the simple and adaptive template
 approaches.
 
 \section{Mean Shift Tracker}
 This Section aims to conclude the results and analysis from of the mean shift
 tracker (MST) performed in Section~\ref{results_mean_shift_tracker}.
 In terms of performance in relation to the motion tracking problem and to the
-challenges in achieving effective tracking, the mean MST was by far
+challenges in achieving effective tracking, the MST was by far
 the most successful of the trialled kernel-based tracking implementations.
 This allowed for more comprehensive performance tests against a variety of
-sequences, exhibiting various of the outlined challenges to motion tracking.
+sequences, exhibiting a variety of the outlined challenges to motion tracking.
 
 Throughout the experiments, the MST implementation showed good robustness to
 challenges such as partial occlusion and changing in target scale provided that
@@ -121,13 +117,14 @@ objects within the kernel location.
 The quantitative and qualitative results indicated that the while the MST
 usually successfully tracked translations, it significantly
 lagged the location of the target object within this sub-sequences. This is
-evidences by Experiments such as the fish, where the MST tracking error averages
+evidences by experiments such as the fish sequence in
+Subsection~\ref{results_fish}, where the MST tracking error metric averages
 were significantly lower when faced with the challenges of partial occlusion and
 changing orientation than when the fish was in translation.
 
 The takeaway from the MST implementation was that it was, naturally, very suited to
-applications that aligned with the underlying low-level feature choice. It had
-trouble tracking translations without a constant offset error between the
+applications that aligned with the underlying low-level feature choice. It did
+demonstrate difficulty in tracking translations without a constant offset error between the
 tracker and ground truth centroids. Possible directions for future work on the
 MST are outlined in Subsection~\ref{future_mst}.
 
@@ -150,7 +147,7 @@ and development choices.
 
 \section{Future Work}\label{future}
 This Section outlines the possible improvements and areas
-of future work for different subsystems of the MT system as well as the overall
+of future work for different subsystems of the MT System as well as the overall
 research methodology. Suggestions are based
 on the conclusions drawn and knowledge obtained from the initial survey of the
 literature in Section~\ref{chapter_literature_review}.
@@ -171,9 +168,9 @@ was relatively sensitive to changes to the $n_c$ and $n_d$ parameters which is
 undesirable in a real world application.
 
 \subsection{Mean shift tracker}\label{future_mst}
-Mean shift tracking remains an active field of research. The mean shift tracker
-(MST) was the most successful of the trialled kernel-based tracker implementations, and
-accordingly has the most room for extension.
+Mean shift tracking remains an active field of research. The MST was the most
+successful of the trialled kernel-based tracker implementations, and accordingly
+has the most room for extension.
 
 The MST implementation has static kernel dimensions. A clear first
 step to optimisation would be to add dynamic dimensioning for the kernel region
