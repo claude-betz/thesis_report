@@ -173,7 +173,7 @@ literature~\cite{Li2013}.
 \end{longtable}\label{tbl:computer_vision_challenges}
 \newpage
 
-\section{A General Motion Tracking Framework}
+\section{A General Motion Tracking Framework}\label{literature_review_framework}
 Among the various surveys of the approaches to motion tracking, Porikli and
 Yilmaz~\cite{Porikli2012} stand out in defining a sufficiently general yet comprehensive
 framework that details the fundamentals of video analysis based on detection
@@ -224,9 +224,11 @@ challenges to the tracking problem outlined in
 Section~\ref{literature_review_challenges}.
 
 \subsection{Object detection approaches}
-There are various approaches to object detection.
+There are various approaches to object detection. Based on taxonomies
+in~\cite{Prajapati2015,Shantaiya2013}, 
 Figure~\ref{fig:literaturereview_taxonomy_motion_detection} outlines some
 approaches to object detection that a motion tracker implementation might take.
+These approaches are subsequently elaborated on.
 
 \Figure[width=1\columnwidth]{Taxonomy of object detection approaches}{literaturereview_taxonomy_motion_detection}
 
@@ -283,7 +285,6 @@ probabilistic models to more accurately model background and foreground objects.
 Motion detection has seen large applicability within the video surveillance
 problem in which there are large periods with little change to a particular
 scene~\cite{Piccardi2004,Mashak2010}.
-
 
 \section{Object Modelling}\label{literature_review_object_modelling}
 Object modelling refers to the process of defining an internal model of
@@ -434,8 +435,37 @@ parametrisation lies above the threshold it is considered a
 detection~\cite{Delprado2013} There are various extensions to this approach
 which allow for more complex silhouettes to detected. 
 
+\section{Framing the study}\label{literature_review}
+Following the brief but broad review of the literature relevant to solving the
+motion tracking problem, it is necessary to narrow the scope of the study.
+
+Drawing upon the idea that the tracking problem can be solved from a standpoint
+of reliable and efficient detection as well as motion tracking as presented in
+Section~\ref{literature_review_general_approach}. This study aims to touch upon
+both avenues in solving the motion tracking problem.
+
+Working within the defined motion tracking framework defined in
+Section~\ref{literature_review_framework}. This study settles on a subset of
+detection, modelling and tracking stages to be combined. These choices are made
+in line with the motivations of the study outlined in
+Chapter~\ref{chapter_introduction}, and factor into the scoping and subsequent user
+requirements of the MT System defined in said chapter.
+
+The definition of the detection and modelling stages is usually more flexible,
+in that various trackers can be initialised with different detection methods,
+and operate of different models. Refining the scope therefore necessitates an initial
+selection of the tracking approach(es) to be trialled. 
+This study will focus on an investigation into the class of kernel based
+trackers. Within this scope we can recursively define the required modelling and
+detection stages after an in depth treatment of the two kernel based tracking
+approaches that were briefly elaborated on in
+Subsection~\ref{literature_review_kernel}. These being simple template matching
+and the mean shift algorithm. 
+
+
 \section{User Interface Design}
 User Interface design (UI) is concerned with facilitation of human-machine
 interaction on either a hardware or software level.~\cite{wiki:uid,wiki:ui}.
+
 
 
